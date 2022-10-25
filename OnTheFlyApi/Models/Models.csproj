@@ -48,6 +48,9 @@
     <Reference Include="MongoDB.Bson, Version=2.18.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MongoDB.Bson.2.18.0\lib\net472\MongoDB.Bson.dll</HintPath>
     </Reference>
+    <Reference Include="MongoDB.Driver, Version=2.18.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Driver.2.18.0\lib\net472\MongoDB.Driver.dll</HintPath>
+    </Reference>
     <Reference Include="MongoDB.Driver.Core, Version=2.18.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MongoDB.Driver.Core.2.18.0\lib\net472\MongoDB.Driver.Core.dll</HintPath>
     </Reference>
@@ -138,12 +141,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Adress.cs" />
+    <Compile Include="Address.cs" />
     <Compile Include="AirCraft.cs" />
     <Compile Include="Airports.cs" />
     <Compile Include="Company.cs" />
     <Compile Include="Flights.cs" />
-    <Compile Include="Passenger.cs" />
+    <Compile Include="Passengers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sales.cs" />
   </ItemGroup>
