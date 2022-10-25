@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    internal class Address
+    public class Address
     {
         [Required]
         [StringLength(9, ErrorMessage = "Tamanho máximo do campo ZipCode 9 caracteres")]
