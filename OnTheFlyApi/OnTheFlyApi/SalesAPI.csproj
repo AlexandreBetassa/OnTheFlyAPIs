@@ -11,6 +11,11 @@
 
   <ItemGroup>
     <Folder Include="Controllers\" />
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Models\Models.csproj" />
   </ItemGroup>
 
 </Project>
