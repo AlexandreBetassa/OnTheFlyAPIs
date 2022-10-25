@@ -35,6 +35,6 @@ namespace FlightsAPI.Services
             _flights.ReplaceOne(flight => flight.Departure == dateTime, flightIn);
         }
 
-        public void Delete(Flight flightIn) => _flights.DeleteOne(flight => flight.Departure == flightIn.Departure);
+        public void Remove(Flight flightIn) => _flights.DeleteOne(flight => flight.Departure == flightIn.Departure);
     }
 }

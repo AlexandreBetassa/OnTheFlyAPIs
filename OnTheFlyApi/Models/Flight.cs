@@ -10,9 +10,6 @@ namespace Models
 {
     public class Flight
     {
-        //[BsonId]
-        //[BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
-
         [Required]
         public Airport Destiny { get; set; }
 

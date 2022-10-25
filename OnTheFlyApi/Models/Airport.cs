@@ -9,7 +9,6 @@ namespace Models
 {
     public class Airport
     {
-        []
         [Required]
         [StringLength(3, ErrorMessage = "Tamanho limite do campo IATA é de 3 caracteres")]
         public string IATA { get; set; }
