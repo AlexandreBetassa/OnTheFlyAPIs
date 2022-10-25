@@ -5,6 +5,8 @@ VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesAPI", "OnTheFlyApi\SalesAPI.csproj", "{126CD22C-850B-4D18-9C6D-71EABF971605}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{6C49A774-19E2-47FB-9F3B-5B5194AADF93}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{126CD22C-850B-4D18-9C6D-71EABF971605}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{126CD22C-850B-4D18-9C6D-71EABF971605}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{126CD22C-850B-4D18-9C6D-71EABF971605}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C49A774-19E2-47FB-9F3B-5B5194AADF93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C49A774-19E2-47FB-9F3B-5B5194AADF93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C49A774-19E2-47FB-9F3B-5B5194AADF93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C49A774-19E2-47FB-9F3B-5B5194AADF93}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
