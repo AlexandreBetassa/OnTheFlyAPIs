@@ -23,6 +23,5 @@ namespace Models
         [Required]
         [MaxLength(2)]
         public string State { get; set; }
-
     }
 }
