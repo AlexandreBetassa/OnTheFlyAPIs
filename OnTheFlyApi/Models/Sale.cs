@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class Sales
+    public class Sale
     {
         [Required(ErrorMessage = "Não há voos vinculados a esta venda")]
         public Flights Flight { get; set; }
-        [Required(ErrorMessage = "Não a pasageiros vinculados a esta venda")]
+        [Required(ErrorMessage = "Não a passageiros vinculados a esta venda")]
         public List<Passengers> Passenger { get; set; } = new List<Passengers>();
         public bool Reserved { get; set; } = false;
         public bool Sold { get; set; } = false;
