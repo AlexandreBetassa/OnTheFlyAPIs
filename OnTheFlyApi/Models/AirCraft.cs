@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    internal class AirCraft
+    public class AirCraft
     {        
         public string Rab { get; set; }
         public int Capacity { get; set; }
