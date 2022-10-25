@@ -16,8 +16,6 @@ namespace AirCraftAPI.Controllers
             _airCraftService = airCraftService;
         }
 
-
-
         [HttpGet]
         public ActionResult<List<AirCraft>> Get() => _airCraftService.Get();
 

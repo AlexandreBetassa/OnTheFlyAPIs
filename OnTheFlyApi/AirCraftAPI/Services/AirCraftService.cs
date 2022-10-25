@@ -16,7 +16,6 @@ namespace AirCraftAPI.Services
             _aircraft = database.GetCollection<AirCraft>(settings.AirCraftCollectionName);
         }
 
-        
         public List<AirCraft> Get() => _aircraft.Find<AirCraft>(aircraft => true).ToList();
 
         public AirCraft Get(string rab) => _aircraft.Find<AirCraft>(aircraft => aircraft.RAB == rab).FirstOrDefault();

@@ -11,9 +11,9 @@ namespace Models
     public class Sale
     {
         [Required(ErrorMessage = "Não há voos vinculados a esta venda")]
-        public Flights Flight { get; set; }
+        public Flight Flight { get; set; }
         [Required(ErrorMessage = "Não a passageiros vinculados a esta venda")]
-        public List<Passengers> Passenger { get; set; } = new List<Passengers>();
+        public List<Passenger> Passenger { get; set; } = new List<Passenger>();
         public bool Reserved { get; set; } = false;
         public bool Sold { get; set; } = false;
     }

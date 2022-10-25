@@ -30,10 +30,7 @@ namespace FlightsAPI.Services
 
         public Flight GetOne(DateTime dateTime) => _flights.Find<Flight>(flight => flight.Departure == dateTime).FirstOrDefault();
 
-        public void Update(DateTime dateTime, Flight flightIn)
-        {
-            _flights.ReplaceOne(flight => flight.Departure == dateTime, flightIn);
-        }
+        public void Update(DateTime dateTime, Flight flightIn) => _flights.ReplaceOne(flight => flight.Departure == dateTime, flightIn);
 
         public void Remove(Flight flightIn) => _flights.DeleteOne(flight => flight.Departure == flightIn.Departure);
     }
