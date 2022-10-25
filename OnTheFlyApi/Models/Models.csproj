@@ -145,10 +145,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Address.cs" />
     <Compile Include="AirCraft.cs" />
     <Compile Include="Airport.cs" />
     <Compile Include="Company.cs" />
     <Compile Include="Flight.cs" />
+    <Compile Include="Passenger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sale.cs" />
   </ItemGroup>
