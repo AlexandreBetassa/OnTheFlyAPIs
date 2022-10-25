@@ -1,7 +1,7 @@
-﻿using Models;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 using PassengerAPI.Utils;
 using System.Collections.Generic;
+using Models;
 
 namespace PassengerAPI.Services
 {

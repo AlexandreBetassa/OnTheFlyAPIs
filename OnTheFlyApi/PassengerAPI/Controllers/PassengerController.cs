@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Models;
+using PassengerAPI.Services;
 using System.Collections.Generic;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -9,36 +11,56 @@ namespace PassengerAPI.Controllers
     [ApiController]
     public class PassengerController : ControllerBase
     {
+        private readonly PassengerService _passengerService;
+
+        public PassengerController(PassengerService passengerService)
+        {
+            _passengerService = passengerService;
+        }
+
         // GET: api/<PassengerController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public ActionResult<List<Passenger>> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _passengerService.Get();
         }
 
         // GET api/<PassengerController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{cpf}")]
+        public ActionResult<Passenger> Get(string cpf)
         {
-            return "value";
+            var passenger = _passengerService.Get(cpf);
+            if (passenger == null) return NotFound();
+            return passenger;
         }
 
         // POST api/<PassengerController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult<Passenger> Post(Passenger passenger)
         {
+            _passengerService.Create(passenger);
+            return passenger;
         }
 
         // PUT api/<PassengerController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public ActionResult<Passenger> Put(Passenger passengerIn, string cpf)
         {
+            var passenger = _passengerService.Get(cpf);
+            if (passenger == null) return NotFound();
+            passengerIn.CPF = cpf;
+            _passengerService.Update(cpf, passengerIn);
+            return NoContent();
         }
 
         // DELETE api/<PassengerController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{cpf}")]
+        public ActionResult<Passenger> Delete(string cpf)
         {
+            var passenger = _passengerService.Get(cpf);
+            if (passenger == null) return NotFound();
+            _passengerService.Remove(passenger);
+            return NoContent();
         }
     }
 }
