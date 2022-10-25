@@ -14,10 +14,15 @@ namespace Models
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
         public string Id { get; set; }
         [Required]
+        [StringLength(19, ErrorMessage ="Numero de CNPJ Invalido")]
         public string CNPJ { get; set; }
         [Required]
+        [StringLength(30,ErrorMessage ="Numeros de caracter permitidos excedidos")]
         public string Name{ get; set; }
+        [Required]
+        [StringLength(30,ErrorMessage = "Numeros de caracter permitidos excedidos")]
         public string NameOp { get; set; }
+        [Required]
         public DateTime Date { get; set; }
         public bool? Status { get; set; }
 
