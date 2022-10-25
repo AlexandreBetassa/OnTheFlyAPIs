@@ -16,8 +16,25 @@ namespace AirCraftAPI.Services
             _aircraft = database.GetCollection<AirCraft>(settings.AirCraftCollectionName);
         }
 
-        public List<AirCraft> Get() => _aircraft.Find<AirCraft>(aircraft => true).ToList();
+        public AirCraft Create(AirCraft aircraftInsert)
+        {
+            _aircraft.InsertOne(aircraftInsert);
+            return aircraftInsert;
+        }
 
-        public AirCraft Get(string rab) => _aircraft.Find<AirCraft>(aircraft => aircraft.RAB == rab).FirstOrDefault();
+        public List<AirCraft> GetAll() => _aircraft.Find<AirCraft>(aircraft => true).ToList();
+
+        public List<AirCraft> GetAllByCnpj(string companyCnpj) => _aircraft.Find<AirCraft>(aircraft => true).ToList();
+        
+        public AirCraft GetOneByRAB(string rab) => _aircraft.Find<AirCraft>(aircraft => aircraft.RAB == rab).FirstOrDefault();
+
+        public void Update(AirCraft aircraftUpdate, string rab)
+        {
+            _aircraft.ReplaceOne(aircraft => aircraft.RAB == rab, aircraftUpdate);
+        }
+
+
+
+
     }
 }

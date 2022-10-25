@@ -17,13 +17,13 @@ namespace AirCraftAPI.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<AirCraft>> Get() => _airCraftService.Get();
+        public ActionResult<List<AirCraft>> Get() => _airCraftService.GetAll();
 
 
-        [HttpGet("GetByAirCraftRAB/{rab}")]
+        [HttpGet("GetByRAB/{rab}")]
         public ActionResult<AirCraft> GetByRAB(string rab)
         {
-            var airCraft = _airCraftService.Get(rab);
+            var airCraft = _airCraftService.GetOneByRAB(rab);
             if (airCraft == null)
                 return NotFound();
 
