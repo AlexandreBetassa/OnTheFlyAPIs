@@ -1,6 +1,6 @@
 ﻿namespace AirCraftAPI.Services
 {
-    public class AirCraftServices
+    public class AirCraftService
     {
     }
 }

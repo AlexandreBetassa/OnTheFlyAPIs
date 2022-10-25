@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <Folder Include="Controllers\" />
-    <Folder Include="DataBaseSettings\" />
+    <Folder Include="DatabaseSettings\" />
   </ItemGroup>
 
 </Project>
