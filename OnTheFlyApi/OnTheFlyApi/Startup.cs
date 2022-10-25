@@ -6,7 +6,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using SalesAPI.Repositories;
+using SalesAPI.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +35,10 @@ namespace OnTheFlyApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "OnTheFlyApi", Version = "v1" });
             });
+            services.Configure<DatabaseSettings>(Configuration.GetSection(nameof(DatabaseSettings)));
+            services.AddSingleton<IDatabaseSettings>(sp => sp.GetRequiredService<IOptions<DatabaseSettings>>().Value);
+
+            services.AddSingleton<SalesService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
