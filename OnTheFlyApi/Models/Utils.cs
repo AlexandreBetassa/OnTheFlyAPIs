@@ -59,7 +59,6 @@ namespace Models
             digito = digito + resto.ToString();
             return cpf.EndsWith(digito);
         }
-
         public static bool ValidateCnpj(string cnpj)
         {
             int[] multiplicador1 = new int[12] { 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };

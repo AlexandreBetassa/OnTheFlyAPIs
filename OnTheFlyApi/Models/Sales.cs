@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    internal class Sales
+    public class Sales
     {
         [Required(ErrorMessage = "Não há voos vinculados a esta venda")]
         public Flights Flight { get; set; }
