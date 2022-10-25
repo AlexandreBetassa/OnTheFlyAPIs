@@ -34,7 +34,5 @@ namespace AirCraftAPI.Services
         }
 
         public void Remove(AirCraft aircraftRemove) => _aircraft.DeleteOne(aircraft => aircraft.RAB == aircraftRemove.RAB);
-
-
     }
 }
