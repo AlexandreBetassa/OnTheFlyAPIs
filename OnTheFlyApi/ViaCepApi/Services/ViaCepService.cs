@@ -1,18 +1,14 @@
-﻿using System.Net.Http;
+﻿using Models;
+using Newtonsoft.Json;
+using System.Net.Http;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using System.Web.Helpers;
 
 namespace ViaCepApi.Services
 {
     public class ViaCepService
     {
-        public async Task<string> GetAdress(string cep)
-        {
-            using (HttpClient _adressClient = new HttpClient())
-            {
-                HttpResponseMessage response = await _adressClient.GetAsync("https://viacep.com.br/ws/" + cep + "/json/");
-                var adress = await response.Content.ReadAsStringAsync();
-                return adress;
-            }
-        }
+
     }
 }
