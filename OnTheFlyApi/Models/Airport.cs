@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    internal class Airports
+    public class Airport
     {
+        public string IATA { get; set; }
+        public string State { get; set; }
+        public string Country { get; set; }
     }
 }
