@@ -19,6 +19,6 @@ namespace AirCraftAPI.Services
         
         public List<AirCraft> Get() => _aircraft.Find<AirCraft>(aircraft => true).ToList();
 
-        public AirCraft Get(string rab) => _aircraft.Find<AirCraft>(aircraft => aircraft.Rab == rab).FirstOrDefault();
+        public AirCraft Get(string rab) => _aircraft.Find<AirCraft>(aircraft => aircraft.RAB == rab).FirstOrDefault();
     }
 }
