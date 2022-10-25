@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIViaCep", "APIViaCep\APIV
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PassengerAPI", "PassengerAPI\PassengerAPI.csproj", "{A6AB4982-9541-4868-BE02-525011DD65C8}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesAPI", "OnTheFlyApi\SalesAPI.csproj", "{126CD22C-850B-4D18-9C6D-71EABF971605}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompanyAPI", "CompanyAPI\CompanyAPI.csproj", "{47D9ADF2-CED1-4CD1-8BE5-7764D1CAC902}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{A6AB4982-9541-4868-BE02-525011DD65C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6AB4982-9541-4868-BE02-525011DD65C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6AB4982-9541-4868-BE02-525011DD65C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{126CD22C-850B-4D18-9C6D-71EABF971605}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{126CD22C-850B-4D18-9C6D-71EABF971605}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{126CD22C-850B-4D18-9C6D-71EABF971605}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{126CD22C-850B-4D18-9C6D-71EABF971605}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47D9ADF2-CED1-4CD1-8BE5-7764D1CAC902}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47D9ADF2-CED1-4CD1-8BE5-7764D1CAC902}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47D9ADF2-CED1-4CD1-8BE5-7764D1CAC902}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47D9ADF2-CED1-4CD1-8BE5-7764D1CAC902}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

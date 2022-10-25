@@ -25,7 +25,7 @@ namespace SalesAPI.Repositories
         }
 
         public List<Sale> Get() => _salesService.Find(sales => true).ToList();
-        public Sale Get(Flights flight) => _salesService.Find(sale => sale.Flight == flight).FirstOrDefault();
+        public Sale Get(Flight flight) => _salesService.Find(sale => sale.Flight == flight).FirstOrDefault();
         public void Put(Sale saleIn) => _salesService.ReplaceOne(sale => sale.Flight == saleIn.Flight, saleIn);
         //public void Delete(Sale saleIn) => _salesService.DeleteOne(sale);
     }
