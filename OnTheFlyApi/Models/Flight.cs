@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    internal class Airports
+    internal class Flight
     {
     }
 }
