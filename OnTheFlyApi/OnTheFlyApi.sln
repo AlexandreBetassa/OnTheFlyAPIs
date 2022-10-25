@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirCraftAPI", "AirCraftAPI\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightsAPI", "FlightsAPI\FlightsAPI.csproj", "{8CA0EDD8-7CA4-46A2-97D7-4DF71A77FBD9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIViaCep", "APIViaCep\APIViaCep.csproj", "{8044D96D-3ABA-40AD-B989-A592304503AE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{8CA0EDD8-7CA4-46A2-97D7-4DF71A77FBD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8CA0EDD8-7CA4-46A2-97D7-4DF71A77FBD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8CA0EDD8-7CA4-46A2-97D7-4DF71A77FBD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8044D96D-3ABA-40AD-B989-A592304503AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8044D96D-3ABA-40AD-B989-A592304503AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8044D96D-3ABA-40AD-B989-A592304503AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8044D96D-3ABA-40AD-B989-A592304503AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
