@@ -33,7 +33,7 @@ namespace AirCraftAPI.Services
             _aircraft.ReplaceOne(aircraft => aircraft.RAB == rab, aircraftUpdate);
         }
 
-
+        public void Remove(AirCraft aircraftRemove) => _aircraft.DeleteOne(aircraft => aircraft.RAB == aircraftRemove.RAB);
 
 
     }
