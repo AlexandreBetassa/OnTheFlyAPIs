@@ -43,6 +43,7 @@ namespace PassengerAPI
                 sp => sp.GetRequiredService<IOptions<DatabaseSettings>>().Value);
 
             services.AddSingleton<PassengerService>();
+            services.AddSingleton<RestrictedPassengerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
