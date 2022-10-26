@@ -21,7 +21,7 @@ namespace FlightsAPI.Controllers
         [HttpGet]
         public ActionResult<List<Flight>> Get() => _flightService.Get();
 
-        [HttpGet(Name = "GetFlightByDate")]
+        [HttpGet("GetFlightByDate/{date}", Name = "GetFlightByDate")]
         public ActionResult<Flight> Get(DateTime date)
         {
             var flight = _flightService.GetByDate(date);
@@ -32,16 +32,16 @@ namespace FlightsAPI.Controllers
             return Ok(flight); 
         }
 
-        //[HttpGet(Name = "GetOneFlight")] // get pela hora
-        //public ActionResult<Flight> Get(DateTime fullDate)
-        //{
-        //    var flight = _flightService.GetOne(fullDate);
-
-        //    if (flight == null)
-        //        return NotFound();
-
-        //    return Ok(flight);
-        //}
+        [HttpGet("Get/GetOne/{fullDate},{rabPlane},{destiny}", Name = "GetOne/Get")] //
+        public ActionResult<Flight> Get(DateTime fullDate, string rabPlane, string destiny)
+        {
+            var flight = _flightService.GetOne(fullDate, rabPlane, destiny);
+        
+            if (flight == null)
+                return NotFound();
+        
+            return Ok(flight);
+        }
 
 
         //não pode cadastrar voos para uma companhia que esteja bloqueada (fazer tal verificação)
