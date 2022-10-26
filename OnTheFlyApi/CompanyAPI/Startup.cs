@@ -35,8 +35,8 @@ namespace CompanyAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CompanyAPI", Version = "v1" });
             });
-            services.Configure<DatabaseSetting>(Configuration.GetSection(nameof(DatabaseSetting)));
-            services.AddSingleton<IDatabaseSetting>(sp => sp.GetRequiredService<IOptions<DatabaseSetting>>().Value);
+            services.Configure<DatabaseSettings.DatabaseSettings>(Configuration.GetSection(nameof(DatabaseSettings)));
+            services.AddSingleton<IDatabaseSettings>(sp => sp.GetRequiredService<IOptions<DatabaseSettings.DatabaseSettings>>().Value);
 
             services.AddSingleton<CompanyService>();
         }

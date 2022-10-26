@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using APIViaCep;
 using CompanyAPI.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,18 +20,40 @@ namespace CompanyAPI.Controllers
 
 
         [HttpPost]
-        public ActionResult<Company> Create(Company company) => _companiesService.Create(company);  
+        public ActionResult<Company> Create(Company company)
+        {
+            var address = ViaCep.GetAdress(company.Address.ZipCode).Result;
+            if (address == null) return NotFound();
+
+            company.Address.Street = address.Street;
+            company.Address.City = address.City;
+            company.Address.State = address.State;
+            _companiesService.Create(company);
+
+            return Ok(company);
+        }
+           
+        //[HttpGet("GetOneCep/{cep}")]
+        //public ActionResult<Address> GetAddress(string cep, int number, string complemento)
+        //{
+        //    var address = ViaCep.GetAdress(cep).Result;
+        //    address.Number = number;
+        //    address.Complement = complemento;
+        //    if (address == null) return NotFound();
+        //    return Ok(address);
+
+        //}
 
         [HttpGet]
         public ActionResult<List<Company>> GetAll() => _companiesService.GetAll();
 
-        [HttpGet("GetCNPJ/{CNPJ}")]
+        [HttpGet("GetCNPJ/{cnpj}")]
         public ActionResult<Company> GetOneCNPJ(string cnpj) 
         {
             var companies = _companiesService.GetOneCNPJ(cnpj);
             if(companies == null)return NotFound();
 
-            return companies;
+            return Ok(companies);
         }
 
         [HttpPut]
@@ -42,6 +65,7 @@ namespace CompanyAPI.Controllers
             _companiesService.Update(cnpj,companyIn);
             return NoContent();
         }
+      
 
         [HttpDelete("{CNPJ}")]
         public ActionResult<Company> Delete(string cnpj)

@@ -1,6 +1,6 @@
 ﻿namespace CompanyAPI.DatabaseSettings
 {
-    public class DatabaseSetting : IDatabaseSetting
+    public class DatabaseSettings : IDatabaseSettings
     {
         public string CompanyCollectionName { get; set; }
       //  public string AddressCompany { get; set; }
