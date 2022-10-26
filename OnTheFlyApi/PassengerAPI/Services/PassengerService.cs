@@ -25,12 +25,25 @@ namespace PassengerAPI.Services
         }
 
         public List<Passenger> Get() => _passengers.Find<Passenger>(passenger => true).ToList();
-        public Passenger Get(string id) => _passengers.Find<Passenger>(passenger => passenger.CPF == id).FirstOrDefault();
-        public void Replace(string id, Passenger passengerIn) => _passengers.ReplaceOne(passenger => passenger.CPF == id, passengerIn);
-        public void Remove(Passenger passengerIn)
+        public Passenger Get(string cpf) => _passengers.Find<Passenger>(passenger => passenger.CPF == cpf).FirstOrDefault();
+        public Passenger Replace(string cpf, Passenger passengerIn)
         {
-            _passengers.DeleteOne(passenger => passenger.CPF == passengerIn.CPF);
-            _deletedPassengers.InsertOne(passengerIn);
+            var passenger = Get(cpf);
+            if (passenger != null) return null;
+
+            _passengers.ReplaceOne(passenger => passenger.CPF == cpf, passengerIn);
+            return passengerIn;
+        }
+
+        public Passenger Remove(string cpf)
+        {
+            var passenger = Get(cpf);
+            if (passenger == null) return null;
+
+            _passengers.DeleteOne(passenger => passenger.CPF == cpf);
+            _deletedPassengers.InsertOne(passenger);
+            
+            return passenger;
         }
     }
 }
