@@ -34,5 +34,6 @@ namespace Models
         [MaxLength(2)]
         [JsonProperty("uf")]
         public string State { get; set; }
+
     }
 }
