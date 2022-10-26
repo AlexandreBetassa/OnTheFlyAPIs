@@ -25,8 +25,6 @@ namespace SaleAPI.Services
         public List<Sale> Get() => _salesService.Find(sales => true).ToList();
         public Sale Get(Sale saleIn) => _salesService.Find(sale => sale.Flight.Destiny == saleIn.Flight.Destiny &&
         sale.Flight.Departure == saleIn.Flight.Departure).FirstOrDefault();
-        public void Put(Sale saleIn) => _salesService.ReplaceOne(sale => sale.Flight.Destiny == saleIn.Flight.Destiny &&
-        sale.Flight.Departure == saleIn.Flight.Departure, saleIn);
         public void Delete(Sale saleIn) => _salesService.DeleteOne(sale => sale.Flight.Destiny == saleIn.Flight.Destiny &&
         sale.Flight.Departure == saleIn.Flight.Departure);
     }
