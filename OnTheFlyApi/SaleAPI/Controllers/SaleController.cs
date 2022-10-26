@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using APIsConsummers;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using SaleAPI.Services;
@@ -19,19 +20,18 @@ namespace SaleAPI.Controllers
         [HttpGet]
         public ActionResult<List<Sale>> Get() => _saleService.Get();
 
-        [HttpGet("GetByDate/{date:length(10)}")]
+        [HttpGet("GetByDate/{date:length(10)}", Name = "GetSale")]
         public ActionResult<Sale> Get(DateTime date)
         {
             var sale = _saleService.Get().Where(saleIn => saleIn.Flight.Departure == date);
             return Ok(sale);
         }
-        [HttpPost]
-        public ActionResult<Sale> Create(Sale sale, string cnpj)
+
+        [HttpPost("CreateSale")]
+        public ActionResult<AirCraft> Create(Sale sale)
         {
             _saleService.Create(sale);
-            Company c = new Company();
-            var p = CreatedAtRoute("localhost: 44355", c);
-            return Ok(sale);
+            return CreatedAtRoute("GetSale", sale.Flight.Departure);
         }
 
         [HttpPut("{date:length(10)}")]
@@ -40,5 +40,6 @@ namespace SaleAPI.Controllers
             _saleService.Get().Where(saleIn => saleIn.Flight.Departure == date && saleIn.Flight.Plane.RAB == aircraft);
             return Ok();
         }
+
     }
 }

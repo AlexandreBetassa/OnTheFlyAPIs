@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Models;
-using APIViaCep;
 using System;
 
 namespace AirCraftAPI.Controllers
