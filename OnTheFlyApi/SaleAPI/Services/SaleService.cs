@@ -13,7 +13,7 @@ namespace SaleAPI.Services
         {
             var sales = new MongoClient(settings.ConnectionString);
             var database = sales.GetDatabase(settings.DatabaseName);
-            _salesService = database.GetCollection<Sale>(settings.SalesConnectionName);
+            _salesService = database.GetCollection<Sale>(settings.SalesCollectionName);
         }
 
         public Sale Create(Sale sale)
