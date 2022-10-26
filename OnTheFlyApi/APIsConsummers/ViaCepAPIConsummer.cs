@@ -7,9 +7,9 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace APIViaCep
+namespace APIsConsummers
 {
-    public class ViaCep
+    public class ViaCepAPIConsummer
     {
         public static async Task<Address> GetAdress(string cep)
         {

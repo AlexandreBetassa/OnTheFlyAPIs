@@ -10,25 +10,30 @@ namespace Models
 {
     public class Address
     {
-        
         [Required]
         [MaxLength(9)]
         [JsonProperty("cep")]
         public string ZipCode { get; set; }
+
         [MaxLength(100)]
         [JsonProperty("logradouro")]
         public string Street { get; set; }
+
         [Required]
         public int Number { get; set; }
+
+        [JsonProperty("complemento")]
         public string Complement { get; set; }
-        //[Required]
+
+        [Required]
         [MaxLength(30)]
         [JsonProperty("localidade")]
         public string City { get; set; }
-        //[Required]
+
+        [Required]
         [MaxLength(2)]
         [JsonProperty("uf")]
         public string State { get; set; }
-        
+
     }
 }

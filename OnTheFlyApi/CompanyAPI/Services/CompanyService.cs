@@ -10,22 +10,18 @@ namespace CompanyAPI.Services
         private readonly IMongoCollection<Company> _companies;
         //private readonly IMongoCollection<Address> _address;
 
-        public CompanyService(IDatabaseSetting settings)
+        public CompanyService(IDatabaseSettings settings)
         {
-            var animal = new MongoClient(settings.ConnectionString);
-            var database = animal.GetDatabase(settings.DatabaseName);
+            var company = new MongoClient(settings.ConnectionString);
+            var database = company.GetDatabase(settings.DatabaseName);
             _companies = database.GetCollection<Company>(settings.CompanyCollectionName);
         }
 
         public Company Create(Company company){ _companies.InsertOne(company); return company; }
-       
-        public List<Company> Get() => _companies.Find<Company>(company => true).ToList();
-
-        public Company Get(string cnpj) => _companies.Find(company => company.CNPJ == cnpj).FirstOrDefault();
-
-        public void Update(string id, Company CompanyIn) => _companies.ReplaceOne(person => person.Id == id, CompanyIn);
-
-        public void Delete(string cnpj)=>_companies.DeleteOne(person => person.CNPJ == cnpj);
+        public List<Company> GetAll() => _companies.Find<Company>(company => true).ToList();
+        public Company GetOneCNPJ(string cnpj) => _companies.Find<Company>(company => company.CNPJ == cnpj).FirstOrDefault();
+        public void Update(string cnpj, Company CompanyIn) => _companies.ReplaceOne(company => company.CNPJ == cnpj, CompanyIn);
+        public void Delete(Company companyIn)=>_companies.DeleteOne(company => company.CNPJ == companyIn.CNPJ);
     }
 }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,6 +10,10 @@ namespace Models
 {
     public class Airport
     {
+        [BsonId]
+        [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
+        public string Id { get; set; }
+
         [Required]
         [StringLength(3, ErrorMessage = "Tamanho limite do campo IATA é de 3 caracteres")]
         public string IATA { get; set; }
