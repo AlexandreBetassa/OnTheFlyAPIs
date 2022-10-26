@@ -38,7 +38,7 @@ namespace AirCraftAPI.Controllers
         //-----------------------------------------------------------------------------------------------------------------
 
         //Get One By RAB
-        [HttpGet("GetByRAB/{rab}", Name = "BATATA")]
+        [HttpGet("GetByRAB/{rab}")]
         public ActionResult<AirCraft> GetByRAB(string rab)
         {
             var airCraft = _airCraftService.GetOneByRAB(rab);
