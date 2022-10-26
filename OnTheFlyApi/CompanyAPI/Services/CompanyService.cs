@@ -20,7 +20,7 @@ namespace CompanyAPI.Services
         public Company Create(Company company){ _companies.InsertOne(company); return company; }
         public List<Company> GetAll() => _companies.Find<Company>(company => true).ToList();
         public Company GetOneCNPJ(string cnpj) => _companies.Find<Company>(company => company.CNPJ == cnpj).FirstOrDefault();
-        public void Update(string id, Company CompanyIn) => _companies.ReplaceOne(person => person.Id == id, CompanyIn);
+        public void Update(string cnpj, Company CompanyIn) => _companies.ReplaceOne(company => company.CNPJ == cnpj, CompanyIn);
         public void Delete(Company companyIn)=>_companies.DeleteOne(company => company.CNPJ == companyIn.CNPJ);
     }
 }

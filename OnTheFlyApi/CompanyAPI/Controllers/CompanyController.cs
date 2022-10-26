@@ -11,11 +11,12 @@ namespace CompanyAPI.Controllers
     [ApiController]
     public class CompanyController : ControllerBase
     {
-        private readonly CompanyService _companiesService;
+        private readonly CompanyService _companyService;
+        private readonly CompanyService _deletedcompanyService;
 
         public CompanyController(CompanyService companiesService)
         {
-            _companiesService = companiesService;
+            _companyService = companiesService;
         }
 
 
@@ -28,7 +29,7 @@ namespace CompanyAPI.Controllers
             company.Address.Street = address.Street;
             company.Address.City = address.City;
             company.Address.State = address.State;
-            _companiesService.Create(company);
+            _companyService.Create(company);
 
             return Ok(company);
         }
@@ -45,12 +46,12 @@ namespace CompanyAPI.Controllers
         //}
 
         [HttpGet]
-        public ActionResult<List<Company>> GetAll() => _companiesService.GetAll();
+        public ActionResult<List<Company>> GetAll() => _companyService.GetAll();
 
         [HttpGet("GetCNPJ/{cnpj}")]
         public ActionResult<Company> GetOneCNPJ(string cnpj) 
         {
-            var company = _companiesService.GetOneCNPJ(cnpj);
+            var company = _companyService.GetOneCNPJ(cnpj);
             if(company == null)return NotFound();
 
             return Ok(company);
@@ -59,22 +60,22 @@ namespace CompanyAPI.Controllers
         [HttpPut("PutNameOP/{newNameOP}")]
         public ActionResult<Company>PutNameOp(string cnpj, string newNameOp)
         {
-            var company = _companiesService.GetOneCNPJ(cnpj);
+            var company = _companyService.GetOneCNPJ(cnpj);
             if (company == null) return NotFound();
 
             company.NameOp= newNameOp;
-            _companiesService.Update(cnpj,company);
+            _companyService.Update(cnpj,company);
 
             return Ok(company);
         }
         [HttpPut("PutStatus/{newStatus}")]
         public ActionResult<Company> PutStatus(string cnpj, bool newStatus)
         {
-            var company = _companiesService.GetOneCNPJ(cnpj);
+            var company = _companyService.GetOneCNPJ(cnpj);
             if (company == null) return NotFound();
 
             company.Status = newStatus;
-            _companiesService.Update(cnpj, company);
+            _companyService.Update(cnpj, company);
 
             return Ok(company);
         }
@@ -82,45 +83,47 @@ namespace CompanyAPI.Controllers
         [HttpPut("PutStreet/{newStreet}")]
         public ActionResult<Company> PutStreet(string cnpj, string newStreet)
         {
-            var company = _companiesService.GetOneCNPJ(cnpj);
+            var company = _companyService.GetOneCNPJ(cnpj);
             if (company == null) return NotFound();
 
             company.Address.Street = newStreet;
-            _companiesService.Update(cnpj, company);
+            _companyService.Update(cnpj, company);
 
             return Ok(company);
         }
 
-        [HttpPut("PutStreet/{newNumber}")]
+        [HttpPut("PutNumber/{newNumber}")]
         public ActionResult<Company> PutNumber(string cnpj, int newNumber)
         {
-            var company = _companiesService.GetOneCNPJ(cnpj);
+            var company = _companyService.GetOneCNPJ(cnpj);
             if (company == null) return NotFound();
 
             company.Address.Number = newNumber;
-            _companiesService.Update(cnpj, company);
+            _companyService.Update(cnpj, company);
 
             return Ok(company);
         }
-        [HttpPut("PutStreet/{newComplement}")]
+        [HttpPut("PutComplement/{newComplement}")]
         public ActionResult<Company> PutComplement(string cnpj, string newComplement)
         {
-            var company = _companiesService.GetOneCNPJ(cnpj);
+            var company = _companyService.GetOneCNPJ(cnpj);
             if (company == null) return NotFound();
 
             company.Address.Complement = newComplement;
-            _companiesService.Update(cnpj, company);
+            _companyService.Update(cnpj, company);
 
             return Ok(company);
         }
 
-        [HttpDelete("{CNPJ}")]
+        [HttpDelete("{cnpj}")]
         public ActionResult<Company> Delete(string cnpj)
         {
-            var company = _companiesService.GetOneCNPJ(cnpj);
+            var company = _companyService.GetOneCNPJ(cnpj);
             if (company == null) return NotFound();
-            //Fazer um insert na tabela de lixeira
-            _companiesService.Delete(company);
+
+            _deletedcompanyService.Create(company);
+            _companyService.Delete(company);
+
             return NoContent();
         }
     }
