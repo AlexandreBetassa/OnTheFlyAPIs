@@ -32,7 +32,7 @@ namespace FlightsAPI.Controllers
             return Ok(flight); 
         }
 
-        [HttpGet("Get/GetOne/{fullDate},{rabPlane},{destiny}", Name = "GetOne/Get")] //
+        [HttpGet("GetOne/{fullDate},{rabPlane},{destiny}", Name = "GetOne")]
         public ActionResult<Flight> Get(DateTime fullDate, string rabPlane, string destiny)
         {
             var flight = _flightService.GetOne(fullDate, rabPlane, destiny);
@@ -49,18 +49,33 @@ namespace FlightsAPI.Controllers
         public ActionResult<Flight> Create(Flight flight)
         {
             _flightService.Create(flight);
-            return CreatedAtRoute("GetFlightByDate", new { date = flight.Departure }, flight);
+            //return CreatedAtRoute("GetOne", new { date = flight.Departure }, flight);
+            return Ok(flight);
         }
 
-        [HttpPut]
-        public ActionResult<Flight> Update(Flight flightIn, DateTime date)
-        {
-            var flight = _flightService.GetByDate(date);
+        //[HttpPut]
+        //public ActionResult<Flight> Update(Flight flightIn, DateTime date)
+        //{
+        //    var flight = _flightService.GetByDate(date);
 
-            if (flight == null)
+        //    if (flight == null)
+        //        return NotFound();
+
+        //    _flightService.Update(date, flightIn);
+
+        //    return NoContent();
+        //}
+
+        [HttpPut("ModifyFlightStatus/{fullDate},{rabPlane},{destiny},{newStatus}", Name = "ModifyFlightStatus")]
+        public ActionResult<Flight> UpdateStatus(DateTime fullDate, string rabPlane, string destiny, bool newStatus)
+        {
+            var flightUpdate = _flightService.GetOne(fullDate, rabPlane, destiny);
+            if (flightUpdate == null)
                 return NotFound();
 
-            _flightService.Update(date, flightIn);
+            flightUpdate.Status = newStatus;
+
+            _flightService.Update(fullDate, rabPlane, destiny, flightUpdate);
 
             return NoContent();
         }
