@@ -14,5 +14,15 @@ namespace AirCraftAPI.Services
             var database = deletedAircraft.GetDatabase(settings.DataBaseName);
             _deletedAircraft = database.GetCollection<AirCraft>(settings.DeletedAirCraftCollectionName);
         }
+
+        public AirCraft Insert(AirCraft aircraftDelete)
+        {
+            _deletedAircraft.InsertOne(aircraftDelete);
+            return aircraftDelete;
+        }
+
+
+
+
     }
 }
