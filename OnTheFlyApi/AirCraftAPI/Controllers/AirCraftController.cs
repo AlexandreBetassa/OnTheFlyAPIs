@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Models;
+using APIViaCep;
 
 namespace AirCraftAPI.Controllers
 {
@@ -18,6 +19,14 @@ namespace AirCraftAPI.Controllers
 
         [HttpGet]
         public ActionResult<List<AirCraft>> Get() => _airCraftService.Get();
+
+        [HttpGet("{cep}")]
+        public ActionResult<Address> GetAdress(string cep)
+        {
+            var address = ViaCep.GetAdress(cep).Result;
+
+            return Ok(address);
+        }
 
 
         [HttpGet("GetByAirCraftRAB/{rab}")]
