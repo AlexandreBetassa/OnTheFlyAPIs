@@ -1,6 +1,6 @@
 ﻿namespace SaleAPI.Utils
 {
-    public class DatabaseSettings : IDatabaseSettings
+    public interface IDatabaseSettings
     {
         public string SalesConnectionName { get; set; }
         public string ConnectionString { get; set; }
