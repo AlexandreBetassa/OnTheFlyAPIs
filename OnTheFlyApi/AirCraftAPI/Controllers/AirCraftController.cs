@@ -31,14 +31,13 @@ namespace AirCraftAPI.Controllers
         public ActionResult<List<AirCraft>> GetAllByCnpj(string companyCnpj)
         {
             var aircraftList = _airCraftService.GetAllByCnpj(companyCnpj);
-
             return aircraftList;
         }
         //-----------------------------------------------------------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------------------
 
         //Get One By RAB
-        [HttpGet("GetByRAB/{rab}")]
+        [HttpGet("GetByRAB/{rab}", Name = "BATATA")]
         public ActionResult<AirCraft> GetByRAB(string rab)
         {
             var airCraft = _airCraftService.GetOneByRAB(rab);
@@ -57,25 +56,12 @@ namespace AirCraftAPI.Controllers
 
             // PRECISA ANTES DE FAZER A INSERCAO, VERIFICAR SE A COMPANHIA AEREA INFORMADA REALMENTE EXISTE CADASTRADA E SE
             // O RAB INFORMADO JÁ NÃO ESTÁ CADASTRADO
+            // ADICIONAR SYSTEMDATETIME.NOW NO CADASTRO
 
             _airCraftService.Create(aircraft);
 
             return Ok(aircraft);
         }
-        //-----------------------------------------------------------------------------------------------------------------
-        //-----------------------------------------------------------------------------------------------------------------
-
-        //[HttpPut] //Editar generico
-        //public ActionResult<AirCraft> Update(AirCraft aircraftUpdate, string rab)
-        //{
-        //    var aircraftUpdate = _airCraftService.GetOneByRAB(rab);
-        //    if (aircraftUpdate == null)
-        //        return NotFound();
-
-        //    _airCraftService.Update(aircraftUpdate, rab);
-
-        //    return NoContent();
-        //}
         //-----------------------------------------------------------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------------------
 
@@ -110,7 +96,19 @@ namespace AirCraftAPI.Controllers
         }
         //-----------------------------------------------------------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------------------
+        [HttpDelete("RemoveAirCraft/{rab}")]
+        public ActionResult<AirCraft> DeleteAirCraft(string rab)
+        {
+            var airCraft = _airCraftService.GetOneByRAB(rab);
+            if (airCraft == null)
+                return NotFound();
 
+            _deletedAirCraftService.Insert(airCraft);
+
+            _airCraftService.Remove(airCraft);
+
+            return NoContent();
+        }
 
 
 

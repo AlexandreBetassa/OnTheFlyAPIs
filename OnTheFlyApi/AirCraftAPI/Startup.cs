@@ -34,6 +34,7 @@ namespace AirCraftAPI
             services.Configure<DatabaseSettings.DatabaseSettings>(Configuration.GetSection(nameof(DatabaseSettings)));
             services.AddSingleton<IDatabaseSettings>(sp => sp.GetRequiredService<IOptions<DatabaseSettings.DatabaseSettings>>().Value);
             services.AddSingleton<AirCraftService>();
+            services.AddSingleton<DeletedAirCraftService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AirCraftAPI", Version = "v1" });
