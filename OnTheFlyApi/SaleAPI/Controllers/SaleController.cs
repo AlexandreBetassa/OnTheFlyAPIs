@@ -19,20 +19,22 @@ namespace SaleAPI.Controllers
         [HttpGet]
         public ActionResult<List<Sale>> Get() => _saleService.Get();
 
-        [HttpGet("GetByDate/{date:length(10)}", Name = "GetByDate")]
+        [HttpGet("GetByDate/{date:length(10)}")]
         public ActionResult<Sale> Get(DateTime date)
         {
             var sale = _saleService.Get().Where(saleIn => saleIn.Flight.Departure == date);
             return Ok(sale);
         }
         [HttpPost]
-        public ActionResult<Sale> Create(Sale sale)
+        public ActionResult<Sale> Create(Sale sale, string cnpj)
         {
             _saleService.Create(sale);
+            Company c = new Company();
+            var p = CreatedAtRoute("localhost: 44355", c);
             return Ok(sale);
         }
 
-        [HttpPut("{date:length(10)}{aircraft:length(6)}")]
+        [HttpPut("{date:length(10)}")]
         public ActionResult<Sale> Put(DateTime date, string aircraft)
         {
             _saleService.Get().Where(saleIn => saleIn.Flight.Departure == date && saleIn.Flight.Plane.RAB == aircraft);
