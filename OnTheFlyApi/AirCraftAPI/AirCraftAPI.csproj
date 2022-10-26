@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\APIViaCep\APIViaCep.csproj" />
     <ProjectReference Include="..\Models\Models.csproj" />
   </ItemGroup>
 
