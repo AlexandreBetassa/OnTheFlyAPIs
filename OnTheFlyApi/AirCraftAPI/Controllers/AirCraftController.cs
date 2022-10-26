@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Models;
+using System;
 
 namespace AirCraftAPI.Controllers
 {
@@ -62,6 +63,49 @@ namespace AirCraftAPI.Controllers
         //-----------------------------------------------------------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------------------
 
+        //[HttpPut] //Editar generico
+        //public ActionResult<AirCraft> Update(AirCraft aircraftUpdate, string rab)
+        //{
+        //    var aircraftUpdate = _airCraftService.GetOneByRAB(rab);
+        //    if (aircraftUpdate == null)
+        //        return NotFound();
+
+        //    _airCraftService.Update(aircraftUpdate, rab);
+
+        //    return NoContent();
+        //}
+        //-----------------------------------------------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------------------------------------------
+
+        [HttpPut("ModifyAirCraftCapacity/{rab},{newCapacity}")]
+        public ActionResult<AirCraft> UpdateCapacity(string rab, int newCapacity)
+        {
+            var aircraftUpdate = _airCraftService.GetOneByRAB(rab);
+            if (aircraftUpdate == null)
+                return NotFound();
+
+            aircraftUpdate.Capacity = newCapacity;
+
+            _airCraftService.Update(aircraftUpdate, rab);
+
+            return NoContent();
+        }
+        //-----------------------------------------------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------------------------------------------
+
+        [HttpPut("ModifyAirCraftDtLastFlight/{rab},{updateLastFlight}")]
+        public ActionResult<AirCraft> UpdateCapacity(string rab, DateTime updateLastFlight)
+        {
+            var aircraftUpdate = _airCraftService.GetOneByRAB(rab);
+            if (aircraftUpdate == null)
+                return NotFound();
+
+            aircraftUpdate.DtLastFlight = updateLastFlight;
+
+            _airCraftService.Update(aircraftUpdate, rab);
+
+            return NoContent();
+        }
 
 
 
