@@ -12,7 +12,7 @@ namespace APIViaCep
     public class ViaCep
     {
         public ViaCep() { }
-        public async Task<Address> GetAdress(string cep)
+        public static async Task<Address> GetAdress(string cep)
         {
             Address adress;
             using (HttpClient _adressClient = new HttpClient())

@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using APIViaCep;
+using Microsoft.AspNetCore.Mvc;
 using Models;
 using PassengerAPI.Services;
 using System.Collections.Generic;
+using static MongoDB.Bson.Serialization.Serializers.SerializerHelper;
+using System.Runtime.ConstrainedExecution;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -26,7 +29,7 @@ namespace PassengerAPI.Controllers
         }
 
         // GET api/<PassengerController>/5
-        [HttpGet("{cpf}")]
+        [HttpGet("GetByCPF/{cpf}")]
         public ActionResult<Passenger> Get(string cpf)
         {
             var passenger = _passengerService.Get(cpf);
@@ -38,20 +41,24 @@ namespace PassengerAPI.Controllers
         [HttpPost]
         public ActionResult<Passenger> Post(Passenger passenger)
         {
-            _passengerService.Create(passenger);
-            return passenger;
+            var address = ViaCep.GetAdress(passenger.Address.ZipCode).Result;
+            if (address == null) return NotFound();
+            address.Number = passenger.Address.Number;
+            address.Complement = passenger.Address.Complement;
+            passenger.Address = address;
+            return _passengerService.Create(passenger);
         }
 
         // PUT api/<PassengerController>/5
         [HttpPut]
-        public ActionResult<Passenger> Put(Passenger passengerIn, string cpf)
-        {
-            var passenger = _passengerService.Get(cpf);
-            if (passenger == null) return NotFound();
-            passengerIn.CPF = cpf;
-            _passengerService.Update(cpf, passengerIn);
-            return NoContent();
-        }
+        //public ActionResult<Passenger> Put(Passenger passengerIn, string cpf)
+        //{
+        //    var passenger = _passengerService.Get(cpf);
+        //    if (passenger == null) return NotFound();
+        //    passengerIn.CPF = cpf;
+        //    _passengerService.Replace(cpf, passengerIn);
+        //    return NoContent();
+        //}
 
         // DELETE api/<PassengerController>/5
         [HttpDelete("{cpf}")]
