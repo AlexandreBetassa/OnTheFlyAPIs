@@ -43,7 +43,7 @@ namespace FlightsAPI.Controllers
             return Ok(flight);
         }
 
-
+        //verificar a existencia de companhia, aeronave e aeroporto
         //não pode cadastrar voos para uma companhia que esteja bloqueada (fazer tal verificação)
         [HttpPost]
         public ActionResult<Flight> Create(Flight flight)
