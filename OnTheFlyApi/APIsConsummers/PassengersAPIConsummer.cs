@@ -6,11 +6,13 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace APIsConsummers
 {
     public class PassengersAPIConsummer
     {
+        //exemplo de get
         public static async Task<Passenger> GetPassenger(string cpf)
         {
             using (HttpClient _passengerClient = new HttpClient())
@@ -22,24 +24,17 @@ namespace APIsConsummers
             }
         }
 
-        public static async Task<Passenger> PostPassenger(Passenger passenger)
+        //exemplo de post
+        public static async Task<bool> PostPassenger(Passenger passenger, DateTime data)
         {
             using (HttpClient _passengerClient = new HttpClient())
             {
-                HttpContent http = new StringContent(passenger.ToString());
-                http.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                HttpResponseMessage response = await _passengerClient.PostAsync($"https://localhost:44355/api/Passenger/Create", http);
+                string jsonString = JsonConvert.SerializeObject(data);
+                HttpContent http = new StringContent(jsonString, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await _passengerClient.PostAsync($"https://localhost:44355/api/Passenger/Create/{data}", http);
 
-                var passengerJson = await response.Content.ReadAsStringAsync();
-                return null;
-
-                /*            
-                string requestUrl = endpointUri + "/Files/";
-                var jsonString = JsonConvert.SerializeObject(new { name = "newFile.txt", type = "File" }); 
-
-                HttpContent httpContent = new StringContent(jsonString);
-                httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue ("application/json");  
-                */
+                if (response.IsSuccessStatusCode) return true;
+                return false;
             }
         }
     }

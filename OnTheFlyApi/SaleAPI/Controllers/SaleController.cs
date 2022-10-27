@@ -30,6 +30,9 @@ namespace SaleAPI.Controllers
         [HttpPost("CreateSale")]
         public ActionResult<AirCraft> Create(Sale sale)
         {
+            //Passenger p = new Passenger { CPF="000000", DtBirth = DateTime.Now, DtRegister = DateTime.Now, Gender = "M", Name = "dasdasda",Phone="6546546546", Status = true};
+            //var axu = PassengersAPIConsummer.PostPassenger(p);
+            //return Ok();
             _saleService.Create(sale);
             return CreatedAtRoute("GetSale", new { date = sale.Flight.Departure.ToString() }, sale);
         }

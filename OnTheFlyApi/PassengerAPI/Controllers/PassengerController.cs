@@ -37,26 +37,28 @@ namespace PassengerAPI.Controllers
 
         // POST api/<PassengerController>
         [HttpPost("Create")]
-        public ActionResult<Passenger> Post(string cpf, string name, string gender, string phone, DateTime dtBirth, string zipCode, int number, string complement)
+        public ActionResult<Passenger> Post(Passenger passenger)
         {
-            var passenger = _passengerService.Get(cpf);
+            //var passenger = _passengerService.Get(cpf);
             //if (passenger != null) return Unauthorized();
 
-            passenger = new()
-            {
-                CPF = cpf,
-                Name = name,
-                Gender = gender,
-                Phone = phone,
-                DtBirth = dtBirth,
-                DtRegister = DateTime.Now
-            };
-            Address address = new(); /*= APIsConsu.GetAdress(zipCode).Result;*/
-            if (address == null) return NotFound();
-            address.Number = number;
-            address.Complement = complement;
-            passenger.Address = address;
-            return _passengerService.Create(passenger);
+            //passenger = new()
+            //{
+            //    CPF = cpf,
+            //    Name = name,
+            //    Gender = gender,
+            //    Phone = phone,
+            //    DtBirth = dtBirth,
+            //    DtRegister = DateTime.Now
+            //};
+
+            //Address address = new(); /*= APIsConsu.GetAdress(zipCode).Result;*/
+            //if (address == null) return NotFound();
+            //address.Number = number;
+            //address.Complement = complement;
+            //passenger.Address = address;
+            _passengerService.Create(passenger);
+            return Ok();
         }
 
         // PUT api/<PassengerController>/5
