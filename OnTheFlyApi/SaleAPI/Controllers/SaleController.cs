@@ -20,10 +20,11 @@ namespace SaleAPI.Controllers
         [HttpGet]
         public ActionResult<List<Sale>> Get() => _saleService.Get();
 
-        [HttpGet("GetByDate/{date:length(10)}", Name = "GetSale")]
+        [HttpGet("GetSale/{date}", Name = "GetSale")]
         public ActionResult<Sale> Get(DateTime date)
         {
             var sale = _saleService.Get().Where(saleIn => saleIn.Flight.Departure == date);
+            if (sale == null) return NotFound("Venda não localizada");
             return Ok(sale);
         }
 
@@ -31,7 +32,7 @@ namespace SaleAPI.Controllers
         public ActionResult<AirCraft> Create(Sale sale)
         {
             _saleService.Create(sale);
-            return CreatedAtRoute("GetSale", sale.Flight.Departure);
+            return CreatedAtRoute("GetSale", new { date = sale.Flight.Departure.ToString() }, sale);
         }
 
         [HttpPut("{date:length(10)}")]

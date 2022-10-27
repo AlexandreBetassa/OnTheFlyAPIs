@@ -1,5 +1,4 @@
-﻿using APIViaCep;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Models;
 using PassengerAPI.Services;
 using System.Collections.Generic;
@@ -52,7 +51,7 @@ namespace PassengerAPI.Controllers
                 DtBirth = dtBirth,
                 DtRegister = DateTime.Now
             };
-            var address = ViaCep.GetAdress(zipCode).Result;
+            Address address = new(); /*= APIsConsu.GetAdress(zipCode).Result;*/
             if (address == null) return NotFound();
             address.Number = number;
             address.Complement = complement;
