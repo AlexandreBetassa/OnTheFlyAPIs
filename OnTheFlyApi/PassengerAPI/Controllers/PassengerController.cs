@@ -1,4 +1,4 @@
-﻿using APIViaCep;
+﻿
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using PassengerAPI.Services;
@@ -36,29 +36,6 @@ namespace PassengerAPI.Controllers
             return passenger;
         }
 
-        // POST api/<PassengerController>
-        [HttpPost("Create")]
-        public ActionResult<Passenger> Post(string cpf, string name, string gender, string phone, DateTime dtBirth, string zipCode, int number, string complement)
-        {
-            var passenger = _passengerService.Get(cpf);
-            if (passenger != null) return Unauthorized();
-
-            passenger = new()
-            {
-                CPF = cpf,
-                Name = name,
-                Gender = gender,
-                Phone = phone,
-                DtBirth = dtBirth,
-                DtRegister = DateTime.Now
-            };
-            var address = ViaCep.GetAdress(zipCode).Result;
-            if (address == null) return NotFound();
-            address.Number = number;
-            address.Complement = complement;
-            passenger.Address = address;
-            return _passengerService.Create(passenger);
-        }
 
         // PUT api/<PassengerController>/5
         //[HttpPut]

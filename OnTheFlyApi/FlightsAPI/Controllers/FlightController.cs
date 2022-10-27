@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Models;
 using System;
 using System.Collections.Generic;
+using APIsConsummers;
 
 namespace FlightsAPI.Controllers
 {
