@@ -15,7 +15,7 @@ namespace FlightsAPI.Controllers
         private readonly FlightServices _flightService;
 
         public FlightController(FlightServices flightService)
-        {
+        { 
             _flightService = flightService;
         }
 

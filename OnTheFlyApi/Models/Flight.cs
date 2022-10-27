@@ -21,6 +21,7 @@ namespace Models
         public AirCraft Plane { get; set; }
 
         [Required]
+        [StringLength(3, ErrorMessage = "Tamanho limite do campo Sales é de 3 caracteres")]
         public int Sales { get; set; }
 
         [Required]
