@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AirCraftAPIConsummer.cs" />
     <Compile Include="FlightAPIConsummer.cs" />
     <Compile Include="CompanyAPIConsummer.cs" />
     <Compile Include="PassengersAPIConsummer.cs" />

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class AirCraft
+    public class AirCraft 
     {
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
@@ -16,12 +16,12 @@ namespace Models
 
 
         [Required]
-        [StringLength(6, ErrorMessage = "Invalid RAB Code. Maximum 5 Characteres")] /// perguntar se o ID(RAB) da Aeronave vai ser 5 char (Sem formatação) ou 6 char (Com Formatação -)
+        [StringLength(6, ErrorMessage = "Invalid RAB Code. Maximum restriction of 6 characters.")] /// perguntar se o ID(RAB) da Aeronave vai ser 5 char (Sem formatação) ou 6 char (Com Formatação -)
         public string RAB { get; set; }
 
 
         [Required]
-        [Range(1, 999, ErrorMessage = "Capacidade da Aeronave precisa constar um valor numerico Inteiro entre 1 a 999.")]
+        [Range(1, 999, ErrorMessage = "Aircraft Capacity must have a numeric value Integer between 1 to 999.")]
         public int Capacity { get; set; }
 
 
