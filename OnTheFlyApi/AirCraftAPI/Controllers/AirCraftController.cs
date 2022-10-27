@@ -81,7 +81,7 @@ namespace AirCraftAPI.Controllers
 
 
         [HttpPut("ModifyAirCraftDtLastFlight/{rab}/{updateLastFlight}")]
-        public ActionResult<AirCraft> UpdateCapacity(string rab, DateTime updateLastFlight)
+        public ActionResult<AirCraft> UpdateLastFlight(string rab, DateTime updateLastFlight)
         {
             var aircraftUpdate = _airCraftService.GetOneByRAB(rab);
             if (aircraftUpdate == null)
