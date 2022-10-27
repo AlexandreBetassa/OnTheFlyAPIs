@@ -16,7 +16,6 @@ namespace SaleAPI.Controllers
         private readonly SaleService _saleService;
         public SaleController(SaleService saleService) => _saleService = saleService;
 
-
         [HttpGet]
         public ActionResult<List<Sale>> Get() => _saleService.Get();
 
@@ -35,12 +34,14 @@ namespace SaleAPI.Controllers
             return CreatedAtRoute("GetSale", new { date = sale.Flight.Departure.ToString() }, sale);
         }
 
-        [HttpPut("{date:length(10)}")]
-        public ActionResult<Sale> Put(DateTime date, string aircraft)
+        [HttpPut("{date:length(10)},{status}")]
+        public ActionResult<Sale> Put(DateTime date, string aircraft, bool status)
         {
-            _saleService.Get().Where(saleIn => saleIn.Flight.Departure == date && saleIn.Flight.Plane.RAB == aircraft);
-            return Ok();
+            var sale = _saleService.Get().Where(saleIn => saleIn.Flight.Departure == date && saleIn.Flight.Plane.RAB == aircraft).First();
+            if (sale == null) return BadRequest("Impossível alterar. Venda não localizada");
+            sale.Reserved = status;
+            _saleService.Put(sale);
+            return NoContent();
         }
-
     }
 }
