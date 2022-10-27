@@ -53,18 +53,20 @@ namespace FlightsAPI.Controllers
             return Ok(flight);
         }
 
-        //[HttpPut]
-        //public ActionResult<Flight> Update(Flight flightIn, DateTime date)
-        //{
-        //    var flight = _flightService.GetByDate(date);
+        [HttpPut("ModifyFlightSales/{fullDate},{rabPlane},{destiny},{newSales}", Name = "ModifyFlightSales")]
+        public ActionResult<Flight> UpdateSales(DateTime fullDate, string rabPlane, string destiny, int newSales)
+        {
+            var flightUpdate = _flightService.GetOne(fullDate, rabPlane, destiny);
 
-        //    if (flight == null)
-        //        return NotFound();
+            if (flightUpdate == null)
+                return NotFound();
 
-        //    _flightService.Update(date, flightIn);
+            flightUpdate.Sales = newSales;
 
-        //    return NoContent();
-        //}
+            _flightService.UpdateSales(fullDate, rabPlane, destiny, flightUpdate);
+
+            return NoContent();
+        }
 
         [HttpPut("ModifyFlightStatus/{fullDate},{rabPlane},{destiny},{newStatus}", Name = "ModifyFlightStatus")]
         public ActionResult<Flight> UpdateStatus(DateTime fullDate, string rabPlane, string destiny, bool newStatus)
@@ -75,7 +77,7 @@ namespace FlightsAPI.Controllers
 
             flightUpdate.Status = newStatus;
 
-            _flightService.Update(fullDate, rabPlane, destiny, flightUpdate);
+            _flightService.UpdateStatus(fullDate, rabPlane, destiny, flightUpdate);
 
             return NoContent();
         }
