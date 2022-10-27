@@ -40,7 +40,7 @@ namespace PassengerAPI.Controllers
         public ActionResult<Passenger> Post(string cpf, string name, string gender, string phone, DateTime dtBirth, string zipCode, int number, string complement)
         {
             var passenger = _passengerService.Get(cpf);
-            if (passenger != null) return Unauthorized();
+            //if (passenger != null) return Unauthorized();
 
             passenger = new()
             {

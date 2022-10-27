@@ -21,5 +21,26 @@ namespace APIsConsummers
                 else return null;
             }
         }
+
+        public static async Task<Passenger> PostPassenger(Passenger passenger)
+        {
+            using (HttpClient _passengerClient = new HttpClient())
+            {
+                HttpContent http = new StringContent(passenger.ToString());
+                http.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                HttpResponseMessage response = await _passengerClient.PostAsync($"https://localhost:44355/api/Passenger/Create", http);
+
+                var passengerJson = await response.Content.ReadAsStringAsync();
+                return null;
+
+                /*            
+                string requestUrl = endpointUri + "/Files/";
+                var jsonString = JsonConvert.SerializeObject(new { name = "newFile.txt", type = "File" }); 
+
+                HttpContent httpContent = new StringContent(jsonString);
+                httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue ("application/json");  
+                */
+            }
+        }
     }
 }
