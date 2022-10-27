@@ -32,7 +32,7 @@ namespace FlightsAPI.Controllers
             return Ok(flight); 
         }
 
-        [HttpGet("GetOne/{fullDate},{rabPlane},{destiny}", Name = "GetOne")]
+        [HttpGet("GetOne/{fullDate}/{rabPlane}/{destiny}", Name = "GetOne")]
         public ActionResult<Flight> Get(DateTime fullDate, string rabPlane, string destiny)
         {
             var flight = _flightService.GetOne(fullDate, rabPlane, destiny);
@@ -53,7 +53,7 @@ namespace FlightsAPI.Controllers
             return Ok(flight);
         }
 
-        [HttpPut("ModifyFlightSales/{fullDate},{rabPlane},{destiny},{newSales}", Name = "ModifyFlightSales")]
+        [HttpPut("ModifyFlightSales/{fullDate}/{rabPlane}/{destiny}/{newSales}", Name = "ModifyFlightSales")]
         public ActionResult<Flight> UpdateSales(DateTime fullDate, string rabPlane, string destiny, int newSales)
         {
             var flightUpdate = _flightService.GetOne(fullDate, rabPlane, destiny);
@@ -68,7 +68,7 @@ namespace FlightsAPI.Controllers
             return NoContent();
         }
 
-        [HttpPut("ModifyFlightStatus/{fullDate},{rabPlane},{destiny},{newStatus}", Name = "ModifyFlightStatus")]
+        [HttpPut("ModifyFlightStatus/{fullDate}/{rabPlane}/{destiny}/{newStatus}", Name = "ModifyFlightStatus")]
         public ActionResult<Flight> UpdateStatus(DateTime fullDate, string rabPlane, string destiny, bool newStatus)
         {
             var flightUpdate = _flightService.GetOne(fullDate, rabPlane, destiny);
