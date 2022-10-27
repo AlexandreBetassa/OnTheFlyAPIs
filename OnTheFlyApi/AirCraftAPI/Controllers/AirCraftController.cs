@@ -65,7 +65,7 @@ namespace AirCraftAPI.Controllers
         //-----------------------------------------------------------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------------------
 
-        [HttpPut("ModifyAirCraftCapacity/{rab},{newCapacity}")]
+        [HttpPut("ModifyAirCraftCapacity/{rab}/{newCapacity}")]
         public ActionResult<AirCraft> UpdateCapacity(string rab, int newCapacity)
         {
             var aircraftUpdate = _airCraftService.GetOneByRAB(rab);
@@ -80,7 +80,7 @@ namespace AirCraftAPI.Controllers
         }
 
 
-        [HttpPut("ModifyAirCraftDtLastFlight/{rab},{updateLastFlight}")]
+        [HttpPut("ModifyAirCraftDtLastFlight/{rab}/{updateLastFlight}")]
         public ActionResult<AirCraft> UpdateCapacity(string rab, DateTime updateLastFlight)
         {
             var aircraftUpdate = _airCraftService.GetOneByRAB(rab);
