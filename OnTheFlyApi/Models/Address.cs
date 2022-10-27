@@ -22,6 +22,7 @@ namespace Models
         [Required]
         public int Number { get; set; }
 
+        [MaxLength(10)]
         [JsonProperty("complemento")]
         public string Complement { get; set; }
 

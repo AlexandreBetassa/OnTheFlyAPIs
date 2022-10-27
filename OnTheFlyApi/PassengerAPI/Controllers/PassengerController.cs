@@ -4,6 +4,7 @@ using Models;
 using PassengerAPI.Services;
 using System.Collections.Generic;
 using System;
+using APIsConsummers;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,10 +15,12 @@ namespace PassengerAPI.Controllers
     public class PassengerController : ControllerBase
     {
         private readonly PassengerService _passengerService;
+        private readonly RestrictedPassengerService _restrictedPassengerService;
 
-        public PassengerController(PassengerService passengerService)
+        public PassengerController(PassengerService passengerService, RestrictedPassengerService restrictedPassengerService)
         {
             _passengerService = passengerService;
+            _restrictedPassengerService = restrictedPassengerService;
         }
 
         // GET: api/<PassengerController>
@@ -46,13 +49,17 @@ namespace PassengerAPI.Controllers
             passenger = new()
             {
                 CPF = cpf,
-                Name = name,
-                Gender = gender,
+                Name = name.ToUpper(),
+                Gender = gender.ToUpper(),
                 Phone = phone,
                 DtBirth = dtBirth,
-                DtRegister = DateTime.Now
+                DtRegister = DateTime.Now,
+                Status = false
             };
-            var address = ViaCep.GetAdress(zipCode).Result;
+
+            if (_restrictedPassengerService.Get(cpf) != null) passenger.Status = true;
+
+            var address = ViaCepAPIConsummer.GetAdress(zipCode).Result;
             if (address == null) return NotFound();
             address.Number = number;
             address.Complement = complement;

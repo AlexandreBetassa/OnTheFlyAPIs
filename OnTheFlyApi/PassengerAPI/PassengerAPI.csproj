@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>cbf717a1-f545-4ce7-9b7a-42b67113d240</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -10,8 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\APIsConsummers\APIsConsummers.csproj" />
     <ProjectReference Include="..\APIViaCep\APIViaCep.csproj" />
     <ProjectReference Include="..\Models\Models.csproj" />
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

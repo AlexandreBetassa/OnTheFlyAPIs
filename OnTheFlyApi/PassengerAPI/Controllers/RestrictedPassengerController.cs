@@ -13,10 +13,12 @@ namespace PassengerAPI.Controllers
     public class RestrictedPassengerController : ControllerBase
     {
         private readonly RestrictedPassengerService _restrictedPassengerService;
+        private readonly PassengerService _passengerService;
 
-        public RestrictedPassengerController(RestrictedPassengerService restrictedPassengerService)
+        public RestrictedPassengerController(RestrictedPassengerService restrictedPassengerService, PassengerService passengerService)
         {
             _restrictedPassengerService = restrictedPassengerService;
+            _passengerService = passengerService;
         }
 
         // GET: api/<RestrictedPassengerController>
@@ -42,7 +44,12 @@ namespace PassengerAPI.Controllers
             var restrictedPassenger = _restrictedPassengerService.Get(cpf);
             if (restrictedPassenger != null) return Unauthorized();
 
-            restrictedPassenger = new() { CPF = cpf, };
+            restrictedPassenger = new() { CPF = cpf };
+
+            var passenger = _passengerService.Get(cpf);
+            if (passenger != null) passenger.Status = true;
+            _passengerService.Replace(passenger.CPF, passenger);
+
             return _restrictedPassengerService.Create(restrictedPassenger);
         }
 

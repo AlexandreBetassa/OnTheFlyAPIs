@@ -29,7 +29,7 @@ namespace PassengerAPI.Services
         public Passenger Replace(string cpf, Passenger passengerIn)
         {
             var passenger = Get(cpf);
-            if (passenger != null) return null;
+            if (passenger == null) return null;
 
             _passengers.ReplaceOne(passenger => passenger.CPF == cpf, passengerIn);
             return passengerIn;
