@@ -38,7 +38,7 @@ namespace Models
         public string Gender { get; set; }
         [StringLength(14)]
         public string Phone { get; set; }
-        [Required]
+        //[Required]
         public DateTime DtBirth { get; set; }
         [Required]
         public AddressDTO Address { get; set; }

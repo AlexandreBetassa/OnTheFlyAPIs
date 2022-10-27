@@ -16,30 +16,35 @@ namespace SaleAPI.Controllers
         private readonly SaleService _saleService;
         public SaleController(SaleService saleService) => _saleService = saleService;
 
-
         [HttpGet]
         public ActionResult<List<Sale>> Get() => _saleService.Get();
 
-        [HttpGet("GetByDate/{date:length(10)}", Name = "GetSale")]
+        [HttpGet("GetSale/{date}", Name = "GetSale")]
         public ActionResult<Sale> Get(DateTime date)
         {
-            var sale = _saleService.Get().Where(saleIn => saleIn.Flight.Departure == date);
+            var sale = _saleService.Get().Where(saleIn => saleIn.Flight.Departure == date).FirstOrDefault();
+            if (sale == null) return NotFound("Venda não localizada");
             return Ok(sale);
         }
 
         [HttpPost("CreateSale")]
         public ActionResult<AirCraft> Create(Sale sale)
         {
+            //Passenger p = new Passenger { CPF="000000", DtBirth = DateTime.Now, DtRegister = DateTime.Now, Gender = "M", Name = "dasdasda",Phone="6546546546", Status = true};
+            //var axu = PassengersAPIConsummer.PostPassenger(p);
+            //return Ok();
             _saleService.Create(sale);
-            return CreatedAtRoute("GetSale", sale.Flight.Departure);
+            return CreatedAtRoute("GetSale", new { date = sale.Flight.Departure.ToString() }, sale);
         }
 
-        [HttpPut("{date:length(10)}")]
-        public ActionResult<Sale> Put(DateTime date, string aircraft)
+        [HttpPut("{date},{status},{aircraft}")]
+        public ActionResult<Sale> Put(DateTime date, string aircraft, bool status)
         {
-            _saleService.Get().Where(saleIn => saleIn.Flight.Departure == date && saleIn.Flight.Plane.RAB == aircraft);
-            return Ok();
+            var sale = _saleService.Get().Where(saleIn => saleIn.Flight.Departure == date && saleIn.Flight.Plane.RAB == aircraft).FirstOrDefault();
+            if (sale == null) return BadRequest("Impossível alterar. Venda não localizada");
+            sale.Reserved = status;
+            _saleService.Put(sale);
+            return NoContent();
         }
-
     }
 }

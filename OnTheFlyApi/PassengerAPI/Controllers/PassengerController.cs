@@ -1,5 +1,4 @@
-﻿using APIViaCep;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Models;
 using PassengerAPI.Services;
 using System.Collections.Generic;
