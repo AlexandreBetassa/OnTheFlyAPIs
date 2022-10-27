@@ -11,7 +11,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\APIsConsummers\APIsConsummers.csproj" />
-    <ProjectReference Include="..\APIViaCep\APIViaCep.csproj" />
     <ProjectReference Include="..\Models\Models.csproj" />
   </ItemGroup>
 
