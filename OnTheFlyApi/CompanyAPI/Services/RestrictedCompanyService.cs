@@ -8,6 +8,7 @@ namespace CompanyAPI.Services
     public class RestrictedCompanyService
     {
         private readonly IMongoCollection<RestrictedCompany> _restritedCompany;
+        
 
         public RestrictedCompanyService(IDatabaseSettings settings)
         {
