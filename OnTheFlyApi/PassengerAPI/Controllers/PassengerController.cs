@@ -41,29 +41,35 @@ namespace PassengerAPI.Controllers
 
         // POST api/<PassengerController>
         [HttpPost("Create")]
-        public ActionResult<Passenger> Post(string cpf, string name, string gender, string phone, DateTime dtBirth, string zipCode, int number, string complement)
+        public ActionResult<Passenger> Post(PassengerDTO p)
         {
-            var passenger = _passengerService.Get(cpf);
-            if (passenger != null) return Unauthorized();
+            if (_passengerService.Get(p.CPF) != null) return Unauthorized();
 
-            passenger = new()
+            var address = ViaCepAPIConsummer.GetAdress(p.Address.ZipCode).Result;
+            if (address == null) return NotFound();
+
+            Passenger passenger = new()
             {
-                CPF = cpf,
-                Name = name.ToUpper(),
-                Gender = gender.ToUpper(),
-                Phone = phone,
-                DtBirth = dtBirth,
+                CPF = p.CPF,
+                Name = p.Name.ToUpper(),
+                Gender = p.Gender.ToUpper(),
+                Phone = p.Phone,
+                DtBirth = p.DtBirth,
                 DtRegister = DateTime.Now,
-                Status = false
+                Status = false,
+                Address = new Address
+                {
+                    ZipCode = address.ZipCode,
+                    Street = address.Street,
+                    Number = p.Address.Number,
+                    Complement = p.Address.Complement.ToUpper(),
+                    City = address.City.ToUpper(),
+                    State = address.State.ToUpper()
+                }
             };
 
-            if (_restrictedPassengerService.Get(cpf) != null) passenger.Status = true;
+            if (_restrictedPassengerService.Get(p.CPF) != null) passenger.Status = true;
 
-            var address = ViaCepAPIConsummer.GetAdress(zipCode).Result;
-            if (address == null) return NotFound();
-            address.Number = number;
-            address.Complement = complement;
-            passenger.Address = address;
             return _passengerService.Create(passenger);
         }
 

@@ -13,8 +13,13 @@ namespace Models
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
         public string Id { get; set; }
-        [Required]
-        [MaxLength(14)]
         public string CPF { get; set; }
     }
+    public class RestrictedPassengerDTO
+    {
+        [Required]
+        [StringLength(14)]
+        public string CPF { get; set; }
+    }
+
 }

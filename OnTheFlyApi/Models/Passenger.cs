@@ -13,25 +13,35 @@ namespace Models
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
         public string Id { get; set; }
+        public string CPF { get; set; }
+        public string Name { get; set; }
+        public string Gender { get; set; }
+        public string Phone { get; set; }
+        public DateTime DtBirth { get; set; }
+        public DateTime DtRegister { get; set; }
+        public bool Status { get; set; }
+        public Address Address { get; set; }
+
+    }
+
+    public class PassengerDTO
+    {
+
         [Required]
-        [MaxLength(14)]
+        [StringLength(14)]
         public string CPF { get; set; }
         [Required]
-        [MaxLength(30)]
+        [StringLength(30)]
         public string Name { get; set; }
         [Required]
-        [MaxLength(1)]
+        [StringLength(1)]
         public string Gender { get; set; }
-        [MaxLength(14)]
+        [StringLength(14)]
         public string Phone { get; set; }
         [Required]
         public DateTime DtBirth { get; set; }
         [Required]
-        public DateTime DtRegister { get; set; }
-        [Required]
-        public bool Status { get; set; }
-        [Required]
-        public Address Address { get; set; }
+        public AddressDTO Address { get; set; }
 
     }
 }

@@ -39,19 +39,20 @@ namespace PassengerAPI.Controllers
 
         // POST api/<RestrictedPassengerController>
         [HttpPost("Create")]
-        public ActionResult<RestrictedPassenger> Post(string cpf)
+        public ActionResult<RestrictedPassenger> Post(RestrictedPassengerDTO r)
         {
-            var restrictedPassenger = _restrictedPassengerService.Get(cpf);
-            if (restrictedPassenger != null) return Unauthorized();
+            if (_restrictedPassengerService.Get(r.CPF) != null) return Unauthorized();
 
-            restrictedPassenger = new() { CPF = cpf };
-
-            var passenger = _passengerService.Get(cpf);
-            if (passenger != null) passenger.Status = true;
-            _passengerService.Replace(passenger.CPF, passenger);
-
-            return _restrictedPassengerService.Create(restrictedPassenger);
+            var passenger = _passengerService.Get(r.CPF);
+            if (passenger != null)
+            {
+                passenger.Status = true;
+                _passengerService.Replace(passenger.CPF, passenger);
+            }
+            
+            return _restrictedPassengerService.Create(new() { CPF = r.CPF});
         }
+
 
 
         // DELETE api/<RestrictedPassengerController>/5

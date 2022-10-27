@@ -26,15 +26,28 @@ namespace Models
         [JsonProperty("complemento")]
         public string Complement { get; set; }
 
-        [Required]
         [MaxLength(30)]
         [JsonProperty("localidade")]
         public string City { get; set; }
 
-        [Required]
         [MaxLength(2)]
         [JsonProperty("uf")]
         public string State { get; set; }
+
+    }
+    public class AddressDTO
+    {
+        [Required]
+        [MaxLength(9)]
+        [JsonProperty("cep")]
+        public string ZipCode { get; set; }
+
+        [Required]
+        public int Number { get; set; }
+
+        [MaxLength(10)]
+        [JsonProperty("complemento")]
+        public string Complement { get; set; }
 
     }
 }
