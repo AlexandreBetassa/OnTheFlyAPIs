@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using APIViaCep;
+using APIsConsummers;
 using CompanyAPI.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +23,7 @@ namespace CompanyAPI.Controllers
         [HttpPost]
         public ActionResult<Company> Create(Company company)
         {
-            var address = ViaCep.GetAdress(company.Address.ZipCode).Result;
+            var address = ViaCepAPIConsummer.GetAdress(company.Address.ZipCode).Result;
             if (address == null) return NotFound();
 
             company.Address.Street = address.Street;
@@ -121,7 +121,7 @@ namespace CompanyAPI.Controllers
             var company = _companyService.GetOneCNPJ(cnpj);
             if (company == null) return NotFound();
 
-            _deletedcompanyService.Create(company);
+            _deletedcompanyService.Insert(company);
             _companyService.Delete(company);
 
             return NoContent();
