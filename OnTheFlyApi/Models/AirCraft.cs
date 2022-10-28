@@ -31,7 +31,7 @@ namespace Models
         public DateTime? DtLastFlight { get; set; }
 
 
-        //[Required]
+        [Required]
         public Company Company { get; set; }
 
 

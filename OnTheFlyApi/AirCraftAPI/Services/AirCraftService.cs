@@ -24,8 +24,8 @@ namespace AirCraftAPI.Services
 
         public List<AirCraft> GetAll() => _aircraft.Find<AirCraft>(aircraft => true).ToList();
 
-        //public List<AirCraft> GetAllByCnpj(string companyCnpj) => _aircraft.Find<AirCraft>(aircraft => aircraft.Company.CNPJ == companyCnpj).ToList();
-        
+        public List<AirCraft> GetAllByCnpj(string companyCnpj) => _aircraft.Find<AirCraft>(aircraft => aircraft.Company.CNPJ == companyCnpj).ToList();
+
         public AirCraft GetOneByRAB(string rab) => _aircraft.Find<AirCraft>(aircraft => aircraft.RAB == rab).FirstOrDefault();
 
 
