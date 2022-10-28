@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using APIsConsummers;
 using CompanyAPI.Services;
 using Microsoft.AspNetCore.Http;
@@ -20,30 +21,62 @@ namespace CompanyAPI.Controllers
             _companyService = companyService;
             _deletedCompanyService = deletedCompanyService;
             _restrictedCompanyService = restrictedCompanyService;
-        }   
+        }
 
         [HttpPost]
-        public ActionResult<Company> Create(Company company)
-        {
-          
-            if (_companyService.GetOneCNPJ(company.CNPJ)!=null) return BadRequest();
+        public ActionResult<Company> Create(CompanyDTO companyDTO, string rab, int capacity)
+        {            
+            if (!Utils.ValidateCnpj(companyDTO.CNPJ)) return BadRequest();
 
-            if(_restrictedCompanyService.GetOneCNPJ(company.CNPJ)!= null) company.Status = true;
-       
-            var address = ViaCepAPIConsummer.GetAdress(company.Address.ZipCode).Result;
+            if (_companyService.GetOneCNPJ(companyDTO.CNPJ) != null) return BadRequest();
+
+            var unformattedCNPJ = companyDTO.CNPJ;
+            companyDTO.CNPJ = Utils.FormatCNPJ(unformattedCNPJ);
+
+            if (companyDTO.NameOp == null) companyDTO.NameOp = companyDTO.Name;
+
+            var address = ViaCepAPIConsummer.GetAdress(companyDTO.Address.ZipCode).Result;
             if (address == null) return NotFound();
 
-            if (company.NameOp == null) company.NameOp = company.Name;
+            Company company = new()
+            {
+                CNPJ = companyDTO.CNPJ,
+                Name = companyDTO.Name.ToUpper(),
+                NameOp = companyDTO.NameOp.ToUpper(),
+                DtOpen = DateTime.Now,
+                Status = false,
+                Address = new Address
+                {
+                    ZipCode = address.ZipCode,
+                    Street = address.Street,
+                    Number = companyDTO.Address.Number,
+                    Complement = companyDTO.Address.Complement.ToUpper(),
+                    City = address.City.ToUpper(),
+                    State = address.State.ToUpper()
+                }
+            };
+           
+            if (_restrictedCompanyService.GetOneCNPJ(companyDTO.CNPJ) != null) company.Status= true;
 
-            company.Address.Street = address.Street;
-            company.Address.City = address.City;
-            company.Address.State = address.State;
-     
             _companyService.Create(company);
+
+            AirCraft airCraft = new AirCraft
+            {
+                Capacity = capacity,
+                RAB = rab,
+                DtRegistry = DateTime.Now,
+                DtLastFlight = DateTime.Now,
+                Company = company
+            };
+
+            //var savedAirCraft = AirCraftAPIConsummer.PostAirCraft(airCraft);
+
+            //if(savedAirCraft == null) company.Status = true;
 
             return Ok(company);
         }
-        
+
+        #region GETs
 
         [HttpGet]
         public ActionResult<List<Company>> GetAll() => _companyService.GetAll();
@@ -57,9 +90,15 @@ namespace CompanyAPI.Controllers
             return Ok(company);
         }
 
+        #endregion
+
+        #region PUTs
+
         [HttpPut("PutNameOP/{newNameOP}")]
         public ActionResult<Company>PutNameOp(string cnpj, string newNameOp)
         {
+
+
             var company = _companyService.GetOneCNPJ(cnpj);
             if (company == null) return NotFound();
 
@@ -131,6 +170,8 @@ namespace CompanyAPI.Controllers
 
             return Ok(company);
         }
+
+        #endregion
 
         [HttpDelete("{cnpj}")]
         public ActionResult<Company> Delete(string cnpj)

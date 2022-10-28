@@ -1,10 +1,6 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson.Serialization.Attributes;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Models
 {
@@ -28,20 +24,38 @@ namespace Models
     {
 
         [Required]
-        [StringLength(14)]
-        public string CPF { get; set; }
+        [StringLength(maximumLength: 11, MinimumLength = 11)]
+        public string UnformattedCPF { get; set; }
         [Required]
         [StringLength(30)]
         public string Name { get; set; }
         [Required]
-        [StringLength(1)]
+        [StringLength(maximumLength: 1, MinimumLength = 1)]
         public string Gender { get; set; }
-        [StringLength(14)]
-        public string Phone { get; set; }
-        //[Required]
+        [StringLength(maximumLength: 15, MinimumLength = 10)]
+        public string PhoneOpt { get; set; }
+        [Required]
         public DateTime DtBirth { get; set; }
         [Required]
         public AddressDTO Address { get; set; }
+    }
+
+    public class PassengerUpdateDTO
+    {
+
+        [Required]
+        [StringLength(maximumLength: 11, MinimumLength = 11)]
+        public string UnformattedCPF { get; set; }
+        [Required]
+        [StringLength(30)]
+        public string NewName { get; set; }
+        [Required]
+        [StringLength(maximumLength: 1, MinimumLength = 1)]
+        public string NewGender { get; set; }
+        [StringLength(maximumLength: 15, MinimumLength = 10)]
+        public string NewPhoneOpt { get; set; }
+        [Required]
+        public AddressDTO NewAddress { get; set; }
 
     }
 }

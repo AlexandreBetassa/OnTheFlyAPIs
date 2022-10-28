@@ -24,9 +24,20 @@ namespace AirCraftAPI.Services
 
         public List<AirCraft> GetAll() => _aircraft.Find<AirCraft>(aircraft => true).ToList();
 
-        public List<AirCraft> GetAllByCnpj(string companyCnpj) => _aircraft.Find<AirCraft>(aircraft => aircraft.Company.CNPJ == companyCnpj).ToList();
+        //public List<AirCraft> GetAllByCnpj(string companyCnpj) => _aircraft.Find<AirCraft>(aircraft => aircraft.Company.CNPJ == companyCnpj).ToList();
         
         public AirCraft GetOneByRAB(string rab) => _aircraft.Find<AirCraft>(aircraft => aircraft.RAB == rab).FirstOrDefault();
+
+
+        //public void Update(AirCraft aircraftUpdate) //update usando o objeto inteiro ja atualizado
+        //{
+        //    _aircraft.ReplaceOne(aircraft => aircraft.RAB == aircraftUpdate.RAB, aircraftUpdate);
+        //}
+
+        public void UpdateCapacity(AirCraft aircraftUpdate, string rab)
+        {
+            _aircraft.ReplaceOne(aircraft => aircraft.RAB == rab, aircraftUpdate);
+        }
 
         public void Update(AirCraft aircraftUpdate, string rab)
         {

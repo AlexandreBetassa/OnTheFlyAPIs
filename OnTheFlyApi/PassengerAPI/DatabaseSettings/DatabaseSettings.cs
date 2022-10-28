@@ -1,6 +1,4 @@
-﻿using static PassengerAPI.Utils.DatabaseSettings;
-
-namespace PassengerAPI.Utils
+﻿namespace PassengerAPI.Utils
 {
     public class DatabaseSettings : IDatabaseSettings
     {

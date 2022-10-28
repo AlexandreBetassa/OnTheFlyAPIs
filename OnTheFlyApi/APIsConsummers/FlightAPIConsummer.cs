@@ -22,15 +22,17 @@ namespace APIsConsummers
             }
         }
 
-        //public static async Task<Passenger> UpdateFlightSales(DateTime fullDate, string rabPlane, string destiny, int newSales)
-        //{
-        //    using (HttpClient flightClient = new HttpClient())
-        //    {
-        //        HttpResponseMessage response = await flightClient.PutAsync($"https://localhost:44348/api/Flight//api/Flight/ModifyFlightSales/{fullDate}/{rabPlane}/{destiny}/{newSales}/", content);
-        //        var flightJson = await response.Content.ReadAsStringAsync();
-        //        if (response.IsSuccessStatusCode) return JsonConvert.DeserializeObject<Passenger>(flightJson);
-        //        else return null;
-        //    }
-        //}
+        public static async Task<bool> UpdateFlightSales(Flight flight)
+        {
+            using (HttpClient _flightClient = new HttpClient())
+            {
+                string flightJson = JsonConvert.SerializeObject(flight);
+                HttpContent flightClientContent = new StringContent(flightJson, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await _flightClient.PutAsync($"https://localhost:44348/api/Flight/ModifyFlightSales", flightClientContent);
+
+                if (response.IsSuccessStatusCode) return true;
+                return false;
+            }
+        }
     }
 }

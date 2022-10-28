@@ -26,40 +26,44 @@ namespace PassengerAPI.Controllers
         [HttpGet("GetAll")]
         public ActionResult<List<Passenger>> Get()
         {
-            return _passengerService.Get();
+            return Ok(_passengerService.Get());
         }
 
         // GET api/<PassengerController>/5
-        [HttpGet("GetByCPF/{cpf}")]
-        public ActionResult<Passenger> Get(string cpf)
+        [HttpGet("GetByCPF/{unformattedCpf}")]
+        public ActionResult<Passenger> Get(string unformattedCpf)
         {
-            var passenger = _passengerService.Get(cpf);
+            var passenger = _passengerService.Get(Models.Utils.FormatCPF(unformattedCpf));
             if (passenger == null) return NotFound();
-            return passenger;
+            return Ok(passenger);
         }
 
         // POST api/<PassengerController>
         [HttpPost("Create")]
         public ActionResult<Passenger> Post(PassengerDTO p)
         {
-            if (_passengerService.Get(p.CPF) != null) return Unauthorized();
+            if (!Models.Utils.CPFIsValid(p.UnformattedCPF)) return BadRequest();
+
+            string formattedCpf = Models.Utils.FormatCPF(p.UnformattedCPF);
+
+            if (_passengerService.Get(formattedCpf) != null) return Unauthorized();
 
             var address = ViaCepAPIConsummer.GetAdress(p.Address.ZipCode).Result;
             if (address == null) return NotFound();
 
             Passenger passenger = new()
             {
-                CPF = p.CPF,
+                CPF = formattedCpf,
                 Name = p.Name.ToUpper(),
                 Gender = p.Gender.ToUpper(),
-                Phone = p.Phone,
+                Phone = p.PhoneOpt,
                 DtBirth = p.DtBirth,
                 DtRegister = DateTime.Now,
                 Status = false,
                 Address = new Address
                 {
                     ZipCode = address.ZipCode,
-                    Street = address.Street,
+                    Street = address.Street.ToUpper(),
                     Number = p.Address.Number,
                     Complement = p.Address.Complement.ToUpper(),
                     City = address.City.ToUpper(),
@@ -67,46 +71,49 @@ namespace PassengerAPI.Controllers
                 }
             };
 
-            if (_restrictedPassengerService.Get(p.CPF) != null) passenger.Status = true;
+            if (_restrictedPassengerService.Get(formattedCpf) != null) passenger.Status = true;
 
-            return _passengerService.Create(passenger);
+            return Ok(_passengerService.Create(passenger));
         }
 
         // PUT api/<PassengerController>/5
-        //[HttpPut]
-        //public ActionResult<Passenger> Put(string cpf, string newname, string gender, string phone, DateTime dtBirth, string cep, int numero, string complemento)
-        //{
-        //    Passenger passenger = new()
-        //    {
-        //        CPF = cpf,
-        //        Name = name,
-        //        Gender = gender,
-        //        Phone = phone,
-        //        DtBirth = dtBirth,
-        //        DtRegister = DateTime.Now
-        //    };
-        //    var address = ViaCep.GetAdress(zipcode).Result;
-        //    if (address == null) return NotFound();
-        //    address.Number = number;
-        //    address.Complement = complement;
-        //    passenger.Address = address;
-        //    return _passengerService.Create(passenger);
+        [HttpPut("Update")]
+        public ActionResult<Passenger> Put(PassengerUpdateDTO p)
+        {
+            if (!Models.Utils.CPFIsValid(p.UnformattedCPF)) return BadRequest();
 
-        //    var passenger = _passengerService.Get(cpf);
-        //    if (passenger == null) return NotFound();
-        //    passengerIn.CPF = cpf;
-        //    _passengerService.Replace(cpf, passengerIn);
-        //    return passenger;
-        //}
+            string formattedCpf = Models.Utils.FormatCPF(p.UnformattedCPF);
+
+            var passenger = _passengerService.Get(formattedCpf);
+            if (passenger == null) return BadRequest();
+
+            var address = ViaCepAPIConsummer.GetAdress(p.NewAddress.ZipCode).Result;
+            if (address == null) return NotFound();
+
+            passenger.Name = p.NewName.ToUpper();
+            passenger.Gender = p.NewGender.ToUpper();
+            passenger.Phone = p.NewPhoneOpt;
+            passenger.Address = new Address
+            {
+                ZipCode = address.ZipCode,
+                Street = address.Street.ToUpper(),
+                Number = p.NewAddress.Number,
+                Complement = p.NewAddress.Complement.ToUpper(),
+                City = address.City.ToUpper(),
+                State = address.State.ToUpper()
+            };
+
+            _passengerService.Replace(formattedCpf, passenger);
+            return Ok(passenger);
+        }
 
         // DELETE api/<PassengerController>/5
-        [HttpDelete("DeleteByCPF/{cpf}")]
-        public ActionResult<Passenger> Delete(string cpf)
+        [HttpDelete("DeleteByCPF/{unformattedCpf}")]
+        public ActionResult<Passenger> Delete(string unformattedCpf)
         {
-            var passenger = _passengerService.Remove(cpf);
-            if (passenger == null)
-                return NotFound();
-            return passenger;
+            var passenger = _passengerService.Remove(Models.Utils.FormatCPF(unformattedCpf));
+            if (passenger == null) return NotFound();
+            return Ok(passenger);
         }
     }
 }
