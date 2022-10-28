@@ -33,6 +33,8 @@ namespace Models
         [Required]
         [StringLength(30, ErrorMessage = "Numeros de caracter permitidos excedidos")]
         public string NameOp { get; set; }
+        public DateTime DtOpen { get; set; }
+
         public AddressDTO Address { get; set; }
     }
 }
