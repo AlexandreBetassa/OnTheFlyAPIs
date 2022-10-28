@@ -43,7 +43,7 @@ namespace CompanyAPI.Controllers
                 CNPJ = companyDTO.CNPJ,
                 Name = companyDTO.Name.ToUpper(),
                 NameOp = companyDTO.NameOp.ToUpper(),
-                DtOpen = DateTime.Now,
+                DtOpen = companyDTO.DtOpen,
                 Status = false,
                 Address = new Address
                 {
@@ -64,14 +64,14 @@ namespace CompanyAPI.Controllers
             {
                 Capacity = capacity,
                 RAB = rab,
-                DtRegistry = DateTime.Now,
+                DtRegistry = DateTime.Now, 
                 DtLastFlight = DateTime.Now,
                 Company = company
             };
 
            var savedAirCraft = AirCraftAPIConsummer.PostAirCraft(airCraft).Result;
           
-            if(savedAirCraft) company.Status = true;
+            if(!savedAirCraft) company.Status = true;
 
             return Ok(company);
         }
@@ -84,6 +84,9 @@ namespace CompanyAPI.Controllers
         [HttpGet("GetCNPJ/{cnpj}")]
         public ActionResult<Company> GetOneCNPJ(string cnpj) 
         {
+            var unformattedCNPJ = cnpj;
+            cnpj = Utils.FormatCNPJ(unformattedCNPJ);
+
             var company = _companyService.GetOneCNPJ(cnpj);
             if(company == null)return NotFound();
 
@@ -94,10 +97,12 @@ namespace CompanyAPI.Controllers
 
         #region PUTs
 
-        [HttpPut("PutNameOP/{newNameOP}")]
+        [HttpPut("PutNameOP/{newNameOp}")]
         public ActionResult<Company>PutNameOp(string cnpj, string newNameOp)
         {
 
+            var unformattedCNPJ = cnpj;
+            cnpj = Utils.FormatCNPJ(unformattedCNPJ);
 
             var company = _companyService.GetOneCNPJ(cnpj);
             if (company == null) return NotFound();
@@ -110,6 +115,10 @@ namespace CompanyAPI.Controllers
         [HttpPut("PutStatus/{newStatus}")]
         public ActionResult<Company> PutStatus(string cnpj, bool newStatus)
         {
+
+            var unformattedCNPJ = cnpj;
+            cnpj = Utils.FormatCNPJ(unformattedCNPJ);
+
             var company = _companyService.GetOneCNPJ(cnpj);
             if (company == null) return NotFound();
 
@@ -122,12 +131,17 @@ namespace CompanyAPI.Controllers
         [HttpPut("PutCEP/{newCEP}")]
         public ActionResult<Company> PutCep(string cnpj, string newCEP)
         {
+
+            var unformattedCNPJ = cnpj;
+            cnpj = Utils.FormatCNPJ(unformattedCNPJ);
+
             var company = _companyService.GetOneCNPJ(cnpj);
             if (company == null) return NotFound();
 
             var address = ViaCepAPIConsummer.GetAdress(newCEP).Result;
             if (address == null) return NotFound();
 
+            company.Address.ZipCode = address.ZipCode;
             company.Address.Street = address.Street;
             company.Address.City = address.City;
             company.Address.State = address.State;
@@ -138,6 +152,9 @@ namespace CompanyAPI.Controllers
         [HttpPut("PutStreet/{newStreet}")]
         public ActionResult<Company> PutStreet(string cnpj, string newStreet)
         {
+            var unformattedCNPJ = cnpj;
+            cnpj = Utils.FormatCNPJ(unformattedCNPJ);
+
             var company = _companyService.GetOneCNPJ(cnpj);
             if (company == null) return NotFound();
 
@@ -151,6 +168,9 @@ namespace CompanyAPI.Controllers
         [HttpPut("PutNumber/{newNumber}")]
         public ActionResult<Company> PutNumber(string cnpj, int newNumber)
         {
+            var unformattedCNPJ = cnpj;
+            cnpj = Utils.FormatCNPJ(unformattedCNPJ);
+
             var company = _companyService.GetOneCNPJ(cnpj);
             if (company == null) return NotFound();
 
@@ -162,6 +182,10 @@ namespace CompanyAPI.Controllers
         [HttpPut("PutComplement/{newComplement}")]
         public ActionResult<Company> PutComplement(string cnpj, string newComplement)
         {
+
+            var unformattedCNPJ = cnpj;
+            cnpj = Utils.FormatCNPJ(unformattedCNPJ);
+
             var company = _companyService.GetOneCNPJ(cnpj);
             if (company == null) return NotFound();
 
