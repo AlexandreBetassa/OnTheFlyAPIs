@@ -1,4 +1,6 @@
-﻿namespace Models
+﻿using System;
+
+namespace Models
 {
     public class Utils
     {
@@ -93,6 +95,19 @@
             else return false;
         }
 
+        public static string FormatCNPJ(string unformatedCNPJ) => $"{unformatedCNPJ.Substring(0, 2)}." +
+           $"{unformatedCNPJ.Substring(2, 3)}." +
+           $"{unformatedCNPJ.Substring(5, 3)}/" +
+           $"{unformatedCNPJ.Substring(8, 4)}-" +
+           $"{unformatedCNPJ.Substring(12, 2)}";
+
+        public static string UnformatCNPJ(string formattedCNPJ) => $"{formattedCNPJ.Substring(0, 2)}." +
+            $"{formattedCNPJ.Substring(2, 3)}." +
+            $"{formattedCNPJ.Substring(6, 3)}/" +
+            $"{formattedCNPJ.Substring(8, 4)}-" +
+            $"{formattedCNPJ.Substring(12, 2)}";
+
+      
         public bool ValidateRab(string rab)
         {
             string prefix = rab.Substring(0, 2);
@@ -109,16 +124,11 @@
             $"{unformatedCpf.Substring(6, 3)}-" +
             $"{unformatedCpf.Substring(9, 2)}";
 
-
-
-        //public bool ValidateCompanyTime(Company company)
-        //{
-        //    //if(DateTime.Now - company.Date < M){
-
-        //    //}
-
-
-        //    //return true;
-        //}
+        public static bool ValidateCompanyTime(Company company)
+        {
+            double time = (DateTime.Now - company.DtOpen).TotalDays;
+            if (time / 30 < 6) return false;
+            else return true;
+        }
     }
 }
