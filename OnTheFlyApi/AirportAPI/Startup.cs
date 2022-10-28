@@ -1,14 +1,21 @@
+using AirportAPI.Serivces;
+using AirportAPI.Utils;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
-using PassengerAPI.Services;
-using PassengerAPI.Utils;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace PassengerAPI
+namespace AirportAPI
 {
     public class Startup
     {
@@ -26,17 +33,15 @@ namespace PassengerAPI
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "PassengerAPI", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "AirportAPI", Version = "v1" });
             });
 
-            services.Configure<DatabaseSettings>(
-                Configuration.GetSection(nameof(DatabaseSettings)));
+            services.Configure<DataBaseSettings>(Configuration.GetSection(nameof(DataBaseSettings)));
 
-            services.AddSingleton<IDatabaseSettings>(
-                sp => sp.GetRequiredService<IOptions<DatabaseSettings>>().Value);
+            services.AddSingleton<IDataBaseSettings>(sp =>
+                sp.GetRequiredService<IOptions<DataBaseSettings>>().Value);
 
-            services.AddSingleton<PassengerService>();
-            services.AddSingleton<RestrictedPassengerService>();
+            services.AddSingleton<AirportService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,7 +51,7 @@ namespace PassengerAPI
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PassengerAPI v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AirportAPI v1"));
             }
 
             app.UseHttpsRedirection();

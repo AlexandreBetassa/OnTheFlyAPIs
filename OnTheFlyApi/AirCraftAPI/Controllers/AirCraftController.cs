@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Models;
 using System;
+using System.Net;
+using APIsConsummers;
 
 namespace AirCraftAPI.Controllers
 {
@@ -28,11 +30,11 @@ namespace AirCraftAPI.Controllers
 
         //Get All By CNPJ
         [HttpGet("GetByCnpj/{companyCnpj}")]
-        public ActionResult<List<AirCraft>> GetAllByCnpj(string companyCnpj)
-        {
-            var aircraftList = _airCraftService.GetAllByCnpj(companyCnpj);
-            return aircraftList;
-        }
+        //public ActionResult<List<AirCraft>> GetAllByCnpj(string companyCnpj)
+        //{
+        //    //var aircraftList = _airCraftService.GetAllByCnpj(companyCnpj);
+        //    //return aircraftList;
+        //}
         //-----------------------------------------------------------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------------------
 
@@ -50,22 +52,34 @@ namespace AirCraftAPI.Controllers
         //-----------------------------------------------------------------------------------------------------------------
 
         [HttpPost]
-        public ActionResult<AirCraft> CreateAirCraft(AirCraft aircraft)
+        public ActionResult<AirCraft> CreateAirCraft(AirCraft airCraftInsert)
         {
             //   ----> VALIDAÇÕES A SEREM FEITAS AQUI   <----   //
 
             // PRECISA ANTES DE FAZER A INSERCAO, VERIFICAR SE A COMPANHIA AEREA INFORMADA REALMENTE EXISTE CADASTRADA E SE
+
+            //var company = CompanyAPIConsummer.GetOneCNPJ()
+
+            // primeiro verifica se o RAB informado é valido:
+            //
+            //
+            //
+            var airCraft = _airCraftService.GetOneByRAB(airCraftInsert.RAB);
+            if (airCraft != null)
+               return StatusCode((int)HttpStatusCode.Conflict, "Could not proceed with this request. There is already an aircraft registered with this RAB code!");
+
+
             // O RAB INFORMADO JÁ NÃO ESTÁ CADASTRADO
             // ADICIONAR SYSTEMDATETIME.NOW NO CADASTRO
 
-            _airCraftService.Create(aircraft);
+            _airCraftService.Create(airCraftInsert);
 
-            return Ok(aircraft);
+            return Ok(airCraftInsert);
         }
         //-----------------------------------------------------------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------------------
 
-        [HttpPut("ModifyAirCraftCapacity/{rab},{newCapacity}")]
+        [HttpPut("ModifyAirCraftCapacity/{rab}/{newCapacity}")]
         public ActionResult<AirCraft> UpdateCapacity(string rab, int newCapacity)
         {
             var aircraftUpdate = _airCraftService.GetOneByRAB(rab);
@@ -74,14 +88,22 @@ namespace AirCraftAPI.Controllers
 
             aircraftUpdate.Capacity = newCapacity;
 
-            _airCraftService.Update(aircraftUpdate, rab);
+            _airCraftService.UpdateCapacity(aircraftUpdate, rab);
 
             return NoContent();
         }
 
 
-        [HttpPut("ModifyAirCraftDtLastFlight/{rab},{updateLastFlight}")]
-        public ActionResult<AirCraft> UpdateCapacity(string rab, DateTime updateLastFlight)
+        //[HttpPut("ModifyAirCraftDtLastFlight/{aircraftUpdate}")]   //update usando o objeto completo ja atualizado
+        //public ActionResult<AirCraft> UpdateLastFlight(AirCraft aircraftUpdate)
+        //{
+        //    _airCraftService.Update(aircraftUpdate);
+
+        //    return NoContent();
+        //}
+
+        [HttpPut("ModifyAirCraftDtLastFlight/{rab}/{updateLastFlight}")]
+        public ActionResult<AirCraft> UpdateLastFlight(string rab, DateTime updateLastFlight)
         {
             var aircraftUpdate = _airCraftService.GetOneByRAB(rab);
             if (aircraftUpdate == null)
@@ -109,10 +131,6 @@ namespace AirCraftAPI.Controllers
 
             return NoContent();
         }
-
-
-
-
 
 
 

@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Models;
 using System;
 using System.Collections.Generic;
+using APIsConsummers;
+using System.IO;
 
 namespace FlightsAPI.Controllers
 {
@@ -29,44 +31,55 @@ namespace FlightsAPI.Controllers
             if (flight == null)
                 return NotFound();
 
-            return Ok(flight); 
+            return Ok(flight);
         }
 
-        [HttpGet("GetOne/{fullDate},{rabPlane},{destiny}", Name = "GetOne")]
+        [HttpGet("GetOne/{fullDate}/{rabPlane}/{destiny}", Name = "GetOne")]
         public ActionResult<Flight> Get(DateTime fullDate, string rabPlane, string destiny)
         {
             var flight = _flightService.GetOne(fullDate, rabPlane, destiny);
-        
+
             if (flight == null)
                 return NotFound();
-        
+
             return Ok(flight);
         }
 
         //verificar a existencia de companhia, aeronave e aeroporto
         //não pode cadastrar voos para uma companhia que esteja bloqueada (fazer tal verificação)
-        [HttpPost]
-        public ActionResult<Flight> Create(Flight flight)
+        [HttpPost("{rab}/{destiny}/{dateFlight}")]
+        public ActionResult<Flight> Create(string rab, DateTime dateFlight, string destiny)
         {
+            AirCraft airCraft = AirCraftAPIConsummer.GetAirCraft(rab).Result;
+            if (airCraft == null) return NotFound();
+            if (airCraft.Company.Status == true) return BadRequest("Restricted Airline, flights can only be registered for unrestricted airlines.");
+
+            Airport airport = new Airport{Country="BR", State = "SP", IATA = destiny}; /*Consumo api pestana*/
+            if (airport == null) return NotFound();
+
+            if (dateFlight < DateTime.Now) return BadRequest("Invalid Date, the date must be a future date the current date.");
+
+            Flight flight = new() { Plane = airCraft, Departure = dateFlight, Destiny = airport, Sales = 0, Status = true };
+
             _flightService.Create(flight);
-            //return CreatedAtRoute("GetOne", new { date = flight.Departure }, flight);
+
             return Ok(flight);
         }
 
-        //[HttpPut]
-        //public ActionResult<Flight> Update(Flight flightIn, DateTime date)
-        //{
-        //    var flight = _flightService.GetByDate(date);
+        [HttpPut("ModifyFlightSales", Name = "ModifyFlightSales")]
+        public ActionResult<Flight> UpdateSalesFlight(Flight flight)
+        {
+            var flightUpdate = _flightService.GetOne(flight.Departure, flight.Plane.RAB, flight.Destiny.IATA);
 
-        //    if (flight == null)
-        //        return NotFound();
+            if (flightUpdate == null)
+                return NotFound();
 
-        //    _flightService.Update(date, flightIn);
+            _flightService.UpdateSales(flight.Departure, flight.Plane.RAB, flight.Destiny.IATA, flightUpdate);
 
-        //    return NoContent();
-        //}
+            return NoContent();
+        }
 
-        [HttpPut("ModifyFlightStatus/{fullDate},{rabPlane},{destiny},{newStatus}", Name = "ModifyFlightStatus")]
+        [HttpPut("ModifyFlightStatus/{fullDate}/{rabPlane}/{destiny}/{newStatus}", Name = "ModifyFlightStatus")]
         public ActionResult<Flight> UpdateStatus(DateTime fullDate, string rabPlane, string destiny, bool newStatus)
         {
             var flightUpdate = _flightService.GetOne(fullDate, rabPlane, destiny);
@@ -75,7 +88,7 @@ namespace FlightsAPI.Controllers
 
             flightUpdate.Status = newStatus;
 
-            _flightService.Update(fullDate, rabPlane, destiny, flightUpdate);
+            _flightService.UpdateStatus(fullDate, rabPlane, destiny, flightUpdate);
 
             return NoContent();
         }

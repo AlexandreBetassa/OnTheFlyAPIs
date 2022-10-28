@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using APIViaCep;
+﻿using System;
+using System.Collections.Generic;
+using APIsConsummers;
 using CompanyAPI.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,38 +13,70 @@ namespace CompanyAPI.Controllers
     public class CompanyController : ControllerBase
     {
         private readonly CompanyService _companyService;
-        private readonly CompanyService _deletedcompanyService;
+        private readonly CompanyService _deletedCompanyService;
+        private readonly RestrictedCompanyService _restrictedCompanyService;
 
-        public CompanyController(CompanyService companiesService)
+        public CompanyController(CompanyService companyService, CompanyService deletedCompanyService, RestrictedCompanyService restrictedCompanyService)
         {
-            _companyService = companiesService;
+            _companyService = companyService;
+            _deletedCompanyService = deletedCompanyService;
+            _restrictedCompanyService = restrictedCompanyService;
         }
 
-
         [HttpPost]
-        public ActionResult<Company> Create(Company company)
-        {
-            var address = ViaCep.GetAdress(company.Address.ZipCode).Result;
+        public ActionResult<Company> Create(CompanyDTO companyDTO, string rab, int capacity)
+        {            
+            if (!Utils.ValidateCnpj(companyDTO.CNPJ)) return BadRequest();
+
+            if (_companyService.GetOneCNPJ(companyDTO.CNPJ) != null) return BadRequest();
+
+            var unformattedCNPJ = companyDTO.CNPJ;
+            companyDTO.CNPJ = Utils.FormatCNPJ(unformattedCNPJ);
+
+            if (companyDTO.NameOp == null) companyDTO.NameOp = companyDTO.Name;
+
+            var address = ViaCepAPIConsummer.GetAdress(companyDTO.Address.ZipCode).Result;
             if (address == null) return NotFound();
 
-            company.Address.Street = address.Street;
-            company.Address.City = address.City;
-            company.Address.State = address.State;
+            Company company = new()
+            {
+                CNPJ = companyDTO.CNPJ,
+                Name = companyDTO.Name.ToUpper(),
+                NameOp = companyDTO.NameOp.ToUpper(),
+                DtOpen = DateTime.Now,
+                Status = false,
+                Address = new Address
+                {
+                    ZipCode = address.ZipCode,
+                    Street = address.Street,
+                    Number = companyDTO.Address.Number,
+                    Complement = companyDTO.Address.Complement.ToUpper(),
+                    City = address.City.ToUpper(),
+                    State = address.State.ToUpper()
+                }
+            };
+           
+            if (_restrictedCompanyService.GetOneCNPJ(companyDTO.CNPJ) != null) company.Status= true;
+
             _companyService.Create(company);
+
+            AirCraft airCraft = new AirCraft
+            {
+                Capacity = capacity,
+                RAB = rab,
+                DtRegistry = DateTime.Now,
+                DtLastFlight = DateTime.Now,
+                Company = company
+            };
+
+            //var savedAirCraft = AirCraftAPIConsummer.PostAirCraft(airCraft);
+
+            //if(savedAirCraft == null) company.Status = true;
 
             return Ok(company);
         }
-           
-        //[HttpGet("GetOneCep/{cep}")]
-        //public ActionResult<Address> GetAddress(string cep, int number, string complemento)
-        //{
-        //    var address = ViaCep.GetAdress(cep).Result;
-        //    address.Number = number;
-        //    address.Complement = complemento;
-        //    if (address == null) return NotFound();
-        //    return Ok(address);
 
-        //}
+        #region GETs
 
         [HttpGet]
         public ActionResult<List<Company>> GetAll() => _companyService.GetAll();
@@ -57,9 +90,15 @@ namespace CompanyAPI.Controllers
             return Ok(company);
         }
 
+        #endregion
+
+        #region PUTs
+
         [HttpPut("PutNameOP/{newNameOP}")]
         public ActionResult<Company>PutNameOp(string cnpj, string newNameOp)
         {
+
+
             var company = _companyService.GetOneCNPJ(cnpj);
             if (company == null) return NotFound();
 
@@ -80,6 +119,22 @@ namespace CompanyAPI.Controllers
             return Ok(company);
         }
 
+        [HttpPut("PutCEP/{newCEP}")]
+        public ActionResult<Company> PutCep(string cnpj, string newCEP)
+        {
+            var company = _companyService.GetOneCNPJ(cnpj);
+            if (company == null) return NotFound();
+
+            var address = ViaCepAPIConsummer.GetAdress(newCEP).Result;
+            if (address == null) return NotFound();
+
+            company.Address.Street = address.Street;
+            company.Address.City = address.City;
+            company.Address.State = address.State;
+
+            return Ok(company);
+        }
+
         [HttpPut("PutStreet/{newStreet}")]
         public ActionResult<Company> PutStreet(string cnpj, string newStreet)
         {
@@ -91,6 +146,7 @@ namespace CompanyAPI.Controllers
 
             return Ok(company);
         }
+              
 
         [HttpPut("PutNumber/{newNumber}")]
         public ActionResult<Company> PutNumber(string cnpj, int newNumber)
@@ -115,13 +171,15 @@ namespace CompanyAPI.Controllers
             return Ok(company);
         }
 
+        #endregion
+
         [HttpDelete("{cnpj}")]
         public ActionResult<Company> Delete(string cnpj)
         {
             var company = _companyService.GetOneCNPJ(cnpj);
             if (company == null) return NotFound();
 
-            _deletedcompanyService.Create(company);
+            _deletedCompanyService.Insert(company);
             _companyService.Delete(company);
 
             return NoContent();

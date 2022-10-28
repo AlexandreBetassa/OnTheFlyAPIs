@@ -27,5 +27,7 @@ namespace SaleAPI.Services
         sale.Flight.Departure == saleIn.Flight.Departure).FirstOrDefault();
         public void Delete(Sale saleIn) => _salesService.DeleteOne(sale => sale.Flight.Destiny == saleIn.Flight.Destiny &&
         sale.Flight.Departure == saleIn.Flight.Departure);
+        public void Put(Sale saleIn) => _salesService.ReplaceOne(sale => sale.Flight.Destiny == saleIn.Flight.Destiny &&
+        sale.Flight.Departure == saleIn.Flight.Departure, saleIn);
     }
 }
