@@ -1,4 +1,4 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -28,8 +28,8 @@ namespace Models
     {
 
         [Required]
-        [StringLength(14)]
-        public string CPF { get; set; }
+        [StringLength(11)]
+        public string UnformattedCPF { get; set; }
         [Required]
         [StringLength(30)]
         public string Name { get; set; }
@@ -37,8 +37,8 @@ namespace Models
         [StringLength(1)]
         public string Gender { get; set; }
         [StringLength(14)]
-        public string Phone { get; set; }
-        //[Required]
+        public string PhoneOpt { get; set; }
+        [Required]
         public DateTime DtBirth { get; set; }
         [Required]
         public AddressDTO Address { get; set; }

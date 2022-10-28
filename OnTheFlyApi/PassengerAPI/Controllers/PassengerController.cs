@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Models;
 using PassengerAPI.Services;
+using PassengerAPI.Utils;
 using System.Collections.Generic;
 using System;
 using APIsConsummers;
@@ -30,10 +31,10 @@ namespace PassengerAPI.Controllers
         }
 
         // GET api/<PassengerController>/5
-        [HttpGet("GetByCPF/{cpf}")]
-        public ActionResult<Passenger> Get(string cpf)
+        [HttpGet("GetByCPF/{unformattedCpf}")]
+        public ActionResult<Passenger> Get(string unformattedCpf)
         {
-            var passenger = _passengerService.Get(cpf);
+            var passenger = _passengerService.Get(Functions.FormatCPF(unformattedCpf));
             if (passenger == null) return NotFound();
             return passenger;
         }
@@ -42,17 +43,19 @@ namespace PassengerAPI.Controllers
         [HttpPost("Create")]
         public ActionResult<Passenger> Post(PassengerDTO p)
         {
-            if (_passengerService.Get(p.CPF) != null) return Unauthorized();
+            string formattedCpf = Functions.FormatCPF(p.UnformattedCPF);
+
+            if (_passengerService.Get(formattedCpf) != null) return Unauthorized();
 
             var address = ViaCepAPIConsummer.GetAdress(p.Address.ZipCode).Result;
             if (address == null) return NotFound();
 
             Passenger passenger = new()
             {
-                CPF = p.CPF,
+                CPF = formattedCpf,
                 Name = p.Name.ToUpper(),
                 Gender = p.Gender.ToUpper(),
-                Phone = p.Phone,
+                Phone = p.PhoneOpt,
                 DtBirth = p.DtBirth,
                 DtRegister = DateTime.Now,
                 Status = false,
@@ -67,10 +70,44 @@ namespace PassengerAPI.Controllers
                 }
             };
 
-            if (_restrictedPassengerService.Get(p.CPF) != null) passenger.Status = true;
+            if (_restrictedPassengerService.Get(formattedCpf) != null) passenger.Status = true;
 
             return _passengerService.Create(passenger);
         }
+        //[HttpPost("Alter")]
+        //public ActionResult<Passenger> Alter(PassengerDTO p)
+        //{
+        //    string formattedCpf = Functions.FormatCPF(p.UnformattedCPF);
+
+        //    if (_passengerService.Get(formattedCpf) != null) return Unauthorized();
+
+        //    var address = ViaCepAPIConsummer.GetAdress(p.Address.ZipCode).Result;
+        //    if (address == null) return NotFound();
+
+        //    Passenger passenger = new()
+        //    {
+        //        CPF = formattedCpf,
+        //        Name = p.Name.ToUpper(),
+        //        Gender = p.Gender.ToUpper(),
+        //        Phone = p.PhoneOpt,
+        //        DtBirth = p.DtBirth,
+        //        DtRegister = DateTime.Now,
+        //        Status = false,
+        //        Address = new Address
+        //        {
+        //            ZipCode = address.ZipCode,
+        //            Street = address.Street,
+        //            Number = p.Address.Number,
+        //            Complement = p.Address.Complement.ToUpper(),
+        //            City = address.City.ToUpper(),
+        //            State = address.State.ToUpper()
+        //        }
+        //    };
+
+        //    if (_restrictedPassengerService.Get(formattedCpf) != null) passenger.Status = true;
+
+        //    return _passengerService.Create(passenger);
+        //}
 
         // PUT api/<PassengerController>/5
         //[HttpPut]
