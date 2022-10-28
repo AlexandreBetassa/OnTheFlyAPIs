@@ -1,7 +1,6 @@
 ﻿using APIsConsummers;
 using Microsoft.AspNetCore.Mvc;
 using Models;
-using SaleAPI.RabbitMQ;
 using SaleAPI.Services;
 using System;
 using System.Collections.Generic;
@@ -41,7 +40,7 @@ namespace SaleAPI.Controllers
             //verifica se há passageiros com restrições
             else foreach (var passenger in sale.Passenger) if (passenger.Status == true) return BadRequest("Existe passegeiro impedido de viajar incluso na solicitação");
             //verifica se todos os passageiros da passagem estão cadastrados no banco de dados do aeroporto
-            var lstPassenger = PassengersAPIConsummer.GetPassengers().Result;
+            var lstPassenger = PassengersAPIConsummer.GetPassengerList().Result;
             foreach (var passenger in lstPassenger)
                 foreach (var passengerIndex in sale.Passenger) if (passenger.CPF == passengerIndex.CPF) count += 1;
             if (count != sale.Passenger.Count) return BadRequest("CPF da venda não localizado no banco de dados do aeroporto");

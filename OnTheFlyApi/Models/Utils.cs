@@ -1,4 +1,6 @@
-﻿namespace Models
+﻿using System;
+
+namespace Models
 {
     public class Utils
     {
@@ -124,7 +126,7 @@
 
         public static bool ValidateCompanyTime(Company company)
         {
-            double time = (DateTime.Now - company.Date).TotalDays;
+            double time = (DateTime.Now - company.DtOpen).TotalDays;
             if (time / 30 < 6) return false;
             else return true;
         }
