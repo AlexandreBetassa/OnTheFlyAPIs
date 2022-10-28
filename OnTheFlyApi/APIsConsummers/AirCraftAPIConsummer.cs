@@ -22,29 +22,45 @@ namespace APIsConsummers
             }
         }
 
-        public static async Task<AirCraft> UpdateLastFlight(string rab, DateTime updateLastFlight)
+
+        public static async Task<bool> PostAirCraft(AirCraft aircraft)
         {
             using (HttpClient _airCraftClient = new HttpClient())
             {
-                HttpResponseMessage response = await _airCraftClient.GetAsync($"https://localhost:44311/api/AirCraft/ModifyAirCraftDtLastFlight/{rab}/{updateLastFlight}/");
-                var airCraftJson = await response.Content.ReadAsStringAsync();
-                if (response.IsSuccessStatusCode) return JsonConvert.DeserializeObject<AirCraft>(airCraftJson);
-                else return null;
+                string jsonString = JsonConvert.SerializeObject(aircraft);
+                HttpContent http = new StringContent(jsonString, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await _airCraftClient.PostAsync($"https://localhost:44311/api/AirCraft/{aircraft}", http);
+
+                if (response.IsSuccessStatusCode) return true;
+                return false;
             }
         }
 
 
-        //public static async Task<AirCraft> CreateAirCraft(AirCraft airCraft)
+        public static async Task<bool> UpdateAirCraft(string rab, DateTime updateLastFlight)
+        {
+            using (HttpClient _airCraftClient = new HttpClient())
+            {
+                string jsonString = JsonConvert.SerializeObject(updateLastFlight);
+                HttpContent http = new StringContent(jsonString, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await _airCraftClient.PostAsync($"https://localhost:44311/api/AirCraft/ModifyAirCraftDtLastFlight/{rab}/{updateLastFlight}", http);
+
+                if (response.IsSuccessStatusCode) return true;
+                return false;
+            }
+        }
+
+        //public static async Task<bool> UpdateAirCraft(AirCraft aircraft)  /// tentativa de dar update com o objeto completo ja atualizado
         //{
         //    using (HttpClient _airCraftClient = new HttpClient())
         //    {
-        //        HttpResponseMessage response = await _airCraftClient.GetAsync($"https://localhost:44311/api/{airCraft}/");////
-        //        var airCraftJson = await response.Content.ReadAsStringAsync();
-        //        if (response.IsSuccessStatusCode) return JsonConvert.DeserializeObject<AirCraft>(airCraftJson);
-        //        else return null;
+        //        string jsonString = JsonConvert.SerializeObject(aircraft);
+        //        HttpContent http = new StringContent(jsonString, Encoding.UTF8, "application/json");
+        //        HttpResponseMessage response = await _airCraftClient.PostAsync($"https://localhost:44311/api/AirCraft/{aircraft}", http); // alterar endpoint!
+
+        //        if (response.IsSuccessStatusCode) return true;
+        //        return false;
         //    }
         //}
-       
-        
     }
 }
