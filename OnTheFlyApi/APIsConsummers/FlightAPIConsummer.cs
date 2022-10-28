@@ -22,13 +22,13 @@ namespace APIsConsummers
             }
         }
 
-        public static async Task<bool> UpdateFlightSales(DateTime fullDate, string rabPlane, string destiny, int newSales)
+        public static async Task<bool> UpdateFlightSales(Flight flight)
         {
             using (HttpClient _flightClient = new HttpClient())
             {
-                string jsonString = JsonConvert.SerializeObject(newSales);
-                HttpContent http = new StringContent(jsonString, Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await _flightClient.PutAsync($"https://localhost:44348/apiFlight//api/Flight/ModifyFlightSales/{fullDate}/{rabPlane}/{destiny}/{newSales}", http);
+                string flightJson = JsonConvert.SerializeObject(flight);
+                HttpContent flightClientContent = new StringContent(flightJson, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await _flightClient.PutAsync($"https://localhost:44348/api/Flight/ModifyFlightSales", flightClientContent);
 
                 if (response.IsSuccessStatusCode) return true;
                 return false;

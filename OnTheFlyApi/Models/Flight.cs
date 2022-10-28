@@ -17,7 +17,7 @@ namespace Models
         [Required]
         public Airport Destiny { get; set; }
 
-        [Required]
+        //[Required]
         public AirCraft Plane { get; set; }
 
         [Required]

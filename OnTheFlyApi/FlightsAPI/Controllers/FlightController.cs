@@ -49,22 +49,26 @@ namespace FlightsAPI.Controllers
         [HttpPost]
         public ActionResult<Flight> Create(Flight flight)
         {
+            var airCraft = AirCraftAPIConsummer.GetAirCraft(flight.Plane.RAB).Result;
+            if (airCraft == null)
+                return NotFound();
+
+            flight.Plane = airCraft;
+
             _flightService.Create(flight);
             //return CreatedAtRoute("GetOne", new { date = flight.Departure }, flight);
             return Ok(flight);
         }
 
-        [HttpPut("ModifyFlightSales/{fullDate}/{rabPlane}/{destiny}/{newSales}", Name = "ModifyFlightSales")]
-        public ActionResult<Flight> UpdateSales(DateTime fullDate, string rabPlane, string destiny, int newSales)
+        [HttpPut("ModifyFlightSales", Name = "ModifyFlightSales")]
+        public ActionResult<Flight> UpdateSalesFlight(Flight flight)
         {
-            var flightUpdate = _flightService.GetOne(fullDate, rabPlane, destiny);
+            var flightUpdate = _flightService.GetOne(flight.Departure, flight.Plane.RAB, flight.Destiny.IATA);
 
             if (flightUpdate == null)
                 return NotFound();
 
-            flightUpdate.Sales = newSales;
-
-            _flightService.UpdateSales(fullDate, rabPlane, destiny, flightUpdate);
+            _flightService.UpdateSales(flight.Departure, flight.Plane.RAB, flight.Destiny.IATA, flightUpdate);
 
             return NoContent();
         }
