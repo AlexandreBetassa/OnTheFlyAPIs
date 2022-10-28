@@ -80,27 +80,27 @@ namespace AirCraftAPI.Controllers
         }
 
 
-        [HttpPut("ModifyAirCraftDtLastFlight/{aircraftUpdate}")]
-        public ActionResult<AirCraft> UpdateLastFlight(AirCraft aircraftUpdate)
-        {
-            _airCraftService.Update(aircraftUpdate);
-
-            return NoContent();
-        }
-
-        //[HttpPut("ModifyAirCraftDtLastFlight/{rab}/{updateLastFlight}")]
-        //public ActionResult<AirCraft> UpdateLastFlight(string rab, DateTime updateLastFlight)
+        //[HttpPut("ModifyAirCraftDtLastFlight/{aircraftUpdate}")]   //update usando o objeto completo ja atualizado
+        //public ActionResult<AirCraft> UpdateLastFlight(AirCraft aircraftUpdate)
         //{
-        //    var aircraftUpdate = _airCraftService.GetOneByRAB(rab);
-        //    if (aircraftUpdate == null)
-        //        return NotFound();
-
-        //    aircraftUpdate.DtLastFlight = updateLastFlight;
-
-        //    _airCraftService.Update(aircraftUpdate, rab);
+        //    _airCraftService.Update(aircraftUpdate);
 
         //    return NoContent();
         //}
+
+        [HttpPut("ModifyAirCraftDtLastFlight/{rab}/{updateLastFlight}")]
+        public ActionResult<AirCraft> UpdateLastFlight(string rab, DateTime updateLastFlight)
+        {
+            var aircraftUpdate = _airCraftService.GetOneByRAB(rab);
+            if (aircraftUpdate == null)
+                return NotFound();
+
+            aircraftUpdate.DtLastFlight = updateLastFlight;
+
+            _airCraftService.Update(aircraftUpdate, rab);
+
+            return NoContent();
+        }
         //-----------------------------------------------------------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------------------
 
@@ -117,10 +117,6 @@ namespace AirCraftAPI.Controllers
 
             return NoContent();
         }
-
-
-
-
 
 
 
