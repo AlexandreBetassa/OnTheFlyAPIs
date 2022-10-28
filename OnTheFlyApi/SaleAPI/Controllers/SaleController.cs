@@ -14,12 +14,7 @@ namespace SaleAPI.Controllers
     public class SaleController : ControllerBase
     {
         private readonly SaleService _saleService;
-        private readonly SendRabbitMQ _sendRabbitMQ;
-        public SaleController(SaleService saleService)
-        {
-            _saleService = saleService;
-            _sendRabbitMQ = new SendRabbitMQ();
-        }
+        public SaleController(SaleService saleService) => _saleService = saleService;
 
         [HttpGet]
         public ActionResult<List<Sale>> Get() => _saleService.Get();
@@ -36,8 +31,7 @@ namespace SaleAPI.Controllers
         public ActionResult<AirCraft> Create(Sale sale)
         {
             int count = 0;
-            _sendRabbitMQ.Send(sale);
-            //busca o voo para cadastro
+            //busca o voo para cadastroartur
             var flight = FlightAPIConsummer.GetFlight(sale.Flight.Departure, sale.Flight.Plane.RAB, sale.Flight.Destiny.IATA).Result;
             if (flight == null) return NotFound("Voo não localizado!!!");
             //verifica se há passagem para todos os passageiros da solicitacao de compra
@@ -51,6 +45,8 @@ namespace SaleAPI.Controllers
             foreach (var passenger in lstPassenger)
                 foreach (var passengerIndex in sale.Passenger) if (passenger.CPF == passengerIndex.CPF) count += 1;
             if (count != sale.Passenger.Count) return BadRequest("CPF da venda não localizado no banco de dados do aeroporto");
+            //muda o status da venda para para true confirmando a venda
+            sale.Sold = true;
             //insere no banco de dados
             _saleService.Create(sale);
             if (CreatedAtRoute("GetSale", new { date = sale.Flight.Departure.ToString(), rab = sale.Flight.Plane.RAB.ToString() }, sale).StatusCode == 200) { /*api para editar quantidades de vendas do voo;*/}
@@ -58,7 +54,7 @@ namespace SaleAPI.Controllers
             return Ok();
         }
 
-        [HttpPut("{date},{status},{aircraft},{cpf}")]
+        [HttpPut("PutStatusReserved/{date}/{status}/{aircraft}/{cpf}")]
         public ActionResult<Sale> Put(DateTime date, string aircraft, bool status, string cpf)
         {
             var sale = _saleService.Get().Where(saleIn => saleIn.Flight.Departure == date
@@ -71,5 +67,21 @@ namespace SaleAPI.Controllers
             _saleService.Put(sale);
             return NoContent();
         }
+
+        //confirmar com pestana
+
+        //[HttpPut("PutStatusCancelFlight")]
+        //public ActionResult<Sale> Put(Flight flight)
+        //{
+        //    var sale = _saleService.Get().Where(saleIn => saleIn.Flight.Departure == flight.Departure
+        //    && saleIn.Flight.Plane.RAB == flight.Plane.RAB).FirstOrDefault();
+        //    if (sale == null) return BadRequest("Impossível alterar. Venda não localizada");
+        //    //
+        //    /* acionar endpoint de get de passageiros restritos (endpoint dany)*/
+        //    //
+        //    sale.Reserved = status;
+        //    _saleService.Put(sale);
+        //    return NoContent();
+        //}
     }
 }
