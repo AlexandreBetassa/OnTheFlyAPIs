@@ -15,7 +15,7 @@ namespace APIsConsummers
         {
             using (HttpClient _airCraftClient = new HttpClient())
             {
-                HttpResponseMessage response = await _airCraftClient.GetAsync($"https://localhost:44311/api/AirCraft/GetByRAB/{rab}/");
+                HttpResponseMessage response = await _airCraftClient.GetAsync($"https://localhost:44311/api/AirCraft/GetByRAB/{rab}");
                 var airCraftJson = await response.Content.ReadAsStringAsync();
                 if (response.IsSuccessStatusCode) return JsonConvert.DeserializeObject<AirCraft>(airCraftJson);
                 else return null;
