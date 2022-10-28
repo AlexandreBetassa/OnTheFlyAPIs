@@ -69,9 +69,9 @@ namespace CompanyAPI.Controllers
                 Company = company
             };
 
-            //var savedAirCraft = AirCraftAPIConsummer.PostAirCraft(airCraft);
-
-            //if(savedAirCraft == null) company.Status = true;
+           var savedAirCraft = AirCraftAPIConsummer.PostAirCraft(airCraft).Result;
+          
+            if(savedAirCraft) company.Status = true;
 
             return Ok(company);
         }
