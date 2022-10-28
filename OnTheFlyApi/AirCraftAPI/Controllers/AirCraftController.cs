@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Models;
 using System;
 using System.Net;
+using APIsConsummers;
 
 namespace AirCraftAPI.Controllers
 {
@@ -57,9 +58,15 @@ namespace AirCraftAPI.Controllers
 
             // PRECISA ANTES DE FAZER A INSERCAO, VERIFICAR SE A COMPANHIA AEREA INFORMADA REALMENTE EXISTE CADASTRADA E SE
 
+            //var company = CompanyAPIConsummer.GetOneCNPJ()
+
+            // primeiro verifica se o RAB informado é valido:
+            //
+            //
+            //
             var airCraft = _airCraftService.GetOneByRAB(airCraftInsert.RAB);
             if (airCraft != null)
-               return StatusCode((int)HttpStatusCode.Conflict);
+               return StatusCode((int)HttpStatusCode.Conflict, "Could not proceed with this request. There is already an aircraft registered with this RAB code!");
 
 
             // O RAB INFORMADO JÁ NÃO ESTÁ CADASTRADO
