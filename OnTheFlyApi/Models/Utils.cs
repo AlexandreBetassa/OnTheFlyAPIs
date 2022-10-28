@@ -123,15 +123,11 @@ namespace Models
                 && sufix == "IFR" && sufix == "VMC" && sufix == "IMC") return false;
             else return true;
         }
-
-        //public bool ValidateCompanyTime(Company company)
-        //{
-        //    //if(DateTime.Now - company.Date < M){
-
-        //    //}
-
-
-        //    //return true;
-        //}
+        public bool ValidateCompanyTime(Company company)
+        {
+            double time = (DateTime.Now - company.Date).TotalDays;
+            if (time / 30 < 6) return false;
+            else return true;
+        }
     }
 }
