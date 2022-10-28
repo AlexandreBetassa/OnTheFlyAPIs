@@ -9,8 +9,9 @@ namespace Models
 {
     internal class Utils
     {
-        public static bool ValidateCpf(string cpf)
+        public static bool ValidateCpf(Passenger passenger)
         {
+            string cpf = passenger.CPF;
             int[] multiplicador1 = new int[9] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
             int[] multiplicador2 = new int[10] { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
 
@@ -60,8 +61,9 @@ namespace Models
             digito = digito + resto.ToString();
             return cpf.EndsWith(digito);
         }
-        public static bool ValidateCnpj(string cnpj)
+        public static bool ValidateCnpj(Company company)
         {
+            string cnpj = company.CNPJ;
             int[] multiplicador1 = new int[12] { 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
             int[] multiplicador2 = new int[13] { 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
 
@@ -114,16 +116,16 @@ namespace Models
             digito += resto.ToString();
             return cnpj.EndsWith(digito);
         }
-        public bool ValidateRab(string rab)
+        public static bool ValidateRab(AirCraft aircraft)
         {
-            string prefix = rab.Substring(0, 2);
-            string sufix = rab.Substring(3, 3);
+            string prefix = aircraft.RAB.Substring(0, 2);
+            string sufix = aircraft.RAB.Substring(3, 3);
             if (prefix != "PP" && prefix != "PR" && prefix != "PT" && prefix != "BR" && prefix != "PS") return false;
             else if (sufix == "SOS" && sufix == "XXX" && sufix == "PAN" && sufix == "TTT" && sufix == "VFR"
                 && sufix == "IFR" && sufix == "VMC" && sufix == "IMC") return false;
             else return true;
         }
-        public bool ValidateCompanyTime(Company company)
+        public static bool ValidateCompanyTime(Company company)
         {
             double time = (DateTime.Now - company.Date).TotalDays;
             if (time / 30 < 6) return false;
