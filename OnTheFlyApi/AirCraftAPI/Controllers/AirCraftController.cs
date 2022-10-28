@@ -54,6 +54,10 @@ namespace AirCraftAPI.Controllers
         [HttpPost]
         public ActionResult<AirCraft> CreateAirCraft(AirCraft airCraftInsert)
         {
+            //passar todos os dados inseridos para UpperCase:
+            airCraftInsert.RAB = airCraftInsert.RAB.ToUpper();
+            //-----------------------------------------------
+
             bool rabValidation = Utils.ValidateRab(airCraftInsert.RAB);
             if (rabValidation == false) return BadRequest("The Informed RAB is not valid. Try using a 6 characters RAB including - after the prefix. Ex: ( EX-ABC ).");
 
