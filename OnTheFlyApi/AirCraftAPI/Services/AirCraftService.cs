@@ -28,10 +28,21 @@ namespace AirCraftAPI.Services
         
         public AirCraft GetOneByRAB(string rab) => _aircraft.Find<AirCraft>(aircraft => aircraft.RAB == rab).FirstOrDefault();
 
-        public void Update(AirCraft aircraftUpdate, string rab)
+        public void Update(AirCraft aircraftUpdate)
+        {
+            _aircraft.ReplaceOne(aircraft => aircraft.RAB == aircraftUpdate.RAB, aircraftUpdate);
+        }
+
+        public void UpdateCapacity(AirCraft aircraftUpdate, string rab)
         {
             _aircraft.ReplaceOne(aircraft => aircraft.RAB == rab, aircraftUpdate);
         }
+
+        //public void Update(AirCraft aircraftUpdate, string rab)
+        //{
+        //    _aircraft.ReplaceOne(aircraft => aircraft.RAB == rab, aircraftUpdate);
+        //}
+        
 
         public void Remove(AirCraft aircraftRemove) => _aircraft.DeleteOne(aircraft => aircraft.RAB == aircraftRemove.RAB);
     }
