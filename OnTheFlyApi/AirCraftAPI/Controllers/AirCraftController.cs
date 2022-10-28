@@ -57,8 +57,9 @@ namespace AirCraftAPI.Controllers
             bool rabValidation = Utils.ValidateRab(airCraftInsert.RAB);
             if (rabValidation == false) return BadRequest("The Informed RAB is not valid. Try using a 6 characters RAB including - after the prefix. Ex: ( EX-ABC ).");
 
-            var company = CompanyAPIConsummer.GetOneCNPJ(airCraftInsert.Company.CNPJ);
+            var company = CompanyAPIConsummer.GetOneCNPJ(airCraftInsert.Company.CNPJ).Result;
             if (company == null) return NotFound("Invalid CNPJ. Company not found.");
+            airCraftInsert.Company = company;
 
             var airCraft = _airCraftService.GetOneByRAB(airCraftInsert.RAB);
             if (airCraft != null)
