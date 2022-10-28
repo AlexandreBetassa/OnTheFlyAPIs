@@ -122,19 +122,11 @@
             $"{unformatedCpf.Substring(6, 3)}-" +
             $"{unformatedCpf.Substring(9, 2)}";
 
-
-
-        //public bool ValidateCompanyTime(Company company)
-        //{
-        //    //if(DateTime.Now - company.Date < M){
-
-        //    //}
-
-
-        //    //return true;
-        //} 
-
-
-
+        public static bool ValidateCompanyTime(Company company)
+        {
+            double time = (DateTime.Now - company.Date).TotalDays;
+            if (time / 30 < 6) return false;
+            else return true;
+        }
     }
 }
