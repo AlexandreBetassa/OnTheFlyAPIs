@@ -27,29 +27,23 @@ namespace SaleAPI.Controllers
         }
 
         [HttpPost("CreateSale")]
-        public ActionResult<AirCraft> Create(List<Sale> sales)
+        public ActionResult<AirCraft> Create(SaleDTO sale)
         {
-            //int count = 0;
-            ////busca o voo para cadastro (artur)
-            //var flight = FlightAPIConsummer.GetFlight(sale.Flight.Departure, sale.Flight.Plane.RAB, sale.Flight.Destiny.IATA).Result;
-            //if (flight == null) return NotFound("Voo não localizado!!!");
-
-            ////verifica se há passagem para todos os passageiros da solicitacao de compra
-            //else if (flight.Sales <= sale.Passenger.Count) return BadRequest("Não há passagens para todos os passageiros");
-
+            int count = 0;
+            //busca o voo para cadastroartur
+            var flight = FlightAPIConsummer.GetFlight(sale.Flight.Departure, sale.Flight.Plane.RAB, sale.Flight.Destiny.IATA).Result;
+            if (flight == null) return NotFound("Voo não localizado!!!");
+            //verifica se há passagem para todos os passageiros da solicitacao de compra
+            else if (flight.Sales <= sale.PassengersCPFs.Count) return BadRequest("Não há passagens para todos os passageiros");
+            //verifica se menores de 18 anos está tentndo comprar passagens
+            //else if ((DateTime.Now - sale.PassengersCPFs[0].DtBirth).TotalDays / 365 < 18) return BadRequest("Passegeiros menores de idade não podem efetuar compras");
+            ////verifica se há passageiros com restrições
+            //else foreach (var passenger in sale.PassengersCPFs) if (passenger.Status == true) return BadRequest("Existe passegeiro impedido de viajar incluso na solicitação");
             ////verifica se todos os passageiros da passagem estão cadastrados no banco de dados do aeroporto
             //var lstPassenger = PassengersAPIConsummer.GetPassengerList().Result;
             //foreach (var passenger in lstPassenger)
-            //    foreach (var passengerIndex in sale.Passenger) if (passenger.CPF == passengerIndex.CPF) count += 1;
-            //if (count != sale.Passenger.Count) return BadRequest("CPF da venda não localizado no banco de dados do aeroporto");
-
-            ////verifica se menores de 18 anos está tentndo comprar passagens
-            //else if ((DateTime.Now - sale.Passenger[0].DtBirth).TotalDays / 365 < 18) return BadRequest("Passegeiros menores de idade não podem efetuar compras");
-            
-            ////verifica se há passageiros com restrições
-            //else foreach (var passenger in sale.Passenger) if (passenger.Status == true) return BadRequest("Existe passegeiro impedido de viajar incluso na solicitação");
-            
-            
+            //    foreach (var passengerIndex in sale.PassengersCPFs) if (passenger.CPF == passengerIndex.CPF) count += 1;
+            //if (count != sale.PassengersCPFs.Count) return BadRequest("CPF da venda não localizado no banco de dados do aeroporto");
             ////muda o status da venda para para true confirmando a venda
             //sale.Sold = true;
             ////insere no banco de dados
