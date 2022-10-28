@@ -39,7 +39,8 @@ namespace CompanyAPI
             services.AddSingleton<IDatabaseSettings>(sp => sp.GetRequiredService<IOptions<DatabaseSettings.DatabaseSettings>>().Value);
 
             services.AddSingleton<CompanyService>();
-            services.AddSingleton<DeletedCompanyService>();
+            services.AddSingleton<RestrictedCompanyService>();
+        
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

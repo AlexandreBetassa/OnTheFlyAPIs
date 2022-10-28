@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Models;
 using System;
 using System.Collections.Generic;
+using APIsConsummers;
 
 namespace FlightsAPI.Controllers
 {
@@ -32,7 +33,7 @@ namespace FlightsAPI.Controllers
             return Ok(flight); 
         }
 
-        [HttpGet("GetOne/{fullDate},{rabPlane},{destiny}", Name = "GetOne")]
+        [HttpGet("GetOne/{fullDate}/{rabPlane}/{destiny}", Name = "GetOne")]
         public ActionResult<Flight> Get(DateTime fullDate, string rabPlane, string destiny)
         {
             var flight = _flightService.GetOne(fullDate, rabPlane, destiny);
@@ -53,20 +54,22 @@ namespace FlightsAPI.Controllers
             return Ok(flight);
         }
 
-        //[HttpPut]
-        //public ActionResult<Flight> Update(Flight flightIn, DateTime date)
-        //{
-        //    var flight = _flightService.GetByDate(date);
+        [HttpPut("ModifyFlightSales/{fullDate}/{rabPlane}/{destiny}/{newSales}", Name = "ModifyFlightSales")]
+        public ActionResult<Flight> UpdateSales(DateTime fullDate, string rabPlane, string destiny, int newSales)
+        {
+            var flightUpdate = _flightService.GetOne(fullDate, rabPlane, destiny);
 
-        //    if (flight == null)
-        //        return NotFound();
+            if (flightUpdate == null)
+                return NotFound();
 
-        //    _flightService.Update(date, flightIn);
+            flightUpdate.Sales = newSales;
 
-        //    return NoContent();
-        //}
+            _flightService.UpdateSales(fullDate, rabPlane, destiny, flightUpdate);
 
-        [HttpPut("ModifyFlightStatus/{fullDate},{rabPlane},{destiny},{newStatus}", Name = "ModifyFlightStatus")]
+            return NoContent();
+        }
+
+        [HttpPut("ModifyFlightStatus/{fullDate}/{rabPlane}/{destiny}/{newStatus}", Name = "ModifyFlightStatus")]
         public ActionResult<Flight> UpdateStatus(DateTime fullDate, string rabPlane, string destiny, bool newStatus)
         {
             var flightUpdate = _flightService.GetOne(fullDate, rabPlane, destiny);
@@ -75,7 +78,7 @@ namespace FlightsAPI.Controllers
 
             flightUpdate.Status = newStatus;
 
-            _flightService.Update(fullDate, rabPlane, destiny, flightUpdate);
+            _flightService.UpdateStatus(fullDate, rabPlane, destiny, flightUpdate);
 
             return NoContent();
         }

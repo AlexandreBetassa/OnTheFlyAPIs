@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -113,5 +114,24 @@ namespace Models
             digito += resto.ToString();
             return cnpj.EndsWith(digito);
         }
+        public bool ValidateRab(string rab)
+        {
+            string prefix = rab.Substring(0, 2);
+            string sufix = rab.Substring(3, 3);
+            if (prefix != "PP" && prefix != "PR" && prefix != "PT" && prefix != "BR" && prefix != "PS") return false;
+            else if (sufix == "SOS" && sufix == "XXX" && sufix == "PAN" && sufix == "TTT" && sufix == "VFR"
+                && sufix == "IFR" && sufix == "VMC" && sufix == "IMC") return false;
+            else return true;
+        }
+
+        //public bool ValidateCompanyTime(Company company)
+        //{
+        //    //if(DateTime.Now - company.Date < M){
+
+        //    //}
+
+
+        //    //return true;
+        //}
     }
 }
