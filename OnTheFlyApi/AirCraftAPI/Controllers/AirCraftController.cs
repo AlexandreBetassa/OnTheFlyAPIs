@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Models;
 using System;
+using System.Net;
 
 namespace AirCraftAPI.Controllers
 {
@@ -50,17 +51,23 @@ namespace AirCraftAPI.Controllers
         //-----------------------------------------------------------------------------------------------------------------
 
         [HttpPost]
-        public ActionResult<AirCraft> CreateAirCraft(AirCraft aircraft)
+        public ActionResult<AirCraft> CreateAirCraft(AirCraft airCraftInsert)
         {
             //   ----> VALIDAÇÕES A SEREM FEITAS AQUI   <----   //
 
             // PRECISA ANTES DE FAZER A INSERCAO, VERIFICAR SE A COMPANHIA AEREA INFORMADA REALMENTE EXISTE CADASTRADA E SE
+
+            var airCraft = _airCraftService.GetOneByRAB(airCraftInsert.RAB);
+            if (airCraft != null)
+               return StatusCode((int)HttpStatusCode.Conflict);
+
+
             // O RAB INFORMADO JÁ NÃO ESTÁ CADASTRADO
             // ADICIONAR SYSTEMDATETIME.NOW NO CADASTRO
 
-            _airCraftService.Create(aircraft);
+            _airCraftService.Create(airCraftInsert);
 
-            return Ok(aircraft);
+            return Ok(airCraftInsert);
         }
         //-----------------------------------------------------------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------------------
