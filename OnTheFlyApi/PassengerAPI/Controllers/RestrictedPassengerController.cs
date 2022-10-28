@@ -2,7 +2,6 @@
 using Models;
 using PassengerAPI.Services;
 using System.Collections.Generic;
-using System;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -25,44 +24,56 @@ namespace PassengerAPI.Controllers
         [HttpGet("GetAll")]
         public ActionResult<List<RestrictedPassenger>> Get()
         {
-            return _restrictedPassengerService.Get();
+            return Ok(_restrictedPassengerService.Get());
         }
 
         // GET api/<RestrictedPassengerController>/5
-        [HttpGet("GetByCPF/{cpf}")]
-        public ActionResult<RestrictedPassenger> Get(string cpf)
+        [HttpGet("GetByCPF/{unformattedCpf}")]
+        public ActionResult<RestrictedPassenger> Get(string unformattedCpf)
         {
-            var restrictedPassenger = _restrictedPassengerService.Get(cpf);
+            var restrictedPassenger = _restrictedPassengerService.Get(Models.Utils.FormatCPF(unformattedCpf));
             if (restrictedPassenger == null) return NotFound();
-            return restrictedPassenger;
+            return Ok(restrictedPassenger);
         }
 
         // POST api/<RestrictedPassengerController>
         [HttpPost("Create")]
         public ActionResult<RestrictedPassenger> Post(RestrictedPassengerDTO r)
         {
-            if (_restrictedPassengerService.Get(r.CPF) != null) return Unauthorized();
+            if (!Models.Utils.CPFIsValid(r.UnformattedCPF)) return BadRequest();
 
-            var passenger = _passengerService.Get(r.CPF);
+            string formattedCpf = Models.Utils.FormatCPF(r.UnformattedCPF);
+
+            if (_restrictedPassengerService.Get(formattedCpf) != null) return Unauthorized();
+
+            var passenger = _passengerService.Get(formattedCpf);
             if (passenger != null)
             {
                 passenger.Status = true;
                 _passengerService.Replace(passenger.CPF, passenger);
             }
             
-            return _restrictedPassengerService.Create(new() { CPF = r.CPF});
+            return Ok(_restrictedPassengerService.Create(new() { CPF = formattedCpf}));
         }
 
 
-
         // DELETE api/<RestrictedPassengerController>/5
-        [HttpDelete("DeleteByCPF/{cpf}")]
-        public ActionResult<RestrictedPassenger> Delete(string cpf)
+        [HttpDelete("DeleteByCPF/{unformattedCpf}")]
+        public ActionResult<RestrictedPassenger> Delete(string unformattedCpf)
         {
-            var restrictedPassenger = _restrictedPassengerService.Remove(cpf);
-            if (restrictedPassenger == null)
-                return NotFound();
-            return restrictedPassenger;
+            string formattedCpf = Models.Utils.FormatCPF(unformattedCpf);
+
+            var restrictedPassenger = _restrictedPassengerService.Remove(formattedCpf);
+            if (restrictedPassenger == null) return NotFound();
+
+            var passenger = _passengerService.Get(formattedCpf);
+            if (passenger != null)
+            {
+                passenger.Status = false;
+                _passengerService.Replace(passenger.CPF, passenger);
+            }
+
+            return Ok(restrictedPassenger);
         }
     }
 }
