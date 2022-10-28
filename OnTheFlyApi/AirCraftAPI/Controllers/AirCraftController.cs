@@ -30,11 +30,11 @@ namespace AirCraftAPI.Controllers
 
         //Get All By CNPJ
         [HttpGet("GetByCnpj/{companyCnpj}")]
-        //public ActionResult<List<AirCraft>> GetAllByCnpj(string companyCnpj)
-        //{
-        //    //var aircraftList = _airCraftService.GetAllByCnpj(companyCnpj);
-        //    //return aircraftList;
-        //}
+        public ActionResult<List<AirCraft>> GetAllByCnpj(string companyCnpj)
+        {
+            var aircraftList = _airCraftService.GetAllByCnpj(companyCnpj);
+            return aircraftList;
+        }
         //-----------------------------------------------------------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------------------
 
@@ -54,23 +54,15 @@ namespace AirCraftAPI.Controllers
         [HttpPost]
         public ActionResult<AirCraft> CreateAirCraft(AirCraft airCraftInsert)
         {
-            //   ----> VALIDAÇÕES A SEREM FEITAS AQUI   <----   //
+            bool rabValidation = Utils.ValidateRab(airCraftInsert.RAB);
+            if (rabValidation == false) return BadRequest("The Informed RAB is not valid. Try using a 6 characters RAB including - after the prefix. Ex: ( EX-ABC ).");
 
-            // PRECISA ANTES DE FAZER A INSERCAO, VERIFICAR SE A COMPANHIA AEREA INFORMADA REALMENTE EXISTE CADASTRADA E SE
+            var company = CompanyAPIConsummer.GetOneCNPJ(airCraftInsert.Company.CNPJ);
+            if (company == null) return NotFound("Invalid CNPJ. Company not found.");
 
-            //var company = CompanyAPIConsummer.GetOneCNPJ()
-
-            // primeiro verifica se o RAB informado é valido:
-            //
-            //
-            //
             var airCraft = _airCraftService.GetOneByRAB(airCraftInsert.RAB);
             if (airCraft != null)
                return StatusCode((int)HttpStatusCode.Conflict, "Could not proceed with this request. There is already an aircraft registered with this RAB code!");
-
-
-            // O RAB INFORMADO JÁ NÃO ESTÁ CADASTRADO
-            // ADICIONAR SYSTEMDATETIME.NOW NO CADASTRO
 
             _airCraftService.Create(airCraftInsert);
 
