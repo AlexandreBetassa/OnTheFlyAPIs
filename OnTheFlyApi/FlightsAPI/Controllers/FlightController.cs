@@ -15,7 +15,7 @@ namespace FlightsAPI.Controllers
         private readonly FlightServices _flightService;
 
         public FlightController(FlightServices flightService)
-        { 
+        {
             _flightService = flightService;
         }
 
@@ -30,30 +30,32 @@ namespace FlightsAPI.Controllers
             if (flight == null)
                 return NotFound();
 
-            return Ok(flight); 
+            return Ok(flight);
         }
 
         [HttpGet("GetOne/{fullDate}/{rabPlane}/{destiny}", Name = "GetOne")]
         public ActionResult<Flight> Get(DateTime fullDate, string rabPlane, string destiny)
         {
             var flight = _flightService.GetOne(fullDate, rabPlane, destiny);
-        
+
             if (flight == null)
                 return NotFound();
-        
+
             return Ok(flight);
         }
 
         //verificar a existencia de companhia, aeronave e aeroporto
         //não pode cadastrar voos para uma companhia que esteja bloqueada (fazer tal verificação)
-        [HttpPost]
-        public ActionResult<Flight> Create(Flight flight)
+        [HttpPost("{rab}/{destiny}/{dateFlight}")]
+        public ActionResult<Flight> Create(string rab, DateTime dateFlight, string destiny)
         {
-            var airCraft = AirCraftAPIConsummer.GetAirCraft(flight.Plane.RAB).Result;
-            if (airCraft == null)
-                return NotFound();
+            AirCraft airCraft = AirCraftAPIConsummer.GetAirCraft(rab).Result;
+            if (airCraft == null) return NotFound();
 
-            flight.Plane = airCraft;
+            Airport airport = new Airport{Country="BR", State = "SP", IATA = destiny}; /*Consumo api pestana*/
+
+
+            Flight flight = new() { Plane = airCraft, Departure = dateFlight, Destiny = airport, Sales = 0, Status = true };
 
             _flightService.Create(flight);
             //return CreatedAtRoute("GetOne", new { date = flight.Departure }, flight);

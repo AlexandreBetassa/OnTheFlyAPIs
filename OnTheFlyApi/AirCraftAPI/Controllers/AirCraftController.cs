@@ -28,11 +28,11 @@ namespace AirCraftAPI.Controllers
 
         //Get All By CNPJ
         [HttpGet("GetByCnpj/{companyCnpj}")]
-        public ActionResult<List<AirCraft>> GetAllByCnpj(string companyCnpj)
-        {
-            var aircraftList = _airCraftService.GetAllByCnpj(companyCnpj);
-            return aircraftList;
-        }
+        //public ActionResult<List<AirCraft>> GetAllByCnpj(string companyCnpj)
+        //{
+        //    //var aircraftList = _airCraftService.GetAllByCnpj(companyCnpj);
+        //    //return aircraftList;
+        //}
         //-----------------------------------------------------------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------------------
 
