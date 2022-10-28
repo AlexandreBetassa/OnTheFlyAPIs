@@ -5,6 +5,7 @@ using Models;
 using System;
 using System.Collections.Generic;
 using APIsConsummers;
+using System.IO;
 
 namespace FlightsAPI.Controllers
 {
@@ -51,14 +52,17 @@ namespace FlightsAPI.Controllers
         {
             AirCraft airCraft = AirCraftAPIConsummer.GetAirCraft(rab).Result;
             if (airCraft == null) return NotFound();
+            if (airCraft.Company.Status == true) return BadRequest("Restricted Airline, flights can only be registered for unrestricted airlines.");
 
             Airport airport = new Airport{Country="BR", State = "SP", IATA = destiny}; /*Consumo api pestana*/
+            if (airport == null) return NotFound();
 
+            if (dateFlight < DateTime.Now) return BadRequest("Invalid Date, the date must be a future date the current date.");
 
             Flight flight = new() { Plane = airCraft, Departure = dateFlight, Destiny = airport, Sales = 0, Status = true };
 
             _flightService.Create(flight);
-            //return CreatedAtRoute("GetOne", new { date = flight.Departure }, flight);
+
             return Ok(flight);
         }
 
