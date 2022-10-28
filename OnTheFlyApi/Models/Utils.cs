@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    internal class Utils
+   public class Utils
     {
         public static bool ValidateCpf(string cpf)
         {
@@ -114,6 +114,19 @@ namespace Models
             digito += resto.ToString();
             return cnpj.EndsWith(digito);
         }
+        public static string FormatCNPJ(string unformatedCNPJ) => $"{unformatedCNPJ.Substring(0, 2)}." +
+           $"{unformatedCNPJ.Substring(2, 3)}." +
+           $"{unformatedCNPJ.Substring(5, 3)}/" +
+           $"{unformatedCNPJ.Substring(8, 4)}-" +
+           $"{unformatedCNPJ.Substring(12, 2)}";
+
+        public static string UnformatCNPJ(string formattedCNPJ) => $"{formattedCNPJ.Substring(0, 2)}." +
+            $"{formattedCNPJ.Substring(2, 3)}." +
+            $"{formattedCNPJ.Substring(6, 3)}/" +
+            $"{formattedCNPJ.Substring(8, 4)}-" +
+            $"{formattedCNPJ.Substring(12, 2)}";
+
+      
         public bool ValidateRab(string rab)
         {
             string prefix = rab.Substring(0, 2);
@@ -124,6 +137,8 @@ namespace Models
             else return true;
         }
 
+       
+        
         //public bool ValidateCompanyTime(Company company)
         //{
         //    //if(DateTime.Now - company.Date < M){
