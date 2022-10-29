@@ -33,9 +33,6 @@ namespace Models
         public Flight Flight { get; set; }
         [Required(ErrorMessage = "Não a passageiros vinculados a esta venda")]
         public List<string> PassengersCPFs { get; set; } = new List<string>();
-        public bool Reserved { get; set; } = false;
-        public bool Sold { get; set; } = false;
+        public bool Reserved { get; set; }
     }
-
-
 }
