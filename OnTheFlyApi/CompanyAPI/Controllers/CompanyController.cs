@@ -33,7 +33,7 @@ namespace CompanyAPI.Controllers
 
             if (_companyService.GetOneCNPJ(companyDTO.CNPJ) != null) return BadRequest("This CNPJ is already registered");
 
-            if ((companyDTO.NameOp == null) || (companyDTO.NameOp == "string")) companyDTO.NameOp = companyDTO.Name;
+            if ((companyDTO.NameOp == null) || (companyDTO.NameOp == "string") ) companyDTO.NameOp = companyDTO.Name;
 
             var address = ViaCepAPIConsummer.GetAdress(companyDTO.Address.ZipCode).Result;
             if (address == null) return NotFound();
@@ -69,15 +69,20 @@ namespace CompanyAPI.Controllers
 
             var savedAirCraft = AirCraftAPIConsummer.PostAirCraft(airCraft).Result;
 
-            if (!savedAirCraft) company.Status = true;
+            if (!savedAirCraft)
+            {
+                _companyService.Delete(company);
+                return BadRequest("An error occurred in the aircraft registration");
+            }
+           
 
             return Ok(company);
         }
 
         #region GETs
-
         [HttpGet]
         public ActionResult<List<Company>> GetAll() => _companyService.GetAll();
+
 
         [HttpGet("GetCNPJ/{cnpj}")]
         public ActionResult<Company> GetOneCNPJ(string cnpj)
@@ -90,11 +95,10 @@ namespace CompanyAPI.Controllers
 
             return Ok(company);
         }
-
         #endregion
 
-        #region PUTs
 
+        #region PUTs
         [HttpPut("PutNameOP/{newNameOp}")]
         public ActionResult<Company> PutNameOp(string cnpj, string newNameOp)
         {
@@ -110,6 +114,8 @@ namespace CompanyAPI.Controllers
 
             return Ok(company);
         }
+
+
         [HttpPut("PutStatus/{newStatus}")]
         public ActionResult<Company> PutStatus(string cnpj, bool newStatus)
         {
@@ -125,6 +131,7 @@ namespace CompanyAPI.Controllers
 
             return Ok(company);
         }
+
 
         [HttpPut("PutCEP/{newCEP}")]
         public ActionResult<Company> PutCep(string cnpj, string newCEP)
@@ -146,6 +153,7 @@ namespace CompanyAPI.Controllers
 
             return Ok(company);
         }
+
 
         [HttpPut("PutStreet/{newStreet}")]
         public ActionResult<Company> PutStreet(string cnpj, string newStreet)
@@ -177,6 +185,8 @@ namespace CompanyAPI.Controllers
 
             return Ok(company);
         }
+
+
         [HttpPut("PutComplement/{newComplement}")]
         public ActionResult<Company> PutComplement(string cnpj, string newComplement)
         {
@@ -192,8 +202,8 @@ namespace CompanyAPI.Controllers
 
             return Ok(company);
         }
-
         #endregion
+
 
         [HttpDelete("{cnpj}")]
         public ActionResult<Company> Delete(string cnpj)
