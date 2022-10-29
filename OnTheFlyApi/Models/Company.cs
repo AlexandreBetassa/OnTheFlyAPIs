@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
 
 namespace Models
 {
@@ -33,6 +34,8 @@ namespace Models
         [Required]
         [StringLength(30, ErrorMessage = "Numeros de caracter permitidos excedidos")]
         public string NameOp { get; set; }
+        public DateTime DtOpen { get; set; }
+
         public AddressDTO Address { get; set; }
     }
 }
