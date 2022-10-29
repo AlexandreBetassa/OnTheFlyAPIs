@@ -52,26 +52,28 @@ namespace AirCraftAPI.Controllers
         //-----------------------------------------------------------------------------------------------------------------
 
         [HttpPost]
-        public ActionResult<AirCraft> CreateAirCraft(AirCraft airCraftInsert)
+        public ActionResult<AirCraft> CreateAirCraft(AirCraftDTO airCraftDTO)
         {
             //passar todos os dados inseridos para UpperCase:
-            airCraftInsert.RAB = airCraftInsert.RAB.ToUpper();
+            airCraftDTO.RAB = airCraftDTO.RAB.ToUpper();
             //-----------------------------------------------
 
-            bool rabValidation = Utils.ValidateRab(airCraftInsert.RAB);
+            bool rabValidation = Utils.ValidateRab(airCraftDTO.RAB);
             if (rabValidation == false) return BadRequest("The Informed RAB is not valid. Try using a 6 characters RAB including - after the prefix. Ex: ( EX-ABC ).");
 
-            var company = CompanyAPIConsummer.GetOneCNPJ(airCraftInsert.Company.CNPJ).Result;
+            var company = CompanyAPIConsummer.GetOneCNPJ(airCraftDTO.CompanyCnpj).Result;
             if (company == null) return NotFound("Invalid CNPJ. Company not found.");
-            airCraftInsert.Company = company;
 
-            var airCraft = _airCraftService.GetOneByRAB(airCraftInsert.RAB);
+            var airCraft = _airCraftService.GetOneByRAB(airCraftDTO.RAB);
             if (airCraft != null)
                return StatusCode((int)HttpStatusCode.Conflict, "Could not proceed with this request. There is already an aircraft registered with this RAB code!");
 
-            _airCraftService.Create(airCraftInsert);
+            AirCraft aircraft = new AirCraft { Capacity = airCraftDTO.Capacity, Company = company, DtLastFlight = DateTime.Now,
+            DtRegistry = DateTime.Now, RAB = airCraftDTO.RAB};
 
-            return Ok(airCraftInsert);
+            _airCraftService.Create(aircraft);
+
+            return Ok(aircraft);
         }
         //-----------------------------------------------------------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------------------
