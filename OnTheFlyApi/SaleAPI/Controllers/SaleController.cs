@@ -5,6 +5,7 @@ using SaleAPI.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SaleAPI.Controllers
 {
@@ -22,35 +23,33 @@ namespace SaleAPI.Controllers
         public ActionResult<Sale> Get(DateTime date, string aircraft)
         {
             var sale = _saleService.Get().Where(saleIn => saleIn.Flight.Departure == date && saleIn.Flight.Plane.RAB == aircraft).FirstOrDefault();
-            if (sale == null) return NotFound("Venda não localizada");
+            if (sale == null) return NotFound("Sale not found!!!");
             return Ok(sale);
         }
 
         [HttpPost("CreateSale")]
-        public ActionResult<AirCraft> Create(Sale sale)
+        public async Task<ActionResult<AirCraft>> Create(SaleDTO saleDTO)
         {
-            int count = 0;
             //busca o voo para cadastroartur
-            var flight = FlightAPIConsummer.GetFlight(sale.Flight.Departure, sale.Flight.Plane.RAB, sale.Flight.Destiny.IATA).Result;
-            if (flight == null) return NotFound("Voo não localizado!!!");
+            var flight = await FlightAPIConsummer.GetFlight(saleDTO.Flight.Departure, saleDTO.Flight.Plane.RAB, saleDTO.Flight.Destiny.IATA);
+            if (flight == null) return NotFound("\r\nFlight not found!!!");
             //verifica se há passagem para todos os passageiros da solicitacao de compra
-            else if (flight.Sales <= sale.Passenger.Count) return BadRequest("Não há passagens para todos os passageiros");
-            //verifica se menores de 18 anos está tentndo comprar passagens
-            else if ((DateTime.Now - sale.Passenger[0].DtBirth).TotalDays / 365 < 18) return BadRequest("Passegeiros menores de idade não podem efetuar compras");
-            //verifica se há passageiros com restrições
-            else foreach (var passenger in sale.Passenger) if (passenger.Status == true) return BadRequest("Existe passegeiro impedido de viajar incluso na solicitação");
-            //verifica se todos os passageiros da passagem estão cadastrados no banco de dados do aeroporto
-            var lstPassenger = PassengersAPIConsummer.GetPassengerList().Result;
-            foreach (var passenger in lstPassenger)
-                foreach (var passengerIndex in sale.Passenger) if (passenger.CPF == passengerIndex.CPF) count += 1;
-            if (count != sale.Passenger.Count) return BadRequest("CPF da venda não localizado no banco de dados do aeroporto");
-            //muda o status da venda para para true confirmando a venda
-            sale.Sold = true;
+            else if (flight.Sales <= saleDTO.PassengersCPFs.Count) return BadRequest("\r\nThere are no tickets for all passengers");
+            var lstPassengers = await PassengersAPIConsummer.PostListPassengers(saleDTO.PassengersCPFs);
+            if (lstPassengers == null) return BadRequest("There is a problem with the passengers on the flight");
+
+            Sale sale = new()
+            {
+                Flight = flight,
+                Passenger = lstPassengers,
+                Reserved = saleDTO.Reserved,
+                Sold = true
+            };
+
             //insere no banco de dados
             _saleService.Create(sale);
-            if (CreatedAtRoute("GetSale", new { date = sale.Flight.Departure.ToString(), rab = sale.Flight.Plane.RAB.ToString() }, sale).StatusCode == 200) { /*api para editar quantidades de vendas do voo;*/}
-            /*metodo put para atualizar quantidade de passagens vendidas do voo (endpoint artur)*/
-            return Ok();
+            await FlightAPIConsummer.UpdateFlightSales(sale.Flight);
+            return CreatedAtRoute("GetSale", new { date = saleDTO.Flight.Departure.ToString(), rab = saleDTO.Flight.Plane.RAB.ToString(), sale });
         }
 
         [HttpPut("PutStatusReserved/{date}/{status}/{aircraft}/{cpf}")]
@@ -59,28 +58,10 @@ namespace SaleAPI.Controllers
             var sale = _saleService.Get().Where(saleIn => saleIn.Flight.Departure == date
             && saleIn.Flight.Plane.RAB == aircraft && saleIn.Passenger[0].CPF == cpf).FirstOrDefault();
             if (sale == null) return BadRequest("Impossível alterar. Venda não localizada");
-            //
-            /* acionar endpoint de get de passageiros restritos (endpoint dany)*/
-            //
+
             sale.Reserved = status;
             _saleService.Put(sale);
             return NoContent();
         }
-
-        //confirmar com pestana
-
-        //[HttpPut("PutStatusCancelFlight")]
-        //public ActionResult<Sale> Put(Flight flight)
-        //{
-        //    var sale = _saleService.Get().Where(saleIn => saleIn.Flight.Departure == flight.Departure
-        //    && saleIn.Flight.Plane.RAB == flight.Plane.RAB).FirstOrDefault();
-        //    if (sale == null) return BadRequest("Impossível alterar. Venda não localizada");
-        //    //
-        //    /* acionar endpoint de get de passageiros restritos (endpoint dany)*/
-        //    //
-        //    sale.Reserved = status;
-        //    _saleService.Put(sale);
-        //    return NoContent();
-        //}
     }
 }
