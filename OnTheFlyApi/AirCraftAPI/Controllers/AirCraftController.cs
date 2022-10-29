@@ -14,7 +14,7 @@ namespace AirCraftAPI.Controllers
     public class AirCraftController : ControllerBase
     {
         private readonly AirCraftService _airCraftService;
-        private readonly DeletedAirCraftService _deletedAirCraftService;
+        private readonly DeletedAirCraftService _deletedAirCraftService; 
         public AirCraftController(AirCraftService airCraftService, DeletedAirCraftService deletedAirCraftService)
         {
             _airCraftService = airCraftService;
