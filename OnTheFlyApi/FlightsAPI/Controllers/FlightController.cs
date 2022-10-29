@@ -37,7 +37,7 @@ namespace FlightsAPI.Controllers
         [HttpGet("GetOne/{fullDate}/{rabPlane}/{destiny}", Name = "GetOne")]
         public ActionResult<Flight> Get(DateTime fullDate, string rabPlane, string destiny)
         {
-            var flight = _flightService.GetOne(fullDate, rabPlane, destiny);
+            var flight = _flightService.GetOne(fullDate, rabPlane.ToUpper(), destiny.ToUpper());
 
             if (flight == null) return NotFound();
 
@@ -72,7 +72,7 @@ namespace FlightsAPI.Controllers
         [HttpPut("ModifyFlightSales", Name = "ModifyFlightSales")]
         public ActionResult<Flight> UpdateSalesFlight(Flight flight)
         {
-            var flightUpdate = _flightService.GetOne(flight.Departure, flight.Plane.RAB, flight.Destiny.IATA);
+            var flightUpdate = _flightService.GetOne(flight.Departure, flight.Plane.RAB.ToUpper(), flight.Destiny.IATA.ToUpper());
 
             if (flightUpdate == null) return NotFound();
 
@@ -84,7 +84,7 @@ namespace FlightsAPI.Controllers
         [HttpPut("ModifyFlightStatus/{fullDate}/{rabPlane}/{destiny}/{newStatus}", Name = "ModifyFlightStatus")]
         public ActionResult<Flight> UpdateStatus(DateTime fullDate, string rabPlane, string destiny, bool newStatus)
         {
-            var flightUpdate = _flightService.GetOne(fullDate, rabPlane, destiny);
+            var flightUpdate = _flightService.GetOne(fullDate, rabPlane.ToUpper(), destiny.ToUpper());
             if (flightUpdate == null) return NotFound();
 
             flightUpdate.Status = newStatus;
