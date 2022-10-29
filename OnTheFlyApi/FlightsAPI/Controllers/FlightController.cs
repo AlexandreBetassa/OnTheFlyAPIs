@@ -68,7 +68,7 @@ namespace FlightsAPI.Controllers
             _flightService.Create(flight);
 
             airCraft.DtLastFlight = dateFlight;
-            var lastPlaneFlight = AirCraftAPIConsummer.UpdateAirCraft(rab, dateFlight);
+            var lastPlaneFlight = AirCraftAPIConsummer.UpdateAirCraft(airCraft);
 
             return Ok(flight);
         }
