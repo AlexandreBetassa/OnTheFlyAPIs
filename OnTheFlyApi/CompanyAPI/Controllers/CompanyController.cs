@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using APIsConsummers;
 using CompanyAPI.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models;
+using System.Threading.Tasks;
 
 namespace CompanyAPI.Controllers
 {
@@ -24,7 +24,7 @@ namespace CompanyAPI.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Company> Create(CompanyDTO companyDTO, string rab, int capacity)
+        public async Task<ActionResult<Company>> Create(CompanyDTO companyDTO, string rab, int capacity)
         {
             if (!Utils.ValidateCnpj(companyDTO.CNPJ)) return BadRequest();
 
@@ -69,7 +69,7 @@ namespace CompanyAPI.Controllers
                 DtLastFlight = DateTime.Now
             };
 
-            var savedAirCraft = AirCraftAPIConsummer.PostAirCraft(airCraft).Result;
+            var savedAirCraft = await AirCraftAPIConsummer.PostAirCraft(airCraft);
 
             if (!savedAirCraft) company.Status = true;
 
