@@ -56,6 +56,8 @@ namespace CompanyAPI.Controllers
                 }
             };
 
+            if (!Utils.ValidateCompanyTime(company))return BadRequest("You cannot register companies that are less than 6 months old");
+
             if (_restrictedCompanyService.GetOneCNPJ(companyDTO.CNPJ) != null) company.Status = true;
 
             _companyService.Create(company);
@@ -64,20 +66,22 @@ namespace CompanyAPI.Controllers
             {
                 Capacity = capacity,
                 RAB = rab,
-                CompanyCnpj = unformattedCNPJ
+                CompanyCnpj = company.CNPJ
             };
 
             var savedAirCraft = AirCraftAPIConsummer.PostAirCraft(airCraft).Result;
 
             if (!savedAirCraft)
             {
-                _companyService.Delete(company);
+                Delete(company.CNPJ.Replace(".","").Replace("/","").Replace("-",""));
                 return BadRequest("An error occurred in the aircraft registration");
             }
            
-
             return Ok(company);
         }
+
+
+
 
         #region GETs
         [HttpGet]
@@ -96,6 +100,7 @@ namespace CompanyAPI.Controllers
             return Ok(company);
         }
         #endregion
+
 
 
         #region PUTs
@@ -203,6 +208,8 @@ namespace CompanyAPI.Controllers
             return Ok(company);
         }
         #endregion
+
+
 
 
         [HttpDelete("{cnpj}")]
