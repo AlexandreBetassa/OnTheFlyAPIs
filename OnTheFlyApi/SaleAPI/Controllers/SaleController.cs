@@ -23,7 +23,7 @@ namespace SaleAPI.Controllers
         public ActionResult<Sale> Get(DateTime date, string aircraft)
         {
             var sale = _saleService.Get().Where(saleIn => saleIn.Flight.Departure == date && saleIn.Flight.Plane.RAB == aircraft).FirstOrDefault();
-            if (sale == null) return NotFound("Venda não localizada");
+            if (sale == null) return NotFound("Sale not found!!!");
             return Ok(sale);
         }
 
@@ -58,28 +58,10 @@ namespace SaleAPI.Controllers
             var sale = _saleService.Get().Where(saleIn => saleIn.Flight.Departure == date
             && saleIn.Flight.Plane.RAB == aircraft && saleIn.Passenger[0].CPF == cpf).FirstOrDefault();
             if (sale == null) return BadRequest("Impossível alterar. Venda não localizada");
-            //
-            /* acionar endpoint de get de passageiros restritos (endpoint dany)*/
-            //
+            
             sale.Reserved = status;
             _saleService.Put(sale);
             return NoContent();
         }
-
-        //confirmar com pestana
-
-        //[HttpPut("PutStatusCancelFlight")]
-        //public ActionResult<Sale> Put(Flight flight)
-        //{
-        //    var saleDTO = _saleService.Get().Where(saleIn => saleIn.Flight.Departure == flight.Departure
-        //    && saleIn.Flight.Plane.RAB == flight.Plane.RAB).FirstOrDefault();
-        //    if (saleDTO == null) return BadRequest("Impossível alterar. Venda não localizada");
-        //    //
-        //    /* acionar endpoint de get de passageiros restritos (endpoint dany)*/
-        //    //
-        //    saleDTO.Reserved = status;
-        //    _saleService.Put(saleDTO);
-        //    return NoContent();
-        //}
     }
 }

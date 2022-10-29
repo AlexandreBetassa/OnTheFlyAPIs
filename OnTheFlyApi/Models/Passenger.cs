@@ -1,6 +1,7 @@
 using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Models
 {
@@ -16,6 +17,7 @@ namespace Models
         public DateTime DtBirth { get; set; }
         public DateTime DtRegister { get; set; }
         public bool Status { get; set; }
+        [JsonPropertyName("Address")]
         public Address Address { get; set; }
 
     }

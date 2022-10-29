@@ -6,6 +6,7 @@ using Models;
 using System;
 using System.Net;
 using APIsConsummers;
+using System.Threading.Tasks;
 
 namespace AirCraftAPI.Controllers
 {
@@ -14,7 +15,7 @@ namespace AirCraftAPI.Controllers
     public class AirCraftController : ControllerBase
     {
         private readonly AirCraftService _airCraftService;
-        private readonly DeletedAirCraftService _deletedAirCraftService; 
+        private readonly DeletedAirCraftService _deletedAirCraftService;
         public AirCraftController(AirCraftService airCraftService, DeletedAirCraftService deletedAirCraftService)
         {
             _airCraftService = airCraftService;
@@ -52,28 +53,25 @@ namespace AirCraftAPI.Controllers
         //-----------------------------------------------------------------------------------------------------------------
 
         [HttpPost]
-        public ActionResult<AirCraft> CreateAirCraft(AirCraftDTO airCraftDTO)
+        public async Task<ActionResult<AirCraft>> CreateAirCraft([FromBody] AirCraft airCraft)
         {
             //passar todos os dados inseridos para UpperCase:
-            airCraftDTO.RAB = airCraftDTO.RAB.ToUpper();
+            airCraft.RAB = airCraft.RAB.ToUpper();
             //-----------------------------------------------
 
-            bool rabValidation = Utils.ValidateRab(airCraftDTO.RAB);
+            bool rabValidation = Utils.ValidateRab(airCraft.RAB);
             if (rabValidation == false) return BadRequest("The Informed RAB is not valid. Try using a 6 characters RAB including - after the prefix. Ex: ( EX-ABC ).");
 
-            var company = CompanyAPIConsummer.GetOneCNPJ(airCraftDTO.CompanyCnpj).Result;
+            var company = await CompanyAPIConsummer.GetOneCNPJ(airCraft.Company.CNPJ);
             if (company == null) return NotFound("Invalid CNPJ. Company not found.");
 
-            var airCraft = _airCraftService.GetOneByRAB(airCraftDTO.RAB);
             if (airCraft != null)
-               return StatusCode((int)HttpStatusCode.Conflict, "Could not proceed with this request. There is already an aircraft registered with this RAB code!");
+                return StatusCode((int)HttpStatusCode.Conflict, "Could not proceed with this request. There is already an aircraft registered with this RAB code!");
 
-            AirCraft aircraft = new AirCraft { Capacity = airCraftDTO.Capacity, Company = company, DtLastFlight = DateTime.Now,
-            DtRegistry = DateTime.Now, RAB = airCraftDTO.RAB};
 
-            _airCraftService.Create(aircraft);
+            _airCraftService.Create(airCraft);
 
-            return Ok(aircraft);
+            return Ok(airCraft);
         }
         //-----------------------------------------------------------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------------------

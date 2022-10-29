@@ -1,8 +1,6 @@
 ﻿using Models;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Text.Json;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,17 +15,17 @@ namespace APIsConsummers
             {
                 HttpResponseMessage response = await _airCraftClient.GetAsync($"https://localhost:44311/api/AirCraft/GetByRAB/{rab}");
                 var airCraftJson = await response.Content.ReadAsStringAsync();
-                if (response.IsSuccessStatusCode) return JsonConvert.DeserializeObject<AirCraft>(airCraftJson);
+                if (response.IsSuccessStatusCode) return JsonSerializer.Deserialize<AirCraft>(airCraftJson);
                 else return null;
             }
         }
 
 
-        public static async Task<bool> PostAirCraft(AirCraftDTO aircraft)
+        public static async Task<bool> PostAirCraft(AirCraft aircraft)
         {
             using (HttpClient _airCraftClient = new HttpClient())
             {
-                string jsonString = JsonConvert.SerializeObject(aircraft);
+                string jsonString = JsonSerializer.Serialize(aircraft);
                 HttpContent http = new StringContent(jsonString, Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await _airCraftClient.PostAsync($"https://localhost:44311/api/AirCraft/", http);
 
@@ -41,7 +39,7 @@ namespace APIsConsummers
         {
             using (HttpClient _airCraftClient = new HttpClient())
             {
-                string jsonString = JsonConvert.SerializeObject(updateLastFlight);
+                string jsonString = JsonSerializer.Serialize(updateLastFlight);
                 HttpContent http = new StringContent(jsonString, Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await _airCraftClient.PostAsync($"https://localhost:44311/api/AirCraft/ModifyAirCraftDtLastFlight/{rab}/{updateLastFlight}", http);
 
@@ -54,7 +52,7 @@ namespace APIsConsummers
         //{
         //    using (HttpClient _airCraftClient = new HttpClient())
         //    {
-        //        string jsonString = JsonConvert.SerializeObject(aircraft);
+        //        string jsonString = JsonSerializer.Serialize(aircraft);
         //        HttpContent http = new StringContent(jsonString, Encoding.UTF8, "application/json");
         //        HttpResponseMessage response = await _airCraftClient.PostAsync($"https://localhost:44311/api/AirCraft/{aircraft}", http); // alterar endpoint!
 

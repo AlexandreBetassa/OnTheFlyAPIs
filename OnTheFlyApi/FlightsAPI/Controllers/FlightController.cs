@@ -54,7 +54,7 @@ namespace FlightsAPI.Controllers
             if (airCraft == null) return NotFound();
             if (airCraft.Company.Status == true) return BadRequest("Restricted Airline, flights can only be registered for unrestricted airlines.");
 
-            Airport airport = new Airport{Country="BR", State = "SP", IATA = destiny}; /*Consumo api pestana*/
+            Airport airport = new Airport{Country="BR", /*State = "SP",*/ IATA = destiny}; /*Consumo api pestana*/
             if (airport == null) return NotFound();
 
             if (dateFlight < DateTime.Now) return BadRequest("Invalid Date, the date must be a future date the current date.");

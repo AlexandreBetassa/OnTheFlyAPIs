@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
 
@@ -15,7 +14,7 @@ namespace Models
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
         public string Id { get; set; }
         public string CNPJ { get; set; }
-        public string Name{ get; set; }
+        public string Name { get; set; }
         public string NameOp { get; set; }
         public DateTime DtOpen { get; set; }
         public bool? Status { get; set; }
@@ -24,7 +23,7 @@ namespace Models
     }
     public class CompanyDTO
     {
-       
+
         [Required]
         [StringLength(19, ErrorMessage = "Numero de CNPJ Invalido")]
         public string CNPJ { get; set; }

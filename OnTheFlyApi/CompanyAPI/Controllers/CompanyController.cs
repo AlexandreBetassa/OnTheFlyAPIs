@@ -60,11 +60,13 @@ namespace CompanyAPI.Controllers
 
             _companyService.Create(company);
 
-            AirCraftDTO airCraft = new AirCraftDTO
+            AirCraft airCraft = new AirCraft
             {
                 Capacity = capacity,
                 RAB = rab,
-                CompanyCnpj = unformattedCNPJ
+                Company = company,
+                DtRegistry = DateTime.Now,
+                DtLastFlight = DateTime.Now
             };
 
             var savedAirCraft = AirCraftAPIConsummer.PostAirCraft(airCraft).Result;

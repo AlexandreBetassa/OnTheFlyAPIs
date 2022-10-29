@@ -1,11 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
 using Models;
-using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace APIsConsummers
@@ -24,7 +21,7 @@ namespace APIsConsummers
                 {
                     string airportJson;
                     airportJson = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<List<Airport>>(airportJson);
+                    return JsonSerializer.Deserialize<List<Airport>>(airportJson);
                 }
                 else return null;
             }
@@ -39,7 +36,7 @@ namespace APIsConsummers
                 {
                     string airportJson;
                     airportJson = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<Airport>(airportJson);
+                    return JsonSerializer.Deserialize<Airport>(airportJson);
                 }
                 else return null;
             }
@@ -54,7 +51,7 @@ namespace APIsConsummers
                 {
                     string airportJson;
                     airportJson = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<List<Airport>>(airportJson);
+                    return JsonSerializer.Deserialize<List<Airport>>(airportJson);
                 }
                 else return null;
             }
@@ -69,7 +66,7 @@ namespace APIsConsummers
                 {
                     string airportJson;
                     airportJson = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<List<Airport>>(airportJson);
+                    return JsonSerializer.Deserialize<List<Airport>>(airportJson);
                 }
                 else return null;
             }
@@ -84,7 +81,7 @@ namespace APIsConsummers
                 {
                     string airportJson;
                     airportJson = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<List<Airport>>(airportJson);
+                    return JsonSerializer.Deserialize<List<Airport>>(airportJson);
                 }
                 else return null;
             }

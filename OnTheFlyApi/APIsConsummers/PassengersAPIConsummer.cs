@@ -1,11 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
-using Models;
-using Newtonsoft.Json;
-using System;
+﻿using Models;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace APIsConsummers
@@ -19,7 +16,7 @@ namespace APIsConsummers
             {
                 HttpResponseMessage response = await client.GetAsync($"https://localhost:44355/api/Passenger/GetByCPF/{unformattedCpf}");
                 var passengerJson = await response.Content.ReadAsStringAsync();
-                if (response.IsSuccessStatusCode) return JsonConvert.DeserializeObject<Passenger>(passengerJson);
+                if (response.IsSuccessStatusCode) return JsonSerializer.Deserialize<Passenger>(passengerJson);
                 else return null;
             }
         }
@@ -33,7 +30,7 @@ namespace APIsConsummers
                     await client.GetAsync($"https://localhost:44355/api/Passenger/GetAll");
                 var passengerJsonArray = await response.Content.ReadAsStringAsync();
                 if (response.IsSuccessStatusCode)
-                    return JsonConvert.DeserializeObject<List<Passenger>>(passengerJsonArray);
+                    return JsonSerializer.Deserialize<List<Passenger>>(passengerJsonArray);
                 else return null;
             }
         }
@@ -46,7 +43,7 @@ namespace APIsConsummers
                 HttpResponseMessage response = await client.GetAsync($"https://localhost:44355/api/RestrictedPassenger/GetAll");
                 var restrictedPassengerJsonArray = await response.Content.ReadAsStringAsync();
                 if (response.IsSuccessStatusCode)
-                    return JsonConvert.DeserializeObject<List<RestrictedPassenger>>(restrictedPassengerJsonArray);
+                    return JsonSerializer.Deserialize<List<RestrictedPassenger>>(restrictedPassengerJsonArray);
                 else return null;
             }
         }
@@ -56,10 +53,10 @@ namespace APIsConsummers
         {
             using (HttpClient _passengerClient = new HttpClient())
             {
-                string jsonListPassenger = JsonConvert.SerializeObject(lstPassenger);
+                string jsonListPassenger = JsonSerializer.Serialize(lstPassenger);
                 HttpContent http = new StringContent(jsonListPassenger, Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await _passengerClient.PostAsync($"https://localhost:44355/api/Passenger/Create/", http);
-                if (response.IsSuccessStatusCode) return JsonConvert.DeserializeObject<List<Passenger>>(await response.Content.ReadAsStringAsync());
+                if (response.IsSuccessStatusCode) return JsonSerializer.Deserialize<List<Passenger>>(await response.Content.ReadAsStringAsync());
             }
             return null;
         }

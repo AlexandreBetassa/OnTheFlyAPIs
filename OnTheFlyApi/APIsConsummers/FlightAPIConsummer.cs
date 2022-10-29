@@ -1,10 +1,8 @@
 ﻿using Models;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace APIsConsummers
@@ -17,7 +15,7 @@ namespace APIsConsummers
             {
                 HttpResponseMessage response = await flightClient.GetAsync($"https://localhost:44348/api/Flight/GetOne/{fullDate}/{rabPlane}/{destiny}/");
                 var flightJson = await response.Content.ReadAsStringAsync();
-                if (response.IsSuccessStatusCode) return JsonConvert.DeserializeObject<Flight>(flightJson);
+                if (response.IsSuccessStatusCode) return JsonSerializer.Deserialize<Flight>(flightJson);
                 else return null;
             }
         }
@@ -26,7 +24,7 @@ namespace APIsConsummers
         {
             using (HttpClient _flightClient = new HttpClient())
             {
-                string flightJson = JsonConvert.SerializeObject(flight);
+                string flightJson = JsonSerializer.Serialize(flight);
                 HttpContent flightClientContent = new StringContent(flightJson, Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await _flightClient.PutAsync($"https://localhost:44348/api/Flight/ModifyFlightSales", flightClientContent);
 

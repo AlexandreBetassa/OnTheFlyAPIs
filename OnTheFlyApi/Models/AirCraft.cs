@@ -45,6 +45,6 @@ namespace Models
         public DateTime? DtLastFlight { get; set; }
 
         [Required]
-        public string CompanyCnpj { get; set; }
+        public Company CompanyCnpj { get; set; }
     }
 }
