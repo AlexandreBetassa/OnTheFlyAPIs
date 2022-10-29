@@ -26,14 +26,14 @@ namespace CompanyAPI.Controllers
         [HttpPost]
         public ActionResult<Company> Create(CompanyDTO companyDTO, string rab, int capacity)
         {
-            if (!Utils.ValidateCnpj(companyDTO.CNPJ)) return BadRequest();
-
-            if (_companyService.GetOneCNPJ(companyDTO.CNPJ) != null) return BadRequest();
-
+            if (!Utils.ValidateCnpj(companyDTO.CNPJ)) return BadRequest("Invalid CNPJ");
+                       
             var unformattedCNPJ = companyDTO.CNPJ;
             companyDTO.CNPJ = Utils.FormatCNPJ(unformattedCNPJ);
 
-            if (companyDTO.NameOp == null) companyDTO.NameOp = companyDTO.Name;
+            if (_companyService.GetOneCNPJ(companyDTO.CNPJ) != null) return BadRequest("This CNPJ is already registered");
+
+            if ((companyDTO.NameOp == null) || (companyDTO.NameOp == "string")) companyDTO.NameOp = companyDTO.Name;
 
             var address = ViaCepAPIConsummer.GetAdress(companyDTO.Address.ZipCode).Result;
             if (address == null) return NotFound();

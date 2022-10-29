@@ -17,16 +17,16 @@ namespace CompanyAPI.Controllers
             _restritedCompany = restritedCompany;
         }
         [HttpPost]
-        public ActionResult<RestrictedCompany> Create(RestrictedCompany cnpj)
+        public ActionResult<RestrictedCompany> Create(RestrictedCompany restritedCnpj)
         {
-            var unformattedCNPJ = cnpj;
-            cnpj = Utils.FormatCNPJ(unformattedCNPJ);
+            string unformattedCNPJ = restritedCnpj.CNPJ;
+            restritedCnpj.CNPJ = Utils.FormatCNPJ(unformattedCNPJ);
 
-            var restritedCompany = _restritedCompany.GetOneCNPJ(cnpj.CNPJ);
+            var restritedCompany = _restritedCompany.GetOneCNPJ(restritedCnpj.CNPJ);
             if (restritedCompany != null) return NoContent() ;
 
-            _restritedCompany.Create(cnpj);
-            return Ok(cnpj);
+            _restritedCompany.Create(restritedCnpj);
+            return Ok(restritedCnpj);
         }
 
         [HttpGet]
