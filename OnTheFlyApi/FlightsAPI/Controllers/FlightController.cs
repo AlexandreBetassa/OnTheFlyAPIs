@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using APIsConsummers;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace FlightsAPI.Controllers
 {
@@ -45,9 +46,9 @@ namespace FlightsAPI.Controllers
         }
 
         [HttpPost("{rab}/{destiny}/{dateFlight}")]
-        public ActionResult<Flight> Create(string rab, DateTime dateFlight, string destiny)
+        public async Task<ActionResult<Flight>> Create(string rab, DateTime dateFlight, string destiny)
         {
-            AirCraft airCraft = AirCraftAPIConsummer.GetAirCraft(rab.ToUpper()).Result;
+            AirCraft airCraft = await AirCraftAPIConsummer.GetAirCraft(rab.ToUpper());
             if (airCraft == null) return NotFound();
             if (airCraft.Company.Status == true) return BadRequest("Restricted Airline, flights can only be registered for unrestricted airlines.");
 
@@ -58,13 +59,16 @@ namespace FlightsAPI.Controllers
 
             Flight flight = new() { Plane = airCraft, Departure = dateFlight, Destiny = airport, Sales = 0, Status = true };
 
-            var lstFlight = _flightService.Get();
-            var flighOfListWithEqualInformation = lstFlight.FirstOrDefault(f => f.Plane.RAB == flight.Plane.RAB && f.Departure == dateFlight);
+            var flightList = _flightService.Get();
+            var flighOfListWithEqualInformation = flightList.FirstOrDefault(f => f.Plane.RAB == flight.Plane.RAB && f.Departure == dateFlight);
 
             if (flighOfListWithEqualInformation != null)
                 if (flighOfListWithEqualInformation.Plane.RAB == flight.Plane.RAB && flighOfListWithEqualInformation.Departure == flight.Departure) return BadRequest("This flight information already exists, cannot register more than one flight with the same plane on the same date.");
 
             _flightService.Create(flight);
+
+            airCraft.DtLastFlight = dateFlight;
+            var lastPlaneFlight = AirCraftAPIConsummer.UpdateAirCraft(rab, dateFlight);
 
             return Ok(flight);
         }
