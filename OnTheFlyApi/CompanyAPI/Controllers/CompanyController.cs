@@ -200,6 +200,9 @@ namespace CompanyAPI.Controllers
         [HttpDelete("{cnpj}")]
         public ActionResult<Company> Delete(string cnpj)
         {
+            var unformattedCNPJ = cnpj;
+            cnpj = Utils.FormatCNPJ(unformattedCNPJ);
+
             var company = _companyService.GetOneCNPJ(cnpj);
             if (company == null) return NotFound();
 
