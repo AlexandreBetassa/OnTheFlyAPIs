@@ -31,8 +31,8 @@ namespace Models
         [JsonProperty("localidade")]
         public string City { get; set; }
 
-        [MaxLength(2)]
-        [JsonProperty("uf")]
+        //[MaxLength(2)]
+        //[JsonProperty("uf")]
         public string State { get; set; }
 
     }
