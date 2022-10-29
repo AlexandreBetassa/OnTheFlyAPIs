@@ -32,11 +32,11 @@ namespace SaleAPI.Controllers
         {
             //busca o voo para cadastroartur
             var flight = await FlightAPIConsummer.GetFlight(saleDTO.Flight.Departure, saleDTO.Flight.Plane.RAB, saleDTO.Flight.Destiny.IATA);
-            if (flight == null) return NotFound("Voo não localizado!!!");
+            if (flight == null) return NotFound("\r\nFlight not found!!!");
             //verifica se há passagem para todos os passageiros da solicitacao de compra
-            else if (flight.Sales <= saleDTO.PassengersCPFs.Count) return BadRequest("Não há passagens para todos os passageiros");
+            else if (flight.Sales <= saleDTO.PassengersCPFs.Count) return BadRequest("\r\nThere are no tickets for all passengers");
             var lstPassengers = await PassengersAPIConsummer.PostListPassengers(saleDTO.PassengersCPFs);
-            if (lstPassengers == null) return BadRequest("Há um problema com os passegeiros do voo");
+            if (lstPassengers == null) return BadRequest("There is a problem with the passengers on the flight");
 
             Sale sale = new()
             {
