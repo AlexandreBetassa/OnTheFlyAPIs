@@ -42,6 +42,7 @@ namespace AirCraftAPI.Controllers
         [HttpGet("GetByRAB/{rab}")]
         public ActionResult<AirCraft> GetByRAB(string rab)
         {
+            rab = rab.ToUpper();
             var airCraft = _airCraftService.GetOneByRAB(rab);
             if (airCraft == null)
                 return NotFound();
@@ -81,6 +82,8 @@ namespace AirCraftAPI.Controllers
         [HttpPut("ModifyAirCraftCapacity/{rab}/{newCapacity}")]
         public ActionResult<AirCraft> UpdateCapacity(string rab, int newCapacity)
         {
+
+            rab = rab.ToUpper();
             var aircraftUpdate = _airCraftService.GetOneByRAB(rab);
             if (aircraftUpdate == null)
                 return NotFound();
@@ -104,6 +107,7 @@ namespace AirCraftAPI.Controllers
         [HttpPut("ModifyAirCraftDtLastFlight/{rab}/{updateLastFlight}")]
         public ActionResult<AirCraft> UpdateLastFlight(string rab, DateTime updateLastFlight)
         {
+            rab = rab.ToUpper();
             var aircraftUpdate = _airCraftService.GetOneByRAB(rab);
             if (aircraftUpdate == null)
                 return NotFound();
@@ -120,6 +124,7 @@ namespace AirCraftAPI.Controllers
         [HttpDelete("RemoveAirCraft/{rab}")]
         public ActionResult<AirCraft> DeleteAirCraft(string rab)
         {
+            rab = rab.ToUpper();
             var airCraft = _airCraftService.GetOneByRAB(rab);
             if (airCraft == null)
                 return NotFound();
