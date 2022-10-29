@@ -23,13 +23,13 @@ namespace APIsConsummers
         }
 
 
-        public static async Task<bool> PostAirCraft(AirCraft aircraft)
+        public static async Task<bool> PostAirCraft(AirCraftDTO aircraft)
         {
             using (HttpClient _airCraftClient = new HttpClient())
             {
                 string jsonString = JsonConvert.SerializeObject(aircraft);
                 HttpContent http = new StringContent(jsonString, Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await _airCraftClient.PostAsync($"https://localhost:44311/api/AirCraft/{aircraft}", http);
+                HttpResponseMessage response = await _airCraftClient.PostAsync($"https://localhost:44311/api/AirCraft/", http);
 
                 if (response.IsSuccessStatusCode) return true;
                 return false;
