@@ -23,7 +23,7 @@ namespace APIsConsummers
         }
 
 
-        public static async Task<bool> PostAirCraft(AirCraft aircraft)
+        public static async Task<bool> PostAirCraft(AirCraftDTO aircraft)
         {
             using (HttpClient _airCraftClient = new HttpClient())
             {

@@ -30,11 +30,11 @@ namespace AirCraftAPI.Controllers
 
         //Get All By CNPJ
         [HttpGet("GetByCnpj/{companyCnpj}")]
-        //public ActionResult<List<AirCraft>> GetAllByCnpj(string companyCnpj)
-        //{
-        //    //var aircraftList = _airCraftService.GetAllByCnpj(companyCnpj);
-        //    //return aircraftList;
-        //}
+        public ActionResult<List<AirCraft>> GetAllByCnpj(string companyCnpj)
+        {
+            var aircraftList = _airCraftService.GetAllByCnpj(companyCnpj);
+            return aircraftList;
+        }
         //-----------------------------------------------------------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------------------
 
@@ -52,29 +52,28 @@ namespace AirCraftAPI.Controllers
         //-----------------------------------------------------------------------------------------------------------------
 
         [HttpPost]
-        public ActionResult<AirCraft> CreateAirCraft(AirCraft airCraftInsert)
+        public ActionResult<AirCraft> CreateAirCraft(AirCraftDTO airCraftDTO)
         {
-            //   ----> VALIDAÇÕES A SEREM FEITAS AQUI   <----   //
+            //passar todos os dados inseridos para UpperCase:
+            airCraftDTO.RAB = airCraftDTO.RAB.ToUpper();
+            //-----------------------------------------------
 
-            // PRECISA ANTES DE FAZER A INSERCAO, VERIFICAR SE A COMPANHIA AEREA INFORMADA REALMENTE EXISTE CADASTRADA E SE
+            bool rabValidation = Utils.ValidateRab(airCraftDTO.RAB);
+            if (rabValidation == false) return BadRequest("The Informed RAB is not valid. Try using a 6 characters RAB including - after the prefix. Ex: ( EX-ABC ).");
 
-            //var company = CompanyAPIConsummer.GetOneCNPJ()
+            var company = CompanyAPIConsummer.GetOneCNPJ(airCraftDTO.CompanyCnpj).Result;
+            if (company == null) return NotFound("Invalid CNPJ. Company not found.");
 
-            // primeiro verifica se o RAB informado é valido:
-            //
-            //
-            //
-            var airCraft = _airCraftService.GetOneByRAB(airCraftInsert.RAB);
+            var airCraft = _airCraftService.GetOneByRAB(airCraftDTO.RAB);
             if (airCraft != null)
                return StatusCode((int)HttpStatusCode.Conflict, "Could not proceed with this request. There is already an aircraft registered with this RAB code!");
 
+            AirCraft aircraft = new AirCraft { Capacity = airCraftDTO.Capacity, Company = company, DtLastFlight = DateTime.Now,
+            DtRegistry = DateTime.Now, RAB = airCraftDTO.RAB};
 
-            // O RAB INFORMADO JÁ NÃO ESTÁ CADASTRADO
-            // ADICIONAR SYSTEMDATETIME.NOW NO CADASTRO
+            _airCraftService.Create(aircraft);
 
-            _airCraftService.Create(airCraftInsert);
-
-            return Ok(airCraftInsert);
+            return Ok(aircraft);
         }
         //-----------------------------------------------------------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------------------

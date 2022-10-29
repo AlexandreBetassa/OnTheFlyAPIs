@@ -108,7 +108,7 @@ namespace Models
             $"{formattedCNPJ.Substring(12, 2)}";
 
       
-        public bool ValidateRab(string rab)
+        public static bool ValidateRab(string rab)
         {
             string prefix = rab.Substring(0, 2);
             string sufix = rab.Substring(3, 3);
