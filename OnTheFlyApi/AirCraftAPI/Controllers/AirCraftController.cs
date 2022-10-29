@@ -32,6 +32,8 @@ namespace AirCraftAPI.Controllers
         [HttpGet("GetByCnpj/{companyCnpj}")]
         public ActionResult<List<AirCraft>> GetAllByCnpj(string companyCnpj)
         {
+            companyCnpj = Utils.FormatCNPJ(companyCnpj);
+
             var aircraftList = _airCraftService.GetAllByCnpj(companyCnpj);
             return aircraftList;
         }
@@ -96,28 +98,29 @@ namespace AirCraftAPI.Controllers
         }
 
 
-        //[HttpPut("ModifyAirCraftDtLastFlight/{aircraftUpdate}")]   //update usando o objeto completo ja atualizado
-        //public ActionResult<AirCraft> UpdateLastFlight(AirCraft aircraftUpdate)
-        //{
-        //    _airCraftService.Update(aircraftUpdate);
-
-        //    return NoContent();
-        //}
-
-        [HttpPut("ModifyAirCraftDtLastFlight/{rab}/{updateLastFlight}")]
-        public ActionResult<AirCraft> UpdateLastFlight(string rab, DateTime updateLastFlight)
+        [HttpPut("ModifyAirCraftDtLastFlight/")]   //update usando o objeto completo ja atualizado
+        public ActionResult<AirCraft> UpdateLastFlight(AirCraft aircraftUpdate)
         {
-            rab = rab.ToUpper();
-            var aircraftUpdate = _airCraftService.GetOneByRAB(rab);
-            if (aircraftUpdate == null)
-                return NotFound();
-
-            aircraftUpdate.DtLastFlight = updateLastFlight;
-
-            _airCraftService.Update(aircraftUpdate, rab);
+            aircraftUpdate.RAB = aircraftUpdate.RAB.ToUpper();
+            _airCraftService.Update(aircraftUpdate);
 
             return NoContent();
         }
+
+        //[HttpPut("ModifyAirCraftDtLastFlight/{rab}/{updateLastFlight}")]
+        //public ActionResult<AirCraft> UpdateLastFlight(string rab, DateTime updateLastFlight)
+        //{
+        //    rab = rab.ToUpper();
+        //    var aircraftUpdate = _airCraftService.GetOneByRAB(rab);
+        //    if (aircraftUpdate == null)
+        //        return NotFound();
+
+        //    aircraftUpdate.DtLastFlight = updateLastFlight;
+
+        //    _airCraftService.Update(aircraftUpdate, rab);
+
+        //    return NoContent();
+        //}
         //-----------------------------------------------------------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------------------
 
