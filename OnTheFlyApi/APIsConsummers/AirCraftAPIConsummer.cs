@@ -37,30 +37,30 @@ namespace APIsConsummers
         }
 
 
-        public static async Task<bool> UpdateAirCraft(string rab, DateTime updateLastFlight)
-        {
-            using (HttpClient _airCraftClient = new HttpClient())
-            {
-                string jsonString = JsonConvert.SerializeObject(updateLastFlight);
-                HttpContent http = new StringContent(jsonString, Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await _airCraftClient.PostAsync($"https://localhost:44311/api/AirCraft/ModifyAirCraftDtLastFlight/{rab}/{updateLastFlight}", http);
-
-                if (response.IsSuccessStatusCode) return true;
-                return false;
-            }
-        }
-
-        //public static async Task<bool> UpdateAirCraft(AirCraft aircraft)  /// tentativa de dar update com o objeto completo ja atualizado
+        //public static async Task<bool> UpdateAirCraft(string rab, DateTime updateLastFlight)
         //{
         //    using (HttpClient _airCraftClient = new HttpClient())
         //    {
-        //        string jsonString = JsonConvert.SerializeObject(aircraft);
+        //        string jsonString = JsonConvert.SerializeObject(updateLastFlight);
         //        HttpContent http = new StringContent(jsonString, Encoding.UTF8, "application/json");
-        //        HttpResponseMessage response = await _airCraftClient.PostAsync($"https://localhost:44311/api/AirCraft/{aircraft}", http); // alterar endpoint!
+        //        HttpResponseMessage response = await _airCraftClient.PostAsync($"https://localhost:44311/api/AirCraft/ModifyAirCraftDtLastFlight/{rab}/{updateLastFlight}", http);
 
         //        if (response.IsSuccessStatusCode) return true;
         //        return false;
         //    }
         //}
+
+        public static async Task<bool> UpdateAirCraft(AirCraft aircraft)  /// tentativa de dar update com o objeto completo ja atualizado
+        {
+            using (HttpClient _airCraftClient = new HttpClient())
+            {
+                string jsonString = JsonConvert.SerializeObject(aircraft);
+                HttpContent http = new StringContent(jsonString, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await _airCraftClient.PutAsync($"https://localhost:44311/api/AirCraft/ModifyAirCraftDtLastFlight/", http); // alterar endpoint!
+
+                if (response.IsSuccessStatusCode) return true;
+                return false;
+            }
+        }
     }
 }
