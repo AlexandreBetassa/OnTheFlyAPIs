@@ -35,22 +35,32 @@ namespace SaleAPI.Controllers
             if (flight == null) return NotFound("\r\nFlight not found!!!");
             //verifica se há passagem para todos os passageiros da solicitacao de compra
             else if (flight.Sales <= saleDTO.PassengersCPFs.Count) return BadRequest("\r\nThere are no tickets for all passengers");
-            var lstPassengers = await PassengersAPIConsummer.PostListPassenger(saleDTO.PassengersCPFs);
-            if (lstPassengers == null) return BadRequest("There is a problem with the passengers on the flight");
+            //var lstPassengers = await PassengersAPIConsummer.GetSalePassengersList(saleDTO.PassengersCPFs);
+            //if (lstPassengers == null) return BadRequest("There is a problem with the passengers on the flight");
 
-            Sale sale = new()
-            {
-                Flight = flight,
-                Passenger = lstPassengers,
-                Reserved = saleDTO.Reserved,
-                Sold = true
-            };
+            //Sale sale = new()
+            //{
+            //    Flight = flight,
+            //    Passenger = lstPassengers,
+            //    Reserved = saleDTO.Reserved,
+            //    Sold = true
+            //};
 
-            //insere no banco de dados
-            _saleService.Create(sale);
-            await FlightAPIConsummer.UpdateFlightSales(sale.Flight);
-            return CreatedAtRoute("GetSale", new { date = saleDTO.Flight.Departure.ToString(), rab = saleDTO.Flight.Plane.RAB.ToString(), sale });
+            ////insere no banco de dados
+            //_saleService.Create(sale);
+            //await FlightAPIConsummer.UpdateFlightSales(sale.Flight);
+            //return CreatedAtRoute("GetSale", new { date = saleDTO.Flight.Departure.ToString(), rab = saleDTO.Flight.Plane.RAB.ToString(), sale });
+            return Ok();
         }
+
+        // TEST BY DANIELDEV***********************
+        [HttpGet("TesteByDanielDev")]
+        public async Task<ActionResult<List<Passenger>>> Test()
+        {
+            return Ok(await PassengersAPIConsummer.GetSalePassengersList(
+                new() { new PassengerOnlyCPFDTO { UnformattedCPF = "57613539032" }, new PassengerOnlyCPFDTO { UnformattedCPF = "39066324821" } }, localPort: "5001"));
+        }
+        //***************************************
 
         [HttpPut("PutStatusReserved/{date}/{status}/{aircraft}/{cpf}")]
         public ActionResult<Sale> Put(DateTime date, string aircraft, bool status, string cpf)
