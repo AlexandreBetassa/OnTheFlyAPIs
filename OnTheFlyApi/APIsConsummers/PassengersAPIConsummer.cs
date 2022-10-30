@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Text.Json;
+using System;
+using System.Text;
 
 namespace APIsConsummers
 {
@@ -40,27 +42,26 @@ namespace APIsConsummers
         {
             using (HttpClient client = new HttpClient())
             {
-                HttpResponseMessage response = 
+                HttpResponseMessage response =
                     await client.GetAsync($"https://localhost:44355/api/RestrictedPassenger/GetAll");
                 var restrictedPassengerJsonArray = await response.Content.ReadAsStringAsync();
-                if (response.IsSuccessStatusCode) 
+                if (response.IsSuccessStatusCode)
                     return JsonSerializer.Deserialize<List<RestrictedPassenger>>(restrictedPassengerJsonArray);
                 else return null;
             }
         }
 
-        //Post example
-        //public static async Task<bool> PostPassenger(Passenger passenger, DateTime data)
-        //{
-        //    using (HttpClient _passengerClient = new HttpClient())
-        //    {
-        //        string jsonString = JsonSerializer.Serialize(data);
-        //        HttpContent http = new StringContent(jsonString, Encoding.UTF8, "application/json");
-        //        HttpResponseMessage response = await _passengerClient.PostAsync($"https://localhost:44355/api/Passenger/Create/{data}", http);
-
-        //        if (response.IsSuccessStatusCode) return true;
-        //        return false;
-        //    }
-        //}
+        public static async Task<List<Passenger>> PostListPassenger(List<String> lstPassengerDTO)
+        {
+            using (HttpClient _passengerClient = new HttpClient())
+            {
+                string jsonString = JsonSerializer.Serialize(lstPassengerDTO);
+                HttpContent http = new StringContent(jsonString, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await _passengerClient.PostAsync($"https://localhost:44355/api/Passenger/Create/", http); //alterar endpoint com o correto
+                var PassengerJsonArray = await response.Content.ReadAsStringAsync();
+                if (response.IsSuccessStatusCode) return JsonSerializer.Deserialize<List<Passenger>>(PassengerJsonArray);
+                return null;
+            }
+        }
     }
 }
