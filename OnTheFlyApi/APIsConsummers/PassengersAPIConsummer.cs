@@ -1,7 +1,9 @@
 ﻿using Models;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace APIsConsummers
@@ -48,18 +50,15 @@ namespace APIsConsummers
             }
         }
 
-        //Post example
-        //public static async Task<bool> PostPassenger(Passenger passenger, DateTime data)
-        //{
-        //    using (HttpClient _passengerClient = new HttpClient())
-        //    {
-        //        string jsonString = JsonConvert.SerializeObject(data);
-        //        HttpContent http = new StringContent(jsonString, Encoding.UTF8, "application/json");
-        //        HttpResponseMessage response = await _passengerClient.PostAsync($"https://localhost:44355/api/Passenger/Create/{data}", http);
+        public static async Task<List<Passenger>> PostListPassenger(Passenger passenger, DateTime data)
+        {
+            using (HttpClient _passengerClient = new HttpClient())
+            {
+                string jsonString = JsonConvert.SerializeObject(data);
+                HttpContent http = new StringContent(jsonString, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await _passengerClient.PostAsync($"https://localhost:44355/api/Passenger/Create/{data}", http);
 
-        //        if (response.IsSuccessStatusCode) return true;
-        //        return false;
-        //    }
-        //}
+            }
+        }
     }
 }
