@@ -1,9 +1,8 @@
 ﻿using FlightsAPI.DatabaseSettings;
-using MongoDB.Driver;
-using System.Collections.Generic;
 using Models;
-using System.Globalization;
+using MongoDB.Driver;
 using System;
+using System.Collections.Generic;
 
 namespace FlightsAPI.Services
 {
