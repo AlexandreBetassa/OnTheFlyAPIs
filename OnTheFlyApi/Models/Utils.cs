@@ -100,15 +100,8 @@ namespace Models
            $"{unformatedCNPJ.Substring(5, 3)}/" +
            $"{unformatedCNPJ.Substring(8, 4)}-" +
            $"{unformatedCNPJ.Substring(12, 2)}";
-
-        public static string UnformatCNPJ(string formattedCNPJ) => $"{formattedCNPJ.Substring(0, 2)}." +
-            $"{formattedCNPJ.Substring(2, 3)}." +
-            $"{formattedCNPJ.Substring(6, 3)}/" +
-            $"{formattedCNPJ.Substring(8, 4)}-" +
-            $"{formattedCNPJ.Substring(12, 2)}";
-
       
-        public bool ValidateRab(string rab)
+        public static bool ValidateRab(string rab)
         {
             string prefix = rab.Substring(0, 2);
             string sufix = rab.Substring(3, 3);

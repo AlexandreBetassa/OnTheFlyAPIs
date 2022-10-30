@@ -17,13 +17,16 @@ namespace CompanyAPI.Controllers
             _restritedCompany = restritedCompany;
         }
         [HttpPost]
-        public ActionResult<RestrictedCompany> Create(RestrictedCompany cnpj)
+        public ActionResult<RestrictedCompany> Create(RestrictedCompany restritedCnpj)
         {
-            var restritedCompany = _restritedCompany.GetOneCNPJ(cnpj.CNPJ);
+            string unformattedCNPJ = restritedCnpj.CNPJ;
+            restritedCnpj.CNPJ = Utils.FormatCNPJ(unformattedCNPJ);
+
+            var restritedCompany = _restritedCompany.GetOneCNPJ(restritedCnpj.CNPJ);
             if (restritedCompany != null) return NoContent() ;
 
-            _restritedCompany.Create(cnpj);
-            return Ok(cnpj);
+            _restritedCompany.Create(restritedCnpj);
+            return Ok(restritedCnpj);
         }
 
         [HttpGet]
@@ -32,6 +35,9 @@ namespace CompanyAPI.Controllers
         [HttpGet("GetCNPJ/{cnpj}")]
         public ActionResult<RestrictedCompany> GetOneCNPJ(string cnpj)
         {
+            var unformattedCNPJ = cnpj;
+            cnpj = Utils.FormatCNPJ(unformattedCNPJ);
+
             var company = _restritedCompany.GetOneCNPJ(cnpj);
             if (company == null) return NotFound();
 
@@ -41,6 +47,9 @@ namespace CompanyAPI.Controllers
         [HttpDelete]
         public ActionResult<RestrictedCompany> Delete(string cnpj)
         {
+            var unformattedCNPJ = cnpj;
+            cnpj = Utils.FormatCNPJ(unformattedCNPJ);
+
             var restritedCompany = _restritedCompany.GetOneCNPJ(cnpj);
             if(restritedCompany == null) return NotFound();
 

@@ -1,11 +1,9 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
-using Newtonsoft.Json;
 using System.Text.Json.Serialization;
 
 namespace AirportAPI.Models
 {
-    [JsonObject(MemberSerialization.OptIn)]
     public class Airport
     {
         //[BsonId]
