@@ -14,7 +14,7 @@ namespace AirCraftAPI.Controllers
     public class AirCraftController : ControllerBase
     {
         private readonly AirCraftService _airCraftService;
-        private readonly DeletedAirCraftService _deletedAirCraftService; 
+        private readonly DeletedAirCraftService _deletedAirCraftService;
         public AirCraftController(AirCraftService airCraftService, DeletedAirCraftService deletedAirCraftService)
         {
             _airCraftService = airCraftService;
@@ -55,7 +55,7 @@ namespace AirCraftAPI.Controllers
         //-----------------------------------------------------------------------------------------------------------------
 
         [HttpPost]
-        public ActionResult<AirCraft> CreateAirCraft([FromBody]AirCraftDTO airCraftDTO)
+        public ActionResult<AirCraft> CreateAirCraft([FromBody] AirCraft airCraftDTO)
         {
             //passar todos os dados inseridos para UpperCase:
             airCraftDTO.RAB = airCraftDTO.RAB.ToUpper();
@@ -64,19 +64,22 @@ namespace AirCraftAPI.Controllers
             bool rabValidation = Utils.ValidateRab(airCraftDTO.RAB);
             if (rabValidation == false) return BadRequest("The Informed RAB is not valid. Try using a 6 characters RAB including - after the prefix. Ex: ( EX-ABC ).");
 
-            var company = CompanyAPIConsummer.GetOneCNPJ(airCraftDTO.CompanyCnpj).Result;
-            if (company == null) return NotFound("Invalid CNPJ. Company not found.");
-
             var airCraft = _airCraftService.GetOneByRAB(airCraftDTO.RAB);
             if (airCraft != null)
-               return StatusCode((int)HttpStatusCode.Conflict, "Could not proceed with this request. There is already an aircraft registered with this RAB code!");
+                return StatusCode((int)HttpStatusCode.Conflict, "Could not proceed with this request. There is already an aircraft registered with this RAB code!");
 
-            AirCraft aircraft = new AirCraft { Capacity = airCraftDTO.Capacity, Company = company, DtLastFlight = DateTime.Now,
-            DtRegistry = DateTime.Now, RAB = airCraftDTO.RAB};
+            //AirCraft aircraft = new AirCraft
+            //{
+            //    Capacity = airCraftDTO.Capacity,
+            //    Company = company,
+            //    DtLastFlight = DateTime.Now,
+            //    DtRegistry = DateTime.Now,
+            //    RAB = airCraftDTO.RAB
+            //};
 
-            _airCraftService.Create(aircraft);
+            _airCraftService.Create(airCraftDTO);
 
-            return Ok(aircraft);
+            return Ok(airCraft);
         }
         //-----------------------------------------------------------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------------------

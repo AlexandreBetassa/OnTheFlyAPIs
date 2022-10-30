@@ -36,7 +36,7 @@ namespace CompanyAPI.Controllers
 
             if (companyDTO.NameOp == null) companyDTO.NameOp = companyDTO.Name;
 
-            Address address = await ViaCepAPIConsummer.GetAdress(companyDTO.Address.ZipCode);
+            AddressDTOViaCep address = await ViaCepAPIConsummer.GetAdress(companyDTO.Address.ZipCode);
             if (address == null) return NotFound();
 
             Company company = new()
@@ -61,11 +61,13 @@ namespace CompanyAPI.Controllers
 
             _companyService.Create(company);
 
-            AirCraftDTO airCraft = new AirCraftDTO
+            AirCraft airCraft = new ()
             {
                 Capacity = capacity,
                 RAB = rab,
-                CompanyCnpj = unformattedCNPJ
+                Company = company,
+                DtLastFlight = DateTime.Now,
+                DtRegistry = DateTime.Now
             };
 
             var savedAirCraft = AirCraftAPIConsummer.PostAirCraft(airCraft).Result;

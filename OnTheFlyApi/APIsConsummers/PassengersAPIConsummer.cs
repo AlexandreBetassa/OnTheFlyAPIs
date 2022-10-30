@@ -1,9 +1,9 @@
 ﻿using Models;
 using Nancy.Json;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Text.Json;
 
 namespace APIsConsummers
 {
@@ -30,7 +30,7 @@ namespace APIsConsummers
                     await client.GetAsync($"https://localhost:44355/api/Passenger/GetAll");
                 var passengerJsonArray = await response.Content.ReadAsStringAsync();
                 if (response.IsSuccessStatusCode)
-                    return JsonConvert.DeserializeObject<List<Passenger>>(passengerJsonArray);
+                    return JsonSerializer.Deserialize<List<Passenger>>(passengerJsonArray);
                 else return null;
             }
         }
@@ -44,7 +44,7 @@ namespace APIsConsummers
                     await client.GetAsync($"https://localhost:44355/api/RestrictedPassenger/GetAll");
                 var restrictedPassengerJsonArray = await response.Content.ReadAsStringAsync();
                 if (response.IsSuccessStatusCode) 
-                    return JsonConvert.DeserializeObject<List<RestrictedPassenger>>(restrictedPassengerJsonArray);
+                    return JsonSerializer.Deserialize<List<RestrictedPassenger>>(restrictedPassengerJsonArray);
                 else return null;
             }
         }
@@ -54,7 +54,7 @@ namespace APIsConsummers
         //{
         //    using (HttpClient _passengerClient = new HttpClient())
         //    {
-        //        string jsonString = JsonConvert.SerializeObject(data);
+        //        string jsonString = JsonSerializer.Serialize(data);
         //        HttpContent http = new StringContent(jsonString, Encoding.UTF8, "application/json");
         //        HttpResponseMessage response = await _passengerClient.PostAsync($"https://localhost:44355/api/Passenger/Create/{data}", http);
 
