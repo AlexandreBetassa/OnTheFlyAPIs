@@ -38,6 +38,24 @@ namespace PassengerAPI.Controllers
             return Ok(passenger);
         }
 
+        [HttpPost("GetSalePassengersList")]
+        public ActionResult<List<Passenger>> GetSalePassengersList(List<string> unformattedCpfList)
+        {
+            Passenger passenger;
+            List<Passenger> passengersList = new();
+            foreach (string cpf in unformattedCpfList)
+            {
+                passenger = _passengerService.Get(Models.Utils.FormatCPF(cpf));
+                if (passenger == null) return NotFound();
+                if (passenger.Status == true) return BadRequest();
+                passengersList.Add(passenger);
+            }
+            if ((DateTime.Today - passengersList[0].DtBirth.AddYears(18)).Days < 0)
+                return BadRequest();
+
+            return Ok(passengersList);
+        }
+
         // POST api/<PassengerController>
         [HttpPost("Create")]
         public ActionResult<Passenger> Post(PassengerDTO p)
