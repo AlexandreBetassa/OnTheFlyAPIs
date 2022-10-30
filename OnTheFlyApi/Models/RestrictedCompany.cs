@@ -13,6 +13,7 @@ namespace Models
     {
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
+        [JsonPropertyName("_id")]
         public string Id { get; set; }
         [Required]
         [StringLength(19, ErrorMessage = "Numero de CNPJ Invalido")]

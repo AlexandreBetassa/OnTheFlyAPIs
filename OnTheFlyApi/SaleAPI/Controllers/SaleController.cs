@@ -36,7 +36,7 @@ namespace SaleAPI.Controllers
             if (flight == null) return NotFound("Flight not found!!!");
             //verifica se há passagem para todos os passageiros da solicitacao de compra
             else if (flight.Sales > saleDTO.PassengersCPFs.Count) return BadRequest("\r\nThere are no tickets for all passengers");
-            var lstPassengers = await PassengersAPIConsummer.GetSalePassengersList(saleDTO.PassengersCPFs);
+            var lstPassengers = await PassengersAPIConsummer.GetSalePassengersList(saleDTO.PassengersCPFs,"44355");
             if (lstPassengers == null) return BadRequest("There is a problem with the passengers on the flight");
 
             Sale sale = new()
