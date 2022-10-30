@@ -6,7 +6,6 @@ using Models;
 using System;
 using System.Net;
 using APIsConsummers;
-using System.Threading.Tasks;
 
 namespace AirCraftAPI.Controllers
 {
@@ -33,6 +32,8 @@ namespace AirCraftAPI.Controllers
         [HttpGet("GetByCnpj/{companyCnpj}")]
         public ActionResult<List<AirCraft>> GetAllByCnpj(string companyCnpj)
         {
+            companyCnpj = Utils.FormatCNPJ(companyCnpj);
+
             var aircraftList = _airCraftService.GetAllByCnpj(companyCnpj);
             return aircraftList;
         }
@@ -43,6 +44,7 @@ namespace AirCraftAPI.Controllers
         [HttpGet("GetByRAB/{rab}")]
         public ActionResult<AirCraft> GetByRAB(string rab)
         {
+            rab = rab.ToUpper();
             var airCraft = _airCraftService.GetOneByRAB(rab);
             if (airCraft == null)
                 return NotFound();
@@ -53,23 +55,29 @@ namespace AirCraftAPI.Controllers
         //-----------------------------------------------------------------------------------------------------------------
 
         [HttpPost]
-        public async Task<ActionResult<AirCraft>> CreateAirCraft([FromBody] AirCraft airCraft)
+        public ActionResult<AirCraft> CreateAirCraft([FromBody] AirCraft airCraftDTO)
         {
             //passar todos os dados inseridos para UpperCase:
-            airCraft.RAB = airCraft.RAB.ToUpper();
+            airCraftDTO.RAB = airCraftDTO.RAB.ToUpper();
             //-----------------------------------------------
 
-            bool rabValidation = Utils.ValidateRab(airCraft.RAB);
+            bool rabValidation = Utils.ValidateRab(airCraftDTO.RAB);
             if (rabValidation == false) return BadRequest("The Informed RAB is not valid. Try using a 6 characters RAB including - after the prefix. Ex: ( EX-ABC ).");
 
-            var company = await CompanyAPIConsummer.GetOneCNPJ(airCraft.Company.CNPJ);
-            if (company == null) return NotFound("Invalid CNPJ. Company not found.");
-
+            var airCraft = _airCraftService.GetOneByRAB(airCraftDTO.RAB);
             if (airCraft != null)
                 return StatusCode((int)HttpStatusCode.Conflict, "Could not proceed with this request. There is already an aircraft registered with this RAB code!");
 
+            //AirCraft aircraft = new AirCraft
+            //{
+            //    Capacity = airCraftDTO.Capacity,
+            //    Company = company,
+            //    DtLastFlight = DateTime.Now,
+            //    DtRegistry = DateTime.Now,
+            //    RAB = airCraftDTO.RAB
+            //};
 
-            _airCraftService.Create(airCraft);
+            _airCraftService.Create(airCraftDTO);
 
             return Ok(airCraft);
         }
@@ -79,6 +87,8 @@ namespace AirCraftAPI.Controllers
         [HttpPut("ModifyAirCraftCapacity/{rab}/{newCapacity}")]
         public ActionResult<AirCraft> UpdateCapacity(string rab, int newCapacity)
         {
+
+            rab = rab.ToUpper();
             var aircraftUpdate = _airCraftService.GetOneByRAB(rab);
             if (aircraftUpdate == null)
                 return NotFound();
@@ -91,33 +101,36 @@ namespace AirCraftAPI.Controllers
         }
 
 
-        //[HttpPut("ModifyAirCraftDtLastFlight/{aircraftUpdate}")]   //update usando o objeto completo ja atualizado
-        //public ActionResult<AirCraft> UpdateLastFlight(AirCraft aircraftUpdate)
-        //{
-        //    _airCraftService.Update(aircraftUpdate);
-
-        //    return NoContent();
-        //}
-
-        [HttpPut("ModifyAirCraftDtLastFlight/{rab}/{updateLastFlight}")]
-        public ActionResult<AirCraft> UpdateLastFlight(string rab, DateTime updateLastFlight)
+        [HttpPut("ModifyAirCraftDtLastFlight/")]   //update usando o objeto completo ja atualizado
+        public ActionResult<AirCraft> UpdateLastFlight(AirCraft aircraftUpdate)
         {
-            var aircraftUpdate = _airCraftService.GetOneByRAB(rab);
-            if (aircraftUpdate == null)
-                return NotFound();
-
-            aircraftUpdate.DtLastFlight = updateLastFlight;
-
-            _airCraftService.Update(aircraftUpdate, rab);
+            aircraftUpdate.RAB = aircraftUpdate.RAB.ToUpper();
+            _airCraftService.Update(aircraftUpdate);
 
             return NoContent();
         }
+
+        //[HttpPut("ModifyAirCraftDtLastFlight/{rab}/{updateLastFlight}")]
+        //public ActionResult<AirCraft> UpdateLastFlight(string rab, DateTime updateLastFlight)
+        //{
+        //    rab = rab.ToUpper();
+        //    var aircraftUpdate = _airCraftService.GetOneByRAB(rab);
+        //    if (aircraftUpdate == null)
+        //        return NotFound();
+
+        //    aircraftUpdate.DtLastFlight = updateLastFlight;
+
+        //    _airCraftService.Update(aircraftUpdate, rab);
+
+        //    return NoContent();
+        //}
         //-----------------------------------------------------------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------------------
 
         [HttpDelete("RemoveAirCraft/{rab}")]
         public ActionResult<AirCraft> DeleteAirCraft(string rab)
         {
+            rab = rab.ToUpper();
             var airCraft = _airCraftService.GetOneByRAB(rab);
             if (airCraft == null)
                 return NotFound();

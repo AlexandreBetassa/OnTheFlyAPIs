@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using APIsConsummers;
 using CompanyAPI.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models;
-using System.Threading.Tasks;
 
 namespace CompanyAPI.Controllers
 {
@@ -35,7 +36,7 @@ namespace CompanyAPI.Controllers
 
             if (companyDTO.NameOp == null) companyDTO.NameOp = companyDTO.Name;
 
-            var address = ViaCepAPIConsummer.GetAdress(companyDTO.Address.ZipCode).Result;
+            AddressDTOViaCep address = await ViaCepAPIConsummer.GetAdress(companyDTO.Address.ZipCode);
             if (address == null) return NotFound();
 
             Company company = new()
@@ -60,16 +61,16 @@ namespace CompanyAPI.Controllers
 
             _companyService.Create(company);
 
-            AirCraft airCraft = new AirCraft
+            AirCraft airCraft = new ()
             {
                 Capacity = capacity,
                 RAB = rab,
                 Company = company,
-                DtRegistry = DateTime.Now,
-                DtLastFlight = DateTime.Now
+                DtLastFlight = DateTime.Now,
+                DtRegistry = DateTime.Now
             };
 
-            var savedAirCraft = await AirCraftAPIConsummer.PostAirCraft(airCraft);
+            var savedAirCraft = AirCraftAPIConsummer.PostAirCraft(airCraft).Result;
 
             if (!savedAirCraft) company.Status = true;
 

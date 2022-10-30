@@ -1,11 +1,7 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace Models
 {
@@ -13,29 +9,51 @@ namespace Models
     {
         [Required]
         [MaxLength(9)]
-        [JsonProperty("cep")]
         public string ZipCode { get; set; }
 
         [MaxLength(100)]
-        [JsonProperty("logradouro")]
         public string Street { get; set; }
 
         [Required]
         public int Number { get; set; }
 
         [MaxLength(10)]
-        [JsonProperty("complemento")]
         public string Complement { get; set; }
 
         [MaxLength(30)]
-        [JsonProperty("localidade")]
         public string City { get; set; }
 
         [MaxLength(2)]
-        [JsonProperty("uf")]
         public string State { get; set; }
-
     }
+
+    public class AddressDTOViaCep
+    {
+        [Required]
+        [MaxLength(9)]
+        [JsonPropertyName("cep")]
+        public string ZipCode { get; set; }
+
+        [MaxLength(100)]
+        [JsonPropertyName("logradouro")]
+        public string Street { get; set; }
+
+        [Required]
+        public int Number { get; set; }
+
+        [MaxLength(10)]
+        [JsonPropertyName("complemento")]
+        public string Complement { get; set; }
+
+        [MaxLength(30)]
+        [JsonPropertyName("localidade")]
+        public string City { get; set; }
+
+        [MaxLength(2)]
+        [JsonPropertyName("uf")]
+        public string State { get; set; }
+    }
+
     public class AddressDTO
     {
         [Required]
@@ -46,7 +64,6 @@ namespace Models
         [Required]
         public int Number { get; set; }
         [MaxLength(10)]
-        [JsonProperty("complemento")]
         public string Complement { get; set; } = "";
     }
 }
