@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Models;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace APIsConsummers
 {
@@ -17,7 +17,7 @@ namespace APIsConsummers
             {
                 HttpResponseMessage response = await _companyClient.GetAsync($"https://localhost:44306/api/Company/GetCNPJ/{cnpj}/");
                 var companyJson = await response.Content.ReadAsStringAsync();
-                if (response.IsSuccessStatusCode) return JsonConvert.DeserializeObject<Company>(companyJson);
+                if (response.IsSuccessStatusCode) return JsonSerializer.Deserialize<Company>(companyJson);
                 else return null;
             }
         }
@@ -28,7 +28,7 @@ namespace APIsConsummers
             {
                 HttpResponseMessage response = await _restritedCompanyClient.GetAsync($"https://localhost:44306/api/RestritedComapany/GetCNPJ/{cnpj}/");
                 var companyJson = await response.Content.ReadAsStringAsync();
-                if (response.IsSuccessStatusCode) return JsonConvert.DeserializeObject<RestrictedCompany>(companyJson);
+                if (response.IsSuccessStatusCode) return JsonSerializer.Deserialize<RestrictedCompany>(companyJson);
                 else return null;
             }
         }

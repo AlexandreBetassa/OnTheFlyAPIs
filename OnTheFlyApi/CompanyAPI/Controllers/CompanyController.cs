@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using APIsConsummers;
 using CompanyAPI.Services;
 using Microsoft.AspNetCore.Http;
@@ -24,7 +25,7 @@ namespace CompanyAPI.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Company> Create(CompanyDTO companyDTO, string rab, int capacity)
+        public async Task<ActionResult<Company>> Create(CompanyDTO companyDTO, string rab, int capacity)
         {
             if (!Utils.ValidateCnpj(companyDTO.CNPJ)) return BadRequest("Invalid CNPJ");
                        
@@ -33,9 +34,7 @@ namespace CompanyAPI.Controllers
 
             if (_companyService.GetOneCNPJ(companyDTO.CNPJ) != null) return BadRequest("This CNPJ is already registered");
 
-            if ((companyDTO.NameOp == null) || (companyDTO.NameOp == "string") ) companyDTO.NameOp = companyDTO.Name;
-
-            var address = ViaCepAPIConsummer.GetAdress(companyDTO.Address.ZipCode).Result;
+            AddressDTOViaCep address = await ViaCepAPIConsummer.GetAdress(companyDTO.Address.ZipCode);
             if (address == null) return NotFound();
 
             Company company = new()
@@ -62,11 +61,13 @@ namespace CompanyAPI.Controllers
 
             _companyService.Create(company);
 
-            AirCraftDTO airCraft = new AirCraftDTO
+            AirCraft airCraft = new ()
             {
                 Capacity = capacity,
                 RAB = rab,
-                CompanyCnpj = company.CNPJ
+                Company = company,
+                DtLastFlight = DateTime.Now,
+                DtRegistry = DateTime.Now
             };
 
             var savedAirCraft = AirCraftAPIConsummer.PostAirCraft(airCraft).Result;
