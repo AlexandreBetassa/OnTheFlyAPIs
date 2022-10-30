@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Models;
 using System;
 using System.Collections.Generic;
+using APIsConsummers;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -33,10 +34,10 @@ namespace FlightsAPI.Controllers
             return Ok(flight);
         }
 
-        [HttpGet("GetOne/{fullDate}/{rabPlane}/{destiny}", Name = "GetOne")]
-        public ActionResult<Flight> Get(DateTime fullDate, string rabPlane, string destiny)
+        [HttpPost("GetOne/", Name = "GetOne")]
+        public ActionResult<Flight> Get([FromBody] SaleDTO sale)
         {
-            var flight = _flightService.GetOne(fullDate, rabPlane.ToUpper(), destiny.ToUpper());
+            var flight = _flightService.GetOne(sale.DtFlight, sale.RAB.ToUpper(), sale.Destiny.ToUpper());
 
             if (flight == null) return NotFound();
 
@@ -72,7 +73,7 @@ namespace FlightsAPI.Controllers
         }
 
         [HttpPut("ModifyFlightSales", Name = "ModifyFlightSales")]
-        public ActionResult<Flight> UpdateSalesFlight(Flight flight)
+        public ActionResult<Flight> UpdateSalesFlight([FromBody]Flight flight)
         {
             var flightUpdate = _flightService.GetOne(flight.Departure, flight.Plane.RAB.ToUpper(), flight.Destiny.IATA.ToUpper());
 

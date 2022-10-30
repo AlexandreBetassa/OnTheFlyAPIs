@@ -10,12 +10,19 @@ namespace Models
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
         public string Id { get; set; }
+        [JsonPropertyName("CPF")]
         public string CPF { get; set; }
+        [JsonPropertyName("Name")]
         public string Name { get; set; }
+        [JsonPropertyName("Gender")]
         public string Gender { get; set; }
+        [JsonPropertyName("Phone")]
         public string Phone { get; set; }
+        [JsonPropertyName("DtBirth")]
         public DateTime DtBirth { get; set; }
+        [JsonPropertyName("DtRegister")]
         public DateTime DtRegister { get; set; }
+        [JsonPropertyName("Status")]
         public bool Status { get; set; }
         [JsonPropertyName("Address")]
         public Address Address { get; set; }

@@ -1,6 +1,5 @@
 ﻿using Models;
 using System.Text.Json;
-using System;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,13 +8,19 @@ namespace APIsConsummers
 {
     public class FlightAPIConsummer
     {
-        public static async Task<Flight> GetFlight(DateTime fullDate, string rabPlane, string destiny)
+        public static async Task<Flight> GetFlight(SaleDTO sale)
         {
             using (HttpClient flightClient = new HttpClient())
             {
-                HttpResponseMessage response = await flightClient.GetAsync($"https://localhost:44348/api/Flight/GetOne/{fullDate}/{rabPlane.ToUpper()}/{destiny.ToUpper()}/");
-                var flightJson = await response.Content.ReadAsStringAsync();
-                if (response.IsSuccessStatusCode) return JsonSerializer.Deserialize<Flight>(flightJson);
+                string saleJson = JsonSerializer.Serialize(sale);
+                HttpContent content = new StringContent(saleJson, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await flightClient.PostAsync($"https://localhost:44348/api/Flight/GetOne/", content);
+                string flightJson = await response.Content.ReadAsStringAsync();
+                if (response.IsSuccessStatusCode)
+                {
+                    Flight flight = JsonSerializer.Deserialize<Flight>(flightJson);
+                    return flight;
+                }
                 else return null;
             }
         }
