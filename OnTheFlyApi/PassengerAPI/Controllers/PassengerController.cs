@@ -39,13 +39,13 @@ namespace PassengerAPI.Controllers
         }
 
         [HttpPost("GetSalePassengersList")]
-        public ActionResult<List<Passenger>> GetSalePassengersList(List<string> unformattedCpfList)
+        public ActionResult<List<Passenger>> GetSalePassengersList(List<PassengerOnlyCPFDTO> unformattedCpfList)
         {
             Passenger passenger;
             List<Passenger> passengersList = new();
-            foreach (string cpf in unformattedCpfList)
+            foreach (PassengerOnlyCPFDTO p in unformattedCpfList)
             {
-                passenger = _passengerService.Get(Models.Utils.FormatCPF(cpf));
+                passenger = _passengerService.Get(Models.Utils.FormatCPF(p.UnformattedCPF));
                 if (passenger == null) return NotFound();
                 if (passenger.Status == true) return BadRequest();
                 passengersList.Add(passenger);
@@ -53,7 +53,7 @@ namespace PassengerAPI.Controllers
             if ((DateTime.Today - passengersList[0].DtBirth.AddYears(18)).Days < 0)
                 return BadRequest();
 
-            return Ok(passengersList);
+            return passengersList;
         }
 
         // POST api/<PassengerController>

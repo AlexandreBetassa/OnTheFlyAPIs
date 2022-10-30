@@ -60,4 +60,13 @@ namespace Models
         public AddressDTO NewAddress { get; set; }
 
     }
+
+    public class PassengerOnlyCPFDTO
+    {
+
+        [Required]
+        [StringLength(maximumLength: 11, MinimumLength = 11)]
+        public string UnformattedCPF { get; set; }
+
+    }
 }

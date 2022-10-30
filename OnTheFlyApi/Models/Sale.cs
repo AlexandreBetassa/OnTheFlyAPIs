@@ -32,7 +32,7 @@ namespace Models
         [Required(ErrorMessage = "Não há voos vinculados a esta venda")]
         public Flight Flight { get; set; }
         [Required(ErrorMessage = "Não a passageiros vinculados a esta venda")]
-        public List<string> PassengersCPFs { get; set; } = new List<string>();
+        public List<PassengerOnlyCPFDTO> PassengersCPFs { get; set; } = new List<PassengerOnlyCPFDTO>();
         public bool Reserved { get; set; }
     }
 }
