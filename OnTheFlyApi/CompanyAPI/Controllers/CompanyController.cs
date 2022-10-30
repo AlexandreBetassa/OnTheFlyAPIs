@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using APIsConsummers;
 using CompanyAPI.Services;
 using Microsoft.AspNetCore.Http;
@@ -24,7 +25,7 @@ namespace CompanyAPI.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Company> Create(CompanyDTO companyDTO, string rab, int capacity)
+        public async Task<ActionResult<Company>> Create(CompanyDTO companyDTO, string rab, int capacity)
         {
             if (!Utils.ValidateCnpj(companyDTO.CNPJ)) return BadRequest();
 
@@ -35,7 +36,7 @@ namespace CompanyAPI.Controllers
 
             if (companyDTO.NameOp == null) companyDTO.NameOp = companyDTO.Name;
 
-            var address = ViaCepAPIConsummer.GetAdress(companyDTO.Address.ZipCode).Result;
+            Address address = await ViaCepAPIConsummer.GetAdress(companyDTO.Address.ZipCode);
             if (address == null) return NotFound();
 
             Company company = new()

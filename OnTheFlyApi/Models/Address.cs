@@ -1,26 +1,21 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Nancy;
 
 namespace Models
 {
     public class Address
     {
-        //[Required]
-        //[MaxLength(9)]
+        [Required]
+        [MaxLength(9)]
         [JsonProperty("cep")]
         public string ZipCode { get; set; }
 
-        //[MaxLength(100)]
+        [MaxLength(100)]
         [JsonProperty("logradouro")]
         public string Street { get; set; }
 
-        //[Required]
+        [Required]
         public int Number { get; set; }
 
         [MaxLength(10)]

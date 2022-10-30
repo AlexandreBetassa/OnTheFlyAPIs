@@ -1,4 +1,5 @@
 ﻿using Models;
+using Nancy.Json;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -15,7 +16,7 @@ namespace APIsConsummers
             {
                 HttpResponseMessage response = await client.GetAsync($"https://localhost:44355/api/Passenger/GetByCPF/{unformattedCpf}");
                 var passengerJson = await response.Content.ReadAsStringAsync();
-                if (response.IsSuccessStatusCode) return JsonConvert.DeserializeObject<Passenger>(passengerJson);
+                if (response.IsSuccessStatusCode) return new JavaScriptSerializer().Deserialize<Passenger>(passengerJson);
                 else return null;
             }
         }

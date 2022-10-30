@@ -55,7 +55,7 @@ namespace AirCraftAPI.Controllers
         //-----------------------------------------------------------------------------------------------------------------
 
         [HttpPost]
-        public ActionResult<AirCraft> CreateAirCraft(AirCraftDTO airCraftDTO)
+        public ActionResult<AirCraft> CreateAirCraft([FromBody]AirCraftDTO airCraftDTO)
         {
             //passar todos os dados inseridos para UpperCase:
             airCraftDTO.RAB = airCraftDTO.RAB.ToUpper();
