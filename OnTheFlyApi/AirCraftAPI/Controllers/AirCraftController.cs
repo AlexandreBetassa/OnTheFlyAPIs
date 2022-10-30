@@ -55,31 +55,35 @@ namespace AirCraftAPI.Controllers
         //-----------------------------------------------------------------------------------------------------------------
 
         [HttpPost]
-        public ActionResult<AirCraft> CreateAirCraft([FromBody] AirCraft airCraftDTO)
+        public ActionResult<AirCraft> CreateAirCraft([FromBody] AirCraft airCraftInsert)
         {
             //passar todos os dados inseridos para UpperCase:
-            airCraftDTO.RAB = airCraftDTO.RAB.ToUpper();
+            airCraftInsert.RAB = airCraftInsert.RAB.ToUpper();
             //-----------------------------------------------
 
-            bool rabValidation = Utils.ValidateRab(airCraftDTO.RAB);
+            bool rabValidation = Utils.ValidateRab(airCraftInsert.RAB);
             if (rabValidation == false) return BadRequest("The Informed RAB is not valid. Try using a 6 characters RAB including - after the prefix. Ex: ( EX-ABC ).");
 
-            var airCraft = _airCraftService.GetOneByRAB(airCraftDTO.RAB);
+            var airCraft = _airCraftService.GetOneByRAB(airCraftInsert.RAB);
             if (airCraft != null)
                 return StatusCode((int)HttpStatusCode.Conflict, "Could not proceed with this request. There is already an aircraft registered with this RAB code!");
 
+            var company = CompanyAPIConsummer.GetOneCNPJ(airCraftInsert.Company.CNPJ).Result;
+            if (company == null) return BadRequest("Invalid CNPJ. Could not found an company with informed CNPJ.");
+
+            airCraftInsert.Company = company;
             //AirCraft aircraft = new AirCraft
             //{
-            //    Capacity = airCraftDTO.Capacity,
+            //    Capacity = airCraftInsert.Capacity,
             //    Company = company,
             //    DtLastFlight = DateTime.Now,
             //    DtRegistry = DateTime.Now,
-            //    RAB = airCraftDTO.RAB
+            //    RAB = airCraftInsert.RAB
             //};
 
-            _airCraftService.Create(airCraftDTO);
+            _airCraftService.Create(airCraftInsert);
 
-            return Ok(airCraft);
+            return Ok(airCraftInsert);
         }
         //-----------------------------------------------------------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------------------

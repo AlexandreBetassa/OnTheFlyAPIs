@@ -38,7 +38,7 @@ namespace Models
     public class AirCraftDTO
     {
         [Required]
-        [StringLength(6, ErrorMessage = "Invalid RAB Code. Maximum restriction of 6 characters.")] /// perguntar se o ID(RAB) da Aeronave vai ser 5 char (Sem formatação) ou 6 char (Com Formatação -)
+        [StringLength(6, ErrorMessage = "Invalid RAB Code. Maximum restriction of 6 characters.")]
         public string RAB { get; set; }
 
         [Required]
