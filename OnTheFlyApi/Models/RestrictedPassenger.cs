@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Models
 {
@@ -8,6 +9,7 @@ namespace Models
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
         public string Id { get; set; }
+        [JsonPropertyName("CPF")]
         public string CPF { get; set; }
     }
     public class RestrictedPassengerDTO
