@@ -11,16 +11,16 @@ namespace Models
 {
     public class Address
     {
-        [Required]
-        [MaxLength(9)]
+        //[Required]
+        //[MaxLength(9)]
         [JsonProperty("cep")]
         public string ZipCode { get; set; }
 
-        [MaxLength(100)]
+        //[MaxLength(100)]
         [JsonProperty("logradouro")]
         public string Street { get; set; }
 
-        [Required]
+        //[Required]
         public int Number { get; set; }
 
         [MaxLength(10)]

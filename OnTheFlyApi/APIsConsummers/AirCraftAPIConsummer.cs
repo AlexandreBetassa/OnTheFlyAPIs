@@ -56,7 +56,7 @@ namespace APIsConsummers
             {
                 string jsonString = JsonConvert.SerializeObject(aircraft);
                 HttpContent http = new StringContent(jsonString, Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await _airCraftClient.PutAsync($"https://localhost:44311/api/AirCraft/ModifyAirCraftDtLastFlight/", http); // alterar endpoint!
+                HttpResponseMessage response = await _airCraftClient.PutAsync("https://localhost:44311/api/AirCraft/ModifyAirCraftDtLastFlight", http); // alterar endpoint!
 
                 if (response.IsSuccessStatusCode) return true;
                 return false;
