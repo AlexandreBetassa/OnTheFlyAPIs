@@ -11,7 +11,7 @@ namespace Models
 {
     public class Address
     {
-        [Required]
+        //[Required]
         [MaxLength(9)]
         [JsonProperty("cep")]
         public string ZipCode { get; set; }
@@ -20,7 +20,7 @@ namespace Models
         [JsonProperty("logradouro")]
         public string Street { get; set; }
 
-        [Required]
+        //[Required]
         public int Number { get; set; }
 
         [MaxLength(10)]

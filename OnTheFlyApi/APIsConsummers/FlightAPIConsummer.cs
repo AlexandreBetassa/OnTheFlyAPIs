@@ -15,7 +15,7 @@ namespace APIsConsummers
         {
             using (HttpClient flightClient = new HttpClient())
             {
-                HttpResponseMessage response = await flightClient.GetAsync($"https://localhost:44348/api/Flight/GetOne/{fullDate}/{rabPlane}/{destiny}/");
+                HttpResponseMessage response = await flightClient.GetAsync($"https://localhost:44348/api/Flight/GetOne/{fullDate}/{rabPlane.ToUpper()}/{destiny.ToUpper()}/");
                 var flightJson = await response.Content.ReadAsStringAsync();
                 if (response.IsSuccessStatusCode) return JsonConvert.DeserializeObject<Flight>(flightJson);
                 else return null;
