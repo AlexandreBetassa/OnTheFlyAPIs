@@ -26,14 +26,14 @@ namespace CompanyAPI.Controllers
         [HttpPost]
         public ActionResult<Company> Create(CompanyDTO companyDTO, string rab, int capacity)
         {
-            if (!Utils.ValidateCnpj(companyDTO.CNPJ)) return BadRequest();
-
-            if (_companyService.GetOneCNPJ(companyDTO.CNPJ) != null) return BadRequest();
-
+            if (!Utils.ValidateCnpj(companyDTO.CNPJ)) return BadRequest("Invalid CNPJ");
+                       
             var unformattedCNPJ = companyDTO.CNPJ;
             companyDTO.CNPJ = Utils.FormatCNPJ(unformattedCNPJ);
 
-            if (companyDTO.NameOp == null) companyDTO.NameOp = companyDTO.Name;
+            if (_companyService.GetOneCNPJ(companyDTO.CNPJ) != null) return BadRequest("This CNPJ is already registered");
+
+            if ((companyDTO.NameOp == null) || (companyDTO.NameOp == "string") ) companyDTO.NameOp = companyDTO.Name;
 
             var address = ViaCepAPIConsummer.GetAdress(companyDTO.Address.ZipCode).Result;
             if (address == null) return NotFound();
@@ -56,6 +56,8 @@ namespace CompanyAPI.Controllers
                 }
             };
 
+            if (!Utils.ValidateCompanyTime(company))return BadRequest("You cannot register companies that are less than 6 months old");
+
             if (_restrictedCompanyService.GetOneCNPJ(companyDTO.CNPJ) != null) company.Status = true;
 
             _companyService.Create(company);
@@ -64,20 +66,27 @@ namespace CompanyAPI.Controllers
             {
                 Capacity = capacity,
                 RAB = rab,
-                CompanyCnpj = unformattedCNPJ
+                CompanyCnpj = company.CNPJ
             };
 
             var savedAirCraft = AirCraftAPIConsummer.PostAirCraft(airCraft).Result;
 
-            if (!savedAirCraft) company.Status = true;
-
+            if (!savedAirCraft)
+            {
+                Delete(company.CNPJ.Replace(".","").Replace("/","").Replace("-",""));
+                return BadRequest("An error occurred in the aircraft registration");
+            }
+           
             return Ok(company);
         }
 
-        #region GETs
 
+
+
+        #region GETs
         [HttpGet]
         public ActionResult<List<Company>> GetAll() => _companyService.GetAll();
+
 
         [HttpGet("GetCNPJ/{cnpj}")]
         public ActionResult<Company> GetOneCNPJ(string cnpj)
@@ -90,11 +99,11 @@ namespace CompanyAPI.Controllers
 
             return Ok(company);
         }
-
         #endregion
 
-        #region PUTs
 
+
+        #region PUTs
         [HttpPut("PutNameOP/{newNameOp}")]
         public ActionResult<Company> PutNameOp(string cnpj, string newNameOp)
         {
@@ -110,6 +119,8 @@ namespace CompanyAPI.Controllers
 
             return Ok(company);
         }
+
+
         [HttpPut("PutStatus/{newStatus}")]
         public ActionResult<Company> PutStatus(string cnpj, bool newStatus)
         {
@@ -125,6 +136,7 @@ namespace CompanyAPI.Controllers
 
             return Ok(company);
         }
+
 
         [HttpPut("PutCEP/{newCEP}")]
         public ActionResult<Company> PutCep(string cnpj, string newCEP)
@@ -146,6 +158,7 @@ namespace CompanyAPI.Controllers
 
             return Ok(company);
         }
+
 
         [HttpPut("PutStreet/{newStreet}")]
         public ActionResult<Company> PutStreet(string cnpj, string newStreet)
@@ -177,6 +190,8 @@ namespace CompanyAPI.Controllers
 
             return Ok(company);
         }
+
+
         [HttpPut("PutComplement/{newComplement}")]
         public ActionResult<Company> PutComplement(string cnpj, string newComplement)
         {
@@ -192,12 +207,17 @@ namespace CompanyAPI.Controllers
 
             return Ok(company);
         }
-
         #endregion
+
+
+
 
         [HttpDelete("{cnpj}")]
         public ActionResult<Company> Delete(string cnpj)
         {
+            var unformattedCNPJ = cnpj;
+            cnpj = Utils.FormatCNPJ(unformattedCNPJ);
+
             var company = _companyService.GetOneCNPJ(cnpj);
             if (company == null) return NotFound();
 
