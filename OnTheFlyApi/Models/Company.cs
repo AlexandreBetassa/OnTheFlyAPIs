@@ -8,6 +8,7 @@ namespace Models
     public class Company
     {
         [BsonId]
+        [JsonPropertyName("Id")]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
         [JsonPropertyName("_id")]
         public string Id { get; set; }
