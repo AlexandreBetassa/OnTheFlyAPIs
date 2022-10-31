@@ -6,6 +6,7 @@ using Models;
 using System;
 using System.Net;
 using APIsConsummers;
+using System.Threading.Tasks;
 
 namespace AirCraftAPI.Controllers
 {
@@ -32,7 +33,6 @@ namespace AirCraftAPI.Controllers
         [HttpGet("GetByCnpj/{companyCnpj}")]
         public ActionResult<List<AirCraft>> GetAllByCnpj(string companyCnpj)
         {
-            companyCnpj.Replace(".", "").Replace("/", "").Replace("-", "");
             companyCnpj = Utils.FormatCNPJ(companyCnpj);
 
             var aircraftList = _airCraftService.GetAllByCnpj(companyCnpj);
@@ -56,7 +56,7 @@ namespace AirCraftAPI.Controllers
         //-----------------------------------------------------------------------------------------------------------------
 
         [HttpPost]
-        public ActionResult<AirCraft> CreateAirCraft([FromBody] AirCraft airCraftInsert)
+        public async Task<ActionResult<AirCraft>> CreateAirCraft([FromBody] AirCraft airCraftInsert)
         {
             airCraftInsert.RAB = airCraftInsert.RAB.ToUpper();
             //-----------------------------------------------
@@ -68,13 +68,12 @@ namespace AirCraftAPI.Controllers
             if (airCraft != null)
                 return StatusCode((int)HttpStatusCode.Conflict, "Could not proceed with this request. There is already an aircraft registered with this RAB code!");
 
-            airCraftInsert.Company.CNPJ.Replace(".", "").Replace("/", "").Replace("-", "");
+            var cnpj = airCraftInsert.Company.CNPJ.Replace(".", "").Replace("/", "").Replace("-", "");
 
-            var company = CompanyAPIConsummer.GetOneCNPJ(airCraftInsert.Company.CNPJ).Result;
+            var company = await CompanyAPIConsummer.GetOneCNPJ(cnpj);
             if (company == null) return BadRequest("Invalid CNPJ. Could not found an company with informed CNPJ.");
 
             airCraftInsert.Company = company;
-
 
             _airCraftService.Create(airCraftInsert);
 
@@ -86,7 +85,6 @@ namespace AirCraftAPI.Controllers
         [HttpPut("ModifyAirCraftCapacity/{rab}/{newCapacity}")]
         public ActionResult<AirCraft> UpdateCapacity(string rab, int newCapacity)
         {
-
             rab = rab.ToUpper();
             var aircraftUpdate = _airCraftService.GetOneByRAB(rab);
             if (aircraftUpdate == null)
@@ -110,24 +108,6 @@ namespace AirCraftAPI.Controllers
         }
         //-----------------------------------------------------------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------------------
-
-        //[HttpDelete("{RemoveAircraftCNPJ/{cnpj}")]
-        //public ActionResult<AirCraft> DeletedCNPJAircraft(string cnpj)
-        //{
-        //    var airCraft = _airCraftService.GetAllByCnpj(cnpj);
-        //    while (airCraft != null)
-        //    {
-        //        _deletedAirCraftService.Insert(airCraft);
-
-        //        _airCraftService.Remove(airCraft);
-
-        //        airCraft = _airCraftService.GetAllByCnpj(cnpj);
-        //    }
-
-        //    return NoContent();
-
-        //}
-
 
         [HttpDelete("RemoveAirCraft/{rab}")]
         public ActionResult<AirCraft> DeleteAirCraft(string rab)
