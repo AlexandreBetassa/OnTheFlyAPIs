@@ -46,6 +46,9 @@ namespace AirCraftAPI.Controllers
         public ActionResult<AirCraft> GetByRAB(string rab)
         {
             rab = rab.ToUpper();
+            string rabValidation = Utils.ValidateRab(rab);
+            if (rabValidation != "OK") return BadRequest(rabValidation);
+
             var airCraft = _airCraftService.GetOneByRAB(rab);
             if (airCraft == null)
                 return NotFound();
@@ -59,8 +62,11 @@ namespace AirCraftAPI.Controllers
         public async Task<ActionResult<AirCraft>> CreateAirCraft([FromBody] AirCraft airCraftInsert)
         {
             airCraftInsert.RAB = airCraftInsert.RAB.ToUpper();
+            var cnpj = airCraftInsert.Company.CNPJ.Replace(".", "").Replace("/", "").Replace("-", "");
             //-----------------------------------------------
-            
+            if (cnpj.Length != 14) return BadRequest("CNPJ is not valid. CNPJ needs to be 14 characters long, without formatation.");
+            if (!long.TryParse(cnpj, out _)) return BadRequest("CNPJ is not valid. Use Only Numbers.");
+
             string rabValidation = Utils.ValidateRab(airCraftInsert.RAB); 
             if (rabValidation != "OK") return BadRequest(rabValidation);
 
@@ -68,7 +74,7 @@ namespace AirCraftAPI.Controllers
             if (airCraft != null)
                 return StatusCode((int)HttpStatusCode.Conflict, "Could not proceed with this request. There is already an aircraft registered with this RAB code!");
 
-            var cnpj = airCraftInsert.Company.CNPJ.Replace(".", "").Replace("/", "").Replace("-", "");
+            
 
             var company = await CompanyAPIConsummer.GetOneCNPJ(cnpj);
             if (company == null) return BadRequest("Invalid CNPJ. Could not found an company with informed CNPJ.");
