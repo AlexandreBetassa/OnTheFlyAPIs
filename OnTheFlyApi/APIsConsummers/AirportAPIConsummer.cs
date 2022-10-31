@@ -14,17 +14,8 @@ namespace APIsConsummers
     {
         public static async Task<Airport> GetAirport(string iata)
         {
-            //using (HttpClient _airportClient = new HttpClient())
-            //{
-            //    HttpResponseMessage response = await _airportClient.GetAsync($"https://localhost:44366/Airport/{iata}");
-            //    var airportJson = await response.Content.ReadAsStringAsync();
-            //    if (response.IsSuccessStatusCode) return new JavaScriptSerializer().Deserialize<Airport>(airportJson);
-            //    else return null;
-            //}
-
             using (HttpClient _airportClient = new HttpClient())
             {
-
                 HttpResponseMessage response = await _airportClient.GetAsync($"https://localhost:44366/Airport/{iata}");
                 string airportJson = await response.Content.ReadAsStringAsync();
                 if (response.IsSuccessStatusCode)
