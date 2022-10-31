@@ -95,6 +95,9 @@ namespace AirCraftAPI.Controllers
         public ActionResult<AirCraft> UpdateCapacity(string rab, int newCapacity)
         {
             rab = rab.ToUpper();
+            string rabValidation = Utils.ValidateRab(rab);
+            if (rabValidation != "OK") return BadRequest(rabValidation);
+
             var aircraftUpdate = _airCraftService.GetOneByRAB(rab);
             if (aircraftUpdate == null)
                 return NotFound();
@@ -113,6 +116,10 @@ namespace AirCraftAPI.Controllers
         public ActionResult<AirCraft> UpdateLastFlight(AirCraft aircraftUpdate)
         {
             aircraftUpdate.RAB = aircraftUpdate.RAB.ToUpper();
+
+            string rabValidation = Utils.ValidateRab(aircraftUpdate.RAB);
+            if (rabValidation != "OK") return BadRequest(rabValidation);
+
             _airCraftService.Update(aircraftUpdate);
 
             return NoContent();
@@ -124,6 +131,9 @@ namespace AirCraftAPI.Controllers
         public ActionResult<AirCraft> DeleteAirCraft(string rab)
         {
             rab = rab.ToUpper();
+            string rabValidation = Utils.ValidateRab(rab);
+            if (rabValidation != "OK") return BadRequest(rabValidation);
+
             var airCraft = _airCraftService.GetOneByRAB(rab);
             if (airCraft == null)
                 return NotFound();
