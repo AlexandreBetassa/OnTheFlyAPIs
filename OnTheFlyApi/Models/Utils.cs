@@ -27,6 +27,8 @@ namespace Models
             if (cnpj.Length == 0) return false;
             //Se o tamanho for < 14 então retorna como falso
             if (cnpj.Length != 14) return false;
+            //Se colocar alguma letra
+            if (!long.TryParse(cnpj, out long aux)) return false;
             // Caso coloque todos os numeros iguais
             switch (cnpj)
             {

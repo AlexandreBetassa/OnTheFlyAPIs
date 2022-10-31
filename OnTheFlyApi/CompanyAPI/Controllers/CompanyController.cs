@@ -27,6 +27,7 @@ namespace CompanyAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Company>> Create(CompanyDTO companyDTO, string rab, int capacity)
         {
+          
             if (!Utils.ValidateCnpj(companyDTO.CNPJ)) return BadRequest("Invalid CNPJ");
                        
             var unformattedCNPJ = companyDTO.CNPJ;
@@ -59,7 +60,7 @@ namespace CompanyAPI.Controllers
 
             if (_restrictedCompanyService.GetOneCNPJ(companyDTO.CNPJ) != null) company.Status = true;
 
-            if (company.NameOp == "STRING") company.NameOp = company.Name;
+            if ((company.NameOp == "STRING")|| (company.NameOp == null)) company.NameOp = company.Name;
            
             _companyService.Create(company);
 
@@ -92,9 +93,11 @@ namespace CompanyAPI.Controllers
         public ActionResult<List<Company>> GetAll() => _companyService.GetAll();
 
 
-        [HttpGet("GetCNPJ/{cnpj}")]
+        [HttpGet("GetCNPJ/{cnpj:length(14)}")]
         public ActionResult<Company> GetOneCNPJ(string cnpj)
         {
+            if (!Utils.ValidateCnpj(cnpj)) return BadRequest("Invalid CNPJ");
+
             var unformattedCNPJ = cnpj;
             cnpj = Utils.FormatCNPJ(unformattedCNPJ);
 
@@ -108,17 +111,20 @@ namespace CompanyAPI.Controllers
 
 
         #region PUTs
-        [HttpPut("PutNameOP/{newNameOp}")]
+        [HttpPut("PutNameOP/")]
         public ActionResult<Company> PutNameOp(string cnpj, string newNameOp)
         {
+            if (!Utils.ValidateCnpj(cnpj)) return BadRequest("Invalid CNPJ");
 
             var unformattedCNPJ = cnpj;
             cnpj = Utils.FormatCNPJ(unformattedCNPJ);
 
             var company = _companyService.GetOneCNPJ(cnpj);
             if (company == null) return NotFound();
+            company.NameOp = newNameOp.ToUpper();
 
-            company.NameOp = newNameOp;
+            if (newNameOp == null) newNameOp = company.Name;
+                            
             _companyService.Update(cnpj, company);
 
             return Ok(company);
@@ -129,6 +135,7 @@ namespace CompanyAPI.Controllers
         [HttpPut("PutCEP/{newCEP}")]
         public ActionResult<Company> PutCep(string cnpj, string newCEP)
         {
+            if (!long.TryParse(cnpj, out long aux)) return BadRequest("");
 
             var unformattedCNPJ = cnpj;
             cnpj = Utils.FormatCNPJ(unformattedCNPJ);
@@ -137,7 +144,7 @@ namespace CompanyAPI.Controllers
             if (company == null) return NotFound();
 
             var address = ViaCepAPIConsummer.GetAdress(newCEP).Result;
-            if (address == null) return NotFound();
+            if (address.ZipCode == null) return NotFound();
 
             company.Address.ZipCode = address.ZipCode;
             company.Address.Street = address.Street;
@@ -151,6 +158,8 @@ namespace CompanyAPI.Controllers
         [HttpPut("PutStreet/{newStreet}")]
         public ActionResult<Company> PutStreet(string cnpj, string newStreet)
         {
+            if (!Utils.ValidateCnpj(cnpj)) return BadRequest("Invalid CNPJ");
+
             var unformattedCNPJ = cnpj;
             cnpj = Utils.FormatCNPJ(unformattedCNPJ);
 
@@ -167,6 +176,8 @@ namespace CompanyAPI.Controllers
         [HttpPut("PutNumber/{newNumber}")]
         public ActionResult<Company> PutNumber(string cnpj, int newNumber)
         {
+            if (!Utils.ValidateCnpj(cnpj)) return BadRequest("Invalid CNPJ");
+
             var unformattedCNPJ = cnpj;
             cnpj = Utils.FormatCNPJ(unformattedCNPJ);
 
@@ -183,6 +194,7 @@ namespace CompanyAPI.Controllers
         [HttpPut("PutComplement/{newComplement}")]
         public ActionResult<Company> PutComplement(string cnpj, string newComplement)
         {
+            if (!Utils.ValidateCnpj(cnpj)) return BadRequest("Invalid CNPJ");
 
             var unformattedCNPJ = cnpj;
             cnpj = Utils.FormatCNPJ(unformattedCNPJ);
@@ -200,9 +212,11 @@ namespace CompanyAPI.Controllers
 
 
 
-        [HttpDelete("{cnpj}")]
+        [HttpDelete("{cnpj:length(14)}")]
         public ActionResult<Company> Delete(string cnpj)
         {
+            if (!Utils.ValidateCnpj(cnpj)) return BadRequest("Invalid CNPJ");
+
             var unformattedCNPJ = cnpj;
             cnpj = Utils.FormatCNPJ(unformattedCNPJ);
 

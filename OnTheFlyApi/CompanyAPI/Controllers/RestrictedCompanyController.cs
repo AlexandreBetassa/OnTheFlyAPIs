@@ -18,9 +18,11 @@ namespace CompanyAPI.Controllers
             _restritedCompany = restritedCompany;
             _companyService = companyService;
         }
-        [HttpPost]
+        [HttpPost("{cnpj: length(14)}")]
         public ActionResult<RestrictedCompany> Create(string cnpj)
         {
+            if (!Utils.ValidateCnpj(cnpj)) return BadRequest("Invalid CNPJ");
+
             RestrictedCompany restrictedCompany = new()
             {
                 CNPJ = cnpj,
@@ -44,9 +46,11 @@ namespace CompanyAPI.Controllers
         [HttpGet]
         public ActionResult<List<RestrictedCompany>> GetAll()=> _restritedCompany.GetAll();
 
-        [HttpGet("GetCNPJ/{cnpj}")]
+        [HttpGet("GetCNPJ/{cnpj:length(14)}")]
         public ActionResult<RestrictedCompany> GetOneCNPJ(string cnpj)
         {
+            if (!Utils.ValidateCnpj(cnpj)) return BadRequest("Invalid CNPJ");
+
             var unformattedCNPJ = cnpj;
             cnpj = Utils.FormatCNPJ(unformattedCNPJ);
 
@@ -56,9 +60,11 @@ namespace CompanyAPI.Controllers
             return Ok(company);
         }
 
-        [HttpDelete("{cnpj}")]
+        [HttpDelete("{cnpj:length(14)}")]
         public ActionResult<RestrictedCompany> Delete(string cnpj)
         {
+            if (!Utils.ValidateCnpj(cnpj)) return BadRequest("Invalid CNPJ");
+
             var unformattedCNPJ = cnpj;
             cnpj = Utils.FormatCNPJ(unformattedCNPJ);
 
