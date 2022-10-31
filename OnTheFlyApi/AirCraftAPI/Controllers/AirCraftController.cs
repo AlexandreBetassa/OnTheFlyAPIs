@@ -111,6 +111,24 @@ namespace AirCraftAPI.Controllers
         //-----------------------------------------------------------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------------------
 
+        //[HttpDelete("{RemoveAircraftCNPJ/{cnpj}")]
+        //public ActionResult<AirCraft> DeletedCNPJAircraft(string cnpj)
+        //{
+        //    var airCraft = _airCraftService.GetAllByCnpj(cnpj);
+        //    while (airCraft != null)
+        //    {
+        //        _deletedAirCraftService.Insert(airCraft);
+
+        //        _airCraftService.Remove(airCraft);
+
+        //        airCraft = _airCraftService.GetAllByCnpj(cnpj);
+        //    }
+
+        //    return NoContent();
+
+        //}
+
+
         [HttpDelete("RemoveAirCraft/{rab}")]
         public ActionResult<AirCraft> DeleteAirCraft(string rab)
         {

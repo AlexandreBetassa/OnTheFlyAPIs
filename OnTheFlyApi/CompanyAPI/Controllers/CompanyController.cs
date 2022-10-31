@@ -59,6 +59,8 @@ namespace CompanyAPI.Controllers
 
             if (_restrictedCompanyService.GetOneCNPJ(companyDTO.CNPJ) != null) company.Status = true;
 
+            if (company.NameOp == "STRING") company.NameOp = company.Name;
+           
             _companyService.Create(company);
 
             AirCraft airCraft = new ()
@@ -70,6 +72,7 @@ namespace CompanyAPI.Controllers
                 DtRegistry = DateTime.Now
             };
 
+           
             var savedAirCraft = AirCraftAPIConsummer.PostAirCraft(airCraft).Result;
 
             if (!savedAirCraft)
@@ -122,7 +125,7 @@ namespace CompanyAPI.Controllers
         }
 
 
-        [HttpPut("PutStatus/{newStatus}")]
+        [HttpPut("PutStatus/{newStatus}", Name ="Status")]
         public ActionResult<Company> PutStatus(string cnpj, bool newStatus)
         {
 
@@ -222,6 +225,8 @@ namespace CompanyAPI.Controllers
             var company = _companyService.GetOneCNPJ(cnpj);
             if (company == null) return NotFound();
 
+            //var DeletedAircraft = Utils.DeletedAircraft(company.CNPJ);
+            //if(!DeletedAircraft)return badRequest();
             _deletedCompanyService.Insert(company);
             _companyService.Delete(company);
 
