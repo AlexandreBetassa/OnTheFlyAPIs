@@ -58,8 +58,8 @@ namespace SaleAPI.Controllers
         }
 
 
-        [HttpPost("CreateSaleByState")]
-        public async Task<ActionResult<AirCraft>> CreateSaleState(SaleDTO saleDTO)
+        [HttpPost("CreateSaleByIcao")]
+        public async Task<ActionResult<AirCraft>> CreateSaleIcao(SaleDTO saleDTO)
         {
             //busca o voo para cadastroartur
             var flight = await FlightAPIConsummer.GetFlight(saleDTO);
