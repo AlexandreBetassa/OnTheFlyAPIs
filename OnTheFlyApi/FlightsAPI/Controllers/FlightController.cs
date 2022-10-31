@@ -58,6 +58,8 @@ namespace FlightsAPI.Controllers
             if (airCraft == null) return NotFound();
             if (airCraft.Company.Status == true) return BadRequest("Restricted Airline, flights can only be registered for unrestricted airlines.");
 
+            //Airport airport = await AirportAPIConsummer.GetAirport(destiny);
+
             Airport airport = new Airport { Country = "BR", IATA = destiny.ToUpper() }; /*Consumo api pestana*/
             if (airport == null) return NotFound();
 
