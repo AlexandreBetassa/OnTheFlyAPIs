@@ -99,6 +99,8 @@ namespace AirCraftAPI.Controllers
             if (aircraftUpdate == null)
                 return NotFound();
 
+            if (newCapacity < 1 || newCapacity > 999) return BadRequest("Aircraft Capacity must have a numeric value Integer between 1 to 999.");
+
             aircraftUpdate.Capacity = newCapacity;
 
             _airCraftService.UpdateCapacity(aircraftUpdate, rab);
