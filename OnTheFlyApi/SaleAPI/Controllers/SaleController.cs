@@ -55,7 +55,7 @@ namespace SaleAPI.Controllers
         }
 
 
-        }
+
         [HttpPut("PutStatusReserved/{date}/{status}/{aircraft}/{cpf}")]
         public ActionResult<Sale> Put(DateTime date, string aircraft, bool status, string cpf)
         {
@@ -68,7 +68,6 @@ namespace SaleAPI.Controllers
             return NoContent();
         }
     }
-
 }
 
 
