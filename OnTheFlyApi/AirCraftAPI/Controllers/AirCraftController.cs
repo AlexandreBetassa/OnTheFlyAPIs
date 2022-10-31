@@ -61,8 +61,8 @@ namespace AirCraftAPI.Controllers
             airCraftInsert.RAB = airCraftInsert.RAB.ToUpper();
             //-----------------------------------------------
 
-            bool rabValidation = Utils.ValidateRab(airCraftInsert.RAB); // arrumar validação RAB
-            if (rabValidation == false) return BadRequest("The Informed RAB is not valid. Try using a 6 characters RAB including - after the prefix. Ex: ( EX-ABC ).");
+            string rabValidation = Utils.ValidateRab(airCraftInsert.RAB); 
+            if (rabValidation != "OK") return BadRequest(rabValidation);
 
             var airCraft = _airCraftService.GetOneByRAB(airCraftInsert.RAB);
             if (airCraft != null)
