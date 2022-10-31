@@ -1,11 +1,9 @@
-﻿using FlightsAPI.Services;
-using Microsoft.AspNetCore.Http;
+﻿using APIsConsummers;
+using FlightsAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using System;
 using System.Collections.Generic;
-using APIsConsummers;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -35,10 +33,10 @@ namespace FlightsAPI.Controllers
             return Ok(flight);
         }
 
-        [HttpGet("GetOne/{fullDate}/{rabPlane}/{destiny}", Name = "GetOne")]
-        public ActionResult<Flight> Get(DateTime fullDate, string rabPlane, string destiny)
+        [HttpPost("GetOne/", Name = "GetOne")]
+        public ActionResult<Flight> Get([FromBody] SaleDTO sale)
         {
-            var flight = _flightService.GetOne(fullDate, rabPlane.ToUpper(), destiny.ToUpper());
+            var flight = _flightService.GetOne(sale.DtFlight, sale.RAB.ToUpper(), sale.Destiny.ToUpper());
 
             if (flight == null) return NotFound();
 
@@ -52,7 +50,7 @@ namespace FlightsAPI.Controllers
             if (airCraft == null) return NotFound();
             if (airCraft.Company.Status == true) return BadRequest("Restricted Airline, flights can only be registered for unrestricted airlines.");
 
-            Airport airport = new Airport { Country = "BR", /*State = "SP"*/ IATA = destiny.ToUpper() }; /*Consumo api pestana*/
+            Airport airport = new Airport { Country = "BR", IATA = destiny.ToUpper() }; /*Consumo api pestana*/
             if (airport == null) return NotFound();
 
             if (dateFlight < DateTime.Now) return BadRequest("Invalid Date, the date must be a future date the current date.");
@@ -74,13 +72,13 @@ namespace FlightsAPI.Controllers
         }
 
         [HttpPut("ModifyFlightSales", Name = "ModifyFlightSales")]
-        public ActionResult<Flight> UpdateSalesFlight(Flight flight)
+        public ActionResult<Flight> UpdateSalesFlight([FromBody] Flight flight)
         {
             var flightUpdate = _flightService.GetOne(flight.Departure, flight.Plane.RAB.ToUpper(), flight.Destiny.IATA.ToUpper());
 
             if (flightUpdate == null) return NotFound();
 
-            _flightService.UpdateSales(flight.Departure, flight.Plane.RAB, flight.Destiny.IATA, flightUpdate);
+            _flightService.UpdateSales(flight.Departure, flight.Plane.RAB, flight.Destiny.IATA, flight);
 
             return NoContent();
         }

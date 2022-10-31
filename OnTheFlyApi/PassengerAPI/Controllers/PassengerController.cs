@@ -4,6 +4,7 @@ using PassengerAPI.Services;
 using System.Collections.Generic;
 using System;
 using APIsConsummers;
+using System.Text.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -39,6 +40,7 @@ namespace PassengerAPI.Controllers
         }
 
         [HttpPost("GetSalePassengersList")]
+        //public ActionResult<List<Passenger>> GetSalePassengersList(List<PassengerOnlyCPFDTO> unformattedCpfList)
         public ActionResult<List<Passenger>> GetSalePassengersList(List<string> unformattedCpfList)
         {
             Passenger passenger;
@@ -53,7 +55,7 @@ namespace PassengerAPI.Controllers
             if ((DateTime.Today - passengersList[0].DtBirth.AddYears(18)).Days < 0)
                 return BadRequest();
 
-            return Ok(passengersList);
+            return passengersList;
         }
 
         // POST api/<PassengerController>
