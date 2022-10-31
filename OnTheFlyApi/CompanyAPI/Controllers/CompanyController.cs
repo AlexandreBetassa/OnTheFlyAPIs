@@ -125,21 +125,21 @@ namespace CompanyAPI.Controllers
         }
 
 
-        [HttpPut("PutStatus/{newStatus}", Name ="Status")]
-        public ActionResult<Company> PutStatus(string cnpj, bool newStatus)
-        {
+        //[HttpPut("PutStatus/{newStatus}", Name ="Status")]
+        //public ActionResult<Company> PutStatus(string cnpj, bool newStatus)
+        //{
 
-            var unformattedCNPJ = cnpj;
-            cnpj = Utils.FormatCNPJ(unformattedCNPJ);
+        //    var unformattedCNPJ = cnpj;
+        //    cnpj = Utils.FormatCNPJ(unformattedCNPJ);
 
-            var company = _companyService.GetOneCNPJ(cnpj);
-            if (company == null) return NotFound();
+        //    var company = _companyService.GetOneCNPJ(cnpj);
+        //    if (company == null) return NotFound();
 
-            company.Status = newStatus;
-            _companyService.Update(cnpj, company);
+        //    company.Status = newStatus;
+        //    _companyService.Update(cnpj, company);
 
-            return Ok(company);
-        }
+        //    return Ok(company);
+        //}
 
 
         [HttpPut("PutCEP/{newCEP}")]
