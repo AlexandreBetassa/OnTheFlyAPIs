@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SaleAPI.Controllers 
+namespace SaleAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -36,7 +36,7 @@ namespace SaleAPI.Controllers
             if (flight == null) return NotFound("Flight not found!!!");
             //verifica se há passagem para todos os passageiros da solicitacao de compra
             else if (flight.Sales > saleDTO.PassengersCPFs.Count) return BadRequest("\r\nThere are no tickets for all passengers");
-            var lstPassengers = await PassengersAPIConsummer.GetSalePassengersList(saleDTO.PassengersCPFs,"44355");
+            var lstPassengers = await PassengersAPIConsummer.GetSalePassengersList(saleDTO.PassengersCPFs, "44355");
             if (lstPassengers == null) return BadRequest("There is a problem with the passengers on the flight");
 
             Sale sale = new()
@@ -52,6 +52,8 @@ namespace SaleAPI.Controllers
             sale.Flight.Sales += sale.Passenger.Count;
             if (await FlightAPIConsummer.UpdateFlightSales(sale.Flight)) return CreatedAtRoute("GetOneSale", sale, sale);
             else return BadRequest();
+        }
+
 
         [HttpPut("PutStatusReserved/{date}/{status}/{aircraft}/{cpf}")]
         public ActionResult<Sale> Put(DateTime date, string aircraft, bool status, string cpf)
@@ -65,4 +67,7 @@ namespace SaleAPI.Controllers
             return NoContent();
         }
     }
+
 }
+
+
