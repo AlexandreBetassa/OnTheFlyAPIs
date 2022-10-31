@@ -53,9 +53,6 @@ namespace SaleAPI.Controllers
             if (await FlightAPIConsummer.UpdateFlightSales(sale.Flight)) return CreatedAtRoute("GetOneSale", sale, sale);
             else return BadRequest();
 
-        }
-        //***************************************
-
         [HttpPut("PutStatusReserved/{date}/{status}/{aircraft}/{cpf}")]
         public ActionResult<Sale> Put(DateTime date, string aircraft, bool status, string cpf)
         {
