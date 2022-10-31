@@ -14,11 +14,11 @@ namespace APIsConsummers
         {
             using (HttpClient _passengerClient = new HttpClient())
             {
-                string jsonString = JsonSerializer.Serialize(unformattedCpfList);
+                string jsonString = JsonConvert.SerializeObject(unformattedCpfList);
                 HttpContent content = new StringContent(jsonString, Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await _passengerClient.PostAsync($"https://localhost:{localPort}/api/Passenger/GetSalePassengersList", content);
                 var passengerJson = await response.Content.ReadAsStringAsync();
-                if (response.IsSuccessStatusCode) return JsonSerializer.Deserialize<List<Passenger>>(passengerJson);
+                if (response.IsSuccessStatusCode) return JsonConvert.DeserializeObject<List<Passenger>>(passengerJson);
                 else return null;
             }
         }
