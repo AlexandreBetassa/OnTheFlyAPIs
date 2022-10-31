@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace APIsConsummers
 {
@@ -14,11 +14,11 @@ namespace APIsConsummers
         {
             using (HttpClient _passengerClient = new HttpClient())
             {
-                string jsonString = JsonConvert.SerializeObject(unformattedCpfList);
+                string jsonString = JsonSerializer.Serialize(unformattedCpfList);
                 HttpContent content = new StringContent(jsonString, Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await _passengerClient.PostAsync($"https://localhost:{localPort}/api/Passenger/GetSalePassengersList", content);
                 var passengerJson = await response.Content.ReadAsStringAsync();
-                if (response.IsSuccessStatusCode) return JsonConvert.DeserializeObject<List<Passenger>>(passengerJson);
+                if (response.IsSuccessStatusCode) return JsonSerializer.Deserialize<List<Passenger>>(passengerJson);
                 else return null;
             }
         }

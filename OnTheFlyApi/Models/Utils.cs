@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Models
 {
@@ -68,7 +69,7 @@ namespace Models
             if (unformattedCpf.Length != 11) return false;
 
             if (!long.TryParse(cpfString, out long cpfLong)) return false;
-            
+
             digVerificador = (int)(cpfLong % 100);
             cpfLong /= 100;
             for (int i = 0; i < 9; i++)
@@ -100,16 +101,6 @@ namespace Models
            $"{unformatedCNPJ.Substring(5, 3)}/" +
            $"{unformatedCNPJ.Substring(8, 4)}-" +
            $"{unformatedCNPJ.Substring(12, 2)}";
-      
-        public static bool ValidateRab(string rab)
-        {
-            string prefix = rab.Substring(0, 2);
-            string sufix = rab.Substring(3, 3);
-            if (prefix != "PP" && prefix != "PR" && prefix != "PT" && prefix != "BR" && prefix != "PS") return false;
-            else if (sufix == "SOS" && sufix == "XXX" && sufix == "PAN" && sufix == "TTT" && sufix == "VFR"
-                && sufix == "IFR" && sufix == "VMC" && sufix == "IMC") return false;
-            else return true;
-        }
 
         public static string FormatCPF(string unformatedCpf)
             => $"{unformatedCpf.Substring(0, 3)}." +
@@ -122,6 +113,68 @@ namespace Models
             double time = (DateTime.Now - company.DtOpen).TotalDays;
             if (time / 30 < 6) return false;
             else return true;
+        }
+
+        public static string ValidateRab(string rab)
+        {
+            // The national prefixes that identify Brazil's private and commercial aircraft are PT, PR, PP, PS and PH.
+            string[] prefix = new string[] { "PT", "PR", "PP", "PS", "PH" };
+
+            // The National Civil Aviation Agency (Anac) prohibits the registration of identification marks on aircraft
+            // starting with the letter Q or having W as the second letter.
+            // The SOS, XXX, PAN, TTT, VFR, IFR, VMC and IMC arrangements cannot be used as well.
+            string[] forbiddenId = new string[] { "SOS", "XXX", "PAN", "TTT", "VFR", "IFR", "VMC", "IMC" };
+
+            char[] chars = rab.ToCharArray();
+
+            //Checks if it has 6 characters:
+            if (chars.Length == 6)
+            {
+                //checks if it was inserted ( - ) in the inscription:
+                if (chars[2] == '-')
+                {
+                    //Check if "Q" and/or "W" have been inserted in positions not allowed in the aircraft registration:
+                    if (chars[3] != 'Q' && chars[4] != 'W')
+                    {
+                        //Separates the writing after the ( - )
+                        string planeRegistration = chars[3].ToString() + chars[4].ToString() + chars[5].ToString();
+
+                        //Checks if the registration has a prohibited name, contained in the forbiddenId vector;
+                        if (forbiddenId.Contains(planeRegistration) == false)
+                        {
+                            //Separates the first 2 prefixes and saves it in the planePrefix variable:
+                            string planePrefix = chars[0].ToString() + chars[1].ToString();
+
+                            //Checks if the first 2 prefixes are valid:
+                            if (prefix.Contains(planePrefix) == true)
+                            {
+                                //passed all checks:
+                                return "OK";
+                            }
+                            else
+                            {
+                                return "Prefixes must be 'PT', 'PR', 'PP', 'PS' or 'PH'.";
+                            }
+                        }
+                        else
+                        {
+                            return "'SOS', 'XXX', 'PAN', 'TTT', 'VFR', 'IFR', 'VMC' and 'IMC' registrations cannot be used.";
+                        }
+                    }
+                    else
+                    {
+                        return "The letter 'Q' as the first letter and the letter 'W' as the second letter of the aircraft registration is not allowed.";
+                    }
+                }
+                else
+                {
+                    return "Is Mandatory insert the dash ( - ) after nationality prefixes.";
+                }
+            }
+            else
+            {
+                return "Is Mandatory insert the dash ( - ) after nationality prefixes. Incorrect number of identification digits.";
+            }
         }
     }
 }

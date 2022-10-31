@@ -11,22 +11,34 @@ namespace CompanyAPI.Controllers
     public class RestrictedCompanyController : ControllerBase
     {
         private readonly RestrictedCompanyService _restritedCompany;
+        private readonly CompanyService _companyService;
 
-        public RestrictedCompanyController(RestrictedCompanyService restritedCompany)
+        public RestrictedCompanyController(RestrictedCompanyService restritedCompany, CompanyService companyService)
         {
             _restritedCompany = restritedCompany;
+            _companyService = companyService;
         }
         [HttpPost]
-        public ActionResult<RestrictedCompany> Create(RestrictedCompany restritedCnpj)
+        public ActionResult<RestrictedCompany> Create(string cnpj)
         {
-            string unformattedCNPJ = restritedCnpj.CNPJ;
-            restritedCnpj.CNPJ = Utils.FormatCNPJ(unformattedCNPJ);
+            RestrictedCompany restrictedCompany = new()
+            {
+                CNPJ = cnpj,
+            };
+            string unformattedCNPJ = restrictedCompany.CNPJ;
+            restrictedCompany.CNPJ = Utils.FormatCNPJ(unformattedCNPJ);
 
-            var restritedCompany = _restritedCompany.GetOneCNPJ(restritedCnpj.CNPJ);
-            if (restritedCompany != null) return NoContent() ;
+            var restritedCnpj = _restritedCompany.GetOneCNPJ(restrictedCompany.CNPJ);
+            if (restritedCnpj != null) return BadRequest() ;
 
-            _restritedCompany.Create(restritedCnpj);
-            return Ok(restritedCnpj);
+          var company = _companyService.GetOneCNPJ(restrictedCompany.CNPJ);
+            if (company != null)
+            {
+                company.Status = true;
+                _companyService.Update(company.CNPJ, company);
+            }
+        
+            return Ok(_restritedCompany.Create(restrictedCompany));
         }
 
         [HttpGet]
@@ -44,7 +56,7 @@ namespace CompanyAPI.Controllers
             return Ok(company);
         }
 
-        [HttpDelete]
+        [HttpDelete("{cnpj}")]
         public ActionResult<RestrictedCompany> Delete(string cnpj)
         {
             var unformattedCNPJ = cnpj;
@@ -52,6 +64,13 @@ namespace CompanyAPI.Controllers
 
             var restritedCompany = _restritedCompany.GetOneCNPJ(cnpj);
             if(restritedCompany == null) return NotFound();
+
+            var company = _companyService.GetOneCNPJ(cnpj);
+            if (company != null)
+            {
+                company.Status = false;
+                _companyService.Update(cnpj, company);
+            }
 
             _restritedCompany.Delete(restritedCompany);
             return NoContent();

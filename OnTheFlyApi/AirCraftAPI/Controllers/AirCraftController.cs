@@ -32,6 +32,7 @@ namespace AirCraftAPI.Controllers
         [HttpGet("GetByCnpj/{companyCnpj}")]
         public ActionResult<List<AirCraft>> GetAllByCnpj(string companyCnpj)
         {
+            companyCnpj.Replace(".", "").Replace("/", "").Replace("-", "");
             companyCnpj = Utils.FormatCNPJ(companyCnpj);
 
             var aircraftList = _airCraftService.GetAllByCnpj(companyCnpj);
@@ -55,31 +56,29 @@ namespace AirCraftAPI.Controllers
         //-----------------------------------------------------------------------------------------------------------------
 
         [HttpPost]
-        public ActionResult<AirCraft> CreateAirCraft([FromBody] AirCraft airCraftDTO)
+        public ActionResult<AirCraft> CreateAirCraft([FromBody] AirCraft airCraftInsert)
         {
-            //passar todos os dados inseridos para UpperCase:
-            airCraftDTO.RAB = airCraftDTO.RAB.ToUpper();
+            airCraftInsert.RAB = airCraftInsert.RAB.ToUpper();
             //-----------------------------------------------
+            
+            string rabValidation = Utils.ValidateRab(airCraftInsert.RAB); 
+            if (rabValidation != "OK") return BadRequest(rabValidation);
 
-            bool rabValidation = Utils.ValidateRab(airCraftDTO.RAB);
-            if (rabValidation == false) return BadRequest("The Informed RAB is not valid. Try using a 6 characters RAB including - after the prefix. Ex: ( EX-ABC ).");
-
-            var airCraft = _airCraftService.GetOneByRAB(airCraftDTO.RAB);
+            var airCraft = _airCraftService.GetOneByRAB(airCraftInsert.RAB);
             if (airCraft != null)
                 return StatusCode((int)HttpStatusCode.Conflict, "Could not proceed with this request. There is already an aircraft registered with this RAB code!");
 
-            //AirCraft aircraft = new AirCraft
-            //{
-            //    Capacity = airCraftDTO.Capacity,
-            //    Company = company,
-            //    DtLastFlight = DateTime.Now,
-            //    DtRegistry = DateTime.Now,
-            //    RAB = airCraftDTO.RAB
-            //};
+            airCraftInsert.Company.CNPJ.Replace(".", "").Replace("/", "").Replace("-", "");
 
-            _airCraftService.Create(airCraftDTO);
+            var company = CompanyAPIConsummer.GetOneCNPJ(airCraftInsert.Company.CNPJ).Result;
+            if (company == null) return BadRequest("Invalid CNPJ. Could not found an company with informed CNPJ.");
 
-            return Ok(airCraft);
+            airCraftInsert.Company = company;
+
+
+            _airCraftService.Create(airCraftInsert);
+
+            return Ok(airCraftInsert);
         }
         //-----------------------------------------------------------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------------------
@@ -101,7 +100,7 @@ namespace AirCraftAPI.Controllers
         }
 
 
-        [HttpPut("ModifyAirCraftDtLastFlight/")]   //update usando o objeto completo ja atualizado
+        [HttpPut("ModifyAirCraftDtLastFlight/")]
         public ActionResult<AirCraft> UpdateLastFlight(AirCraft aircraftUpdate)
         {
             aircraftUpdate.RAB = aircraftUpdate.RAB.ToUpper();
@@ -109,23 +108,26 @@ namespace AirCraftAPI.Controllers
 
             return NoContent();
         }
+        //-----------------------------------------------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------------------------------------------
 
-        //[HttpPut("ModifyAirCraftDtLastFlight/{rab}/{updateLastFlight}")]
-        //public ActionResult<AirCraft> UpdateLastFlight(string rab, DateTime updateLastFlight)
+        //[HttpDelete("{RemoveAircraftCNPJ/{cnpj}")]
+        //public ActionResult<AirCraft> DeletedCNPJAircraft(string cnpj)
         //{
-        //    rab = rab.ToUpper();
-        //    var aircraftUpdate = _airCraftService.GetOneByRAB(rab);
-        //    if (aircraftUpdate == null)
-        //        return NotFound();
+        //    var airCraft = _airCraftService.GetAllByCnpj(cnpj);
+        //    while (airCraft != null)
+        //    {
+        //        _deletedAirCraftService.Insert(airCraft);
 
-        //    aircraftUpdate.DtLastFlight = updateLastFlight;
+        //        _airCraftService.Remove(airCraft);
 
-        //    _airCraftService.Update(aircraftUpdate, rab);
+        //        airCraft = _airCraftService.GetAllByCnpj(cnpj);
+        //    }
 
         //    return NoContent();
+
         //}
-        //-----------------------------------------------------------------------------------------------------------------
-        //-----------------------------------------------------------------------------------------------------------------
+
 
         [HttpDelete("RemoveAirCraft/{rab}")]
         public ActionResult<AirCraft> DeleteAirCraft(string rab)
@@ -141,8 +143,6 @@ namespace AirCraftAPI.Controllers
 
             return NoContent();
         }
-
-
 
     }
 }

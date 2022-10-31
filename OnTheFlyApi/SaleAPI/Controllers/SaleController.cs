@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SaleAPI.Controllers 
+namespace SaleAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -52,8 +52,10 @@ namespace SaleAPI.Controllers
             sale.Flight.Sales += sale.Passenger.Count;
             if (await FlightAPIConsummer.UpdateFlightSales(sale.Flight)) return CreatedAtRoute("GetOneSale", sale, sale);
             else return BadRequest();
-
         }
+
+
+
         [HttpPut("PutStatusReserved/{date}/{status}/{aircraft}/{cpf}")]
         public ActionResult<Sale> Put(DateTime date, string aircraft, bool status, string cpf)
         {
@@ -67,3 +69,5 @@ namespace SaleAPI.Controllers
         }
     }
 }
+
+
