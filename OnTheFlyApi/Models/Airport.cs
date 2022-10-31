@@ -8,7 +8,7 @@ namespace Models
     {
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
-        [JsonPropertyName("_id")]
+        [JsonPropertyName("Id")]
         public string Id { get; set; }
         [Required]
         [StringLength(3, ErrorMessage = "Tamanho limite do campo IATA é de 3 caracteres")]

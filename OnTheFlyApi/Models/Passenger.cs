@@ -9,7 +9,7 @@ namespace Models
     {
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
-        [JsonPropertyName("_id")]
+        [JsonPropertyName("Id")]
         public string Id { get; set; }
         [JsonPropertyName("CPF")]
         public string CPF { get; set; }

@@ -33,10 +33,9 @@ namespace AirCraftAPI.Controllers
         [HttpGet("GetByCnpj/{companyCnpj}")]
         public ActionResult<List<AirCraft>> GetAllByCnpj(string companyCnpj)
         {
-            var a = companyCnpj.Replace(".", "").Replace("/", "").Replace("-", "");
-            a = Utils.FormatCNPJ(companyCnpj);
+            companyCnpj = Utils.FormatCNPJ(companyCnpj);
 
-            var aircraftList = _airCraftService.GetAllByCnpj(a);
+            var aircraftList = _airCraftService.GetAllByCnpj(companyCnpj);
             return aircraftList;
         }
         //-----------------------------------------------------------------------------------------------------------------
@@ -76,7 +75,6 @@ namespace AirCraftAPI.Controllers
 
             airCraftInsert.Company = company;
 
-
             _airCraftService.Create(airCraftInsert);
 
             return Ok(airCraftInsert);
@@ -87,7 +85,6 @@ namespace AirCraftAPI.Controllers
         [HttpPut("ModifyAirCraftCapacity/{rab}/{newCapacity}")]
         public ActionResult<AirCraft> UpdateCapacity(string rab, int newCapacity)
         {
-
             rab = rab.ToUpper();
             var aircraftUpdate = _airCraftService.GetOneByRAB(rab);
             if (aircraftUpdate == null)
