@@ -125,22 +125,6 @@ namespace CompanyAPI.Controllers
         }
 
 
-        //[HttpPut("PutStatus/{newStatus}", Name ="Status")]
-        //public ActionResult<Company> PutStatus(string cnpj, bool newStatus)
-        //{
-
-        //    var unformattedCNPJ = cnpj;
-        //    cnpj = Utils.FormatCNPJ(unformattedCNPJ);
-
-        //    var company = _companyService.GetOneCNPJ(cnpj);
-        //    if (company == null) return NotFound();
-
-        //    company.Status = newStatus;
-        //    _companyService.Update(cnpj, company);
-
-        //    return Ok(company);
-        //}
-
 
         [HttpPut("PutCEP/{newCEP}")]
         public ActionResult<Company> PutCep(string cnpj, string newCEP)
@@ -225,8 +209,6 @@ namespace CompanyAPI.Controllers
             var company = _companyService.GetOneCNPJ(cnpj);
             if (company == null) return NotFound();
 
-            //var DeletedAircraft = Utils.DeletedAircraft(company.CNPJ);
-            //if(!DeletedAircraft)return badRequest();
             _deletedCompanyService.Insert(company);
             _companyService.Delete(company);
 
