@@ -28,7 +28,7 @@ namespace FlightsAPI.Controllers
         {
             var flight = _flightService.GetByDate(date);
 
-            if (flight == null) return NotFound("Not found, date not found.");
+            if (flight == null) return NotFound();
 
             return Ok(flight);
         }
@@ -38,7 +38,7 @@ namespace FlightsAPI.Controllers
         {
             var flight = _flightService.GetOne(fullDate, rabPlane.ToUpper(), destiny.ToUpper());
 
-            if (flight == null) return NotFound("Not found, specific flight with full date, RAB and destination not found.");
+            if (flight == null) return NotFound();
 
             return Ok(flight);
         }
@@ -48,7 +48,7 @@ namespace FlightsAPI.Controllers
         {
             var flight = _flightService.GetOne(sale.DtFlight, sale.RAB.ToUpper(), sale.Destiny.ToUpper());
 
-            if (flight == null) return NotFound("Not found, specific flight not found.");
+            if (flight == null) return NotFound();
 
             return Ok(flight);
         }
@@ -58,13 +58,13 @@ namespace FlightsAPI.Controllers
         {
             AirCraft airCraft = await AirCraftAPIConsummer.GetAirCraft(rab.ToUpper());
 
-            if (airCraft == null) return NotFound("Not found, flight with reported rab not found.");
+            if (airCraft == null) return NotFound();
 
             if (airCraft.Company.Status == true) return BadRequest("Restricted Airline, flights can only be registered for unrestricted airlines.");
 
             Airport airport = await AirportAPIConsummer.GetAirport(destiny.ToUpper());
 
-            if (airport == null) return NotFound("Not found, informed airport not found.");
+            if (airport == null) return NotFound();
 
             if (dateFlight < DateTime.Now) return BadRequest("Invalid Date, the date must be a future date the current date.");
 
@@ -90,7 +90,7 @@ namespace FlightsAPI.Controllers
         {
             var flightUpdate = _flightService.GetOne(flight.Departure, flight.Plane.RAB.ToUpper(), flight.Destiny.IATA.ToUpper());
 
-            if (flightUpdate == null) return NotFound("Not found, flight with reported date, and RAB not found.");
+            if (flightUpdate == null) return NotFound();
 
             _flightService.UpdateSales(flight.Departure, flight.Plane.RAB, flight.Destiny.IATA, flight);
 
@@ -102,7 +102,7 @@ namespace FlightsAPI.Controllers
         {
             var flightUpdate = _flightService.GetOne(fullDate, rabPlane.ToUpper(), destiny.ToUpper());
 
-            if (flightUpdate == null) return NotFound("Not found, specific flight with full date, RAB and destination not found.");
+            if (flightUpdate == null) return NotFound();
 
             if (flightUpdate.Status == false) return BadRequest("The flight was canceled, unable to change flight status.");
 
