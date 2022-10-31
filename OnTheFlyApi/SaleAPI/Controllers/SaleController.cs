@@ -28,16 +28,16 @@ namespace SaleAPI.Controllers
             return Ok(sale);
         }
 
-        //[HttpPost("CreateSale")]
-        //public async Task<ActionResult<AirCraft>> Create(SaleDTO saleDTO)
-        //{
-        //    //busca o voo para cadastroartur
-        //    var flight = await FlightAPIConsummer.GetFlight(saleDTO);
-        //    if (flight == null) return NotFound("Flight not found!!!");
-        //    //verifica se há passagem para todos os passageiros da solicitacao de compra
-        //    else if (flight.Sales > saleDTO.PassengersCPFs.Count) return BadRequest("\r\nThere are no tickets for all passengers");
-        //    var lstPassengers = await PassengersAPIConsummer.GetSalePassengersList(saleDTO.PassengersCPFs);
-        //    if (lstPassengers == null) return BadRequest("There is a problem with the passengers on the flight");
+        [HttpPost("CreateSale")]
+        public async Task<ActionResult<AirCraft>> Create(SaleDTO saleDTO)
+        {
+            //busca o voo para cadastroartur
+            var flight = await FlightAPIConsummer.GetFlight(saleDTO);
+            if (flight == null) return NotFound("Flight not found!!!");
+            //verifica se há passagem para todos os passageiros da solicitacao de compra
+            else if (flight.Sales > saleDTO.PassengersCPFs.Count) return BadRequest("\r\nThere are no tickets for all passengers");
+            var lstPassengers = await PassengersAPIConsummer.GetSalePassengersList(saleDTO.PassengersCPFs,"44355");
+            if (lstPassengers == null) return BadRequest("There is a problem with the passengers on the flight");
 
         //    Sale sale = new()
         //    {

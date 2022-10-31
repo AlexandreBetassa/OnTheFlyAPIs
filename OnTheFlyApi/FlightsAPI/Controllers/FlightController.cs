@@ -80,13 +80,13 @@ namespace FlightsAPI.Controllers
         }
 
         [HttpPut("ModifyFlightSales", Name = "ModifyFlightSales")]
-        public ActionResult<Flight> UpdateSalesFlight([FromBody]Flight flight)
+        public ActionResult<Flight> UpdateSalesFlight([FromBody] Flight flight)
         {
             var flightUpdate = _flightService.GetOne(flight.Departure, flight.Plane.RAB.ToUpper(), flight.Destiny.IATA.ToUpper());
 
             if (flightUpdate == null) return NotFound();
 
-            _flightService.UpdateSales(flight.Departure, flight.Plane.RAB, flight.Destiny.IATA, flightUpdate);
+            _flightService.UpdateSales(flight.Departure, flight.Plane.RAB, flight.Destiny.IATA, flight);
 
             return NoContent();
         }

@@ -1,7 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
 using System.Text.Json.Serialization;
-
 namespace AirportAPI.Models
 {
     public class Airport
@@ -27,5 +26,9 @@ namespace AirportAPI.Models
         public string elevation { get; set; }
         [JsonPropertyName("icao")]
         public string icao { get; set; }
+        [JsonPropertyName("city")]
+        public string city { get; set; }
+        [JsonPropertyName("state")]
+        public string state { get; set; }
     }
 }
