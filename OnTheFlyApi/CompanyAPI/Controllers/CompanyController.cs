@@ -61,12 +61,7 @@ namespace CompanyAPI.Controllers
 
             if (company.NameOp == "STRING") company.NameOp = company.Name;
            
-            //Street
-
             _companyService.Create(company);
-
-            //var UnFormatedCNPJ = company.CNPJ.Replace(".", "").Replace("/", "").Replace("-", "");
-            //company.CNPJ = UnFormatedCNPJ;
 
             AirCraft airCraft = new ()
             {

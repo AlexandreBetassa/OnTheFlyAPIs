@@ -56,7 +56,7 @@ namespace CompanyAPI.Controllers
             return Ok(company);
         }
 
-        [HttpDelete]
+        [HttpDelete("{cnpj}")]
         public ActionResult<RestrictedCompany> Delete(string cnpj)
         {
             var unformattedCNPJ = cnpj;
