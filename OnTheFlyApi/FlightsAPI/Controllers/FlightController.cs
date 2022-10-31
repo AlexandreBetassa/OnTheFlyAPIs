@@ -37,7 +37,9 @@ namespace FlightsAPI.Controllers
         public ActionResult<Flight> GetOneFlight(DateTime fullDate, string rabPlane, string destiny)
         {
             var flight = _flightService.GetOne(fullDate, rabPlane.ToUpper(), destiny.ToUpper());
+
             if (flight == null) return NotFound("Not found, specific flight with full date, RAB and destination not found.");
+
             return Ok(flight);
         }
 
@@ -55,7 +57,9 @@ namespace FlightsAPI.Controllers
         public async Task<ActionResult<Flight>> Create(string rab, DateTime dateFlight, string destiny)
         {
             AirCraft airCraft = await AirCraftAPIConsummer.GetAirCraft(rab.ToUpper());
+
             if (airCraft == null) return NotFound("Not found, flight with reported rab not found.");
+
             if (airCraft.Company.Status == true) return BadRequest("Restricted Airline, flights can only be registered for unrestricted airlines.");
 
             Airport airport = await AirportAPIConsummer.GetAirport(destiny.ToUpper());
@@ -75,6 +79,7 @@ namespace FlightsAPI.Controllers
             _flightService.Create(flight);
 
             airCraft.DtLastFlight = dateFlight;
+
             var lastPlaneFlight = AirCraftAPIConsummer.UpdateAirCraft(airCraft);
 
             return Ok(flight);
@@ -96,6 +101,7 @@ namespace FlightsAPI.Controllers
         public ActionResult<Flight> UpdateStatus(DateTime fullDate, string rabPlane, string destiny, bool newStatus)
         {
             var flightUpdate = _flightService.GetOne(fullDate, rabPlane.ToUpper(), destiny.ToUpper());
+
             if (flightUpdate == null) return NotFound("Not found, specific flight with full date, RAB and destination not found.");
 
             if (flightUpdate.Status == false) return BadRequest("The flight was canceled, unable to change flight status.");

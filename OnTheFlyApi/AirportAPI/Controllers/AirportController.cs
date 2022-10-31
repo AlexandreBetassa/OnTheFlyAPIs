@@ -1,6 +1,5 @@
 ﻿using AirportAPI.Models;
 using AirportAPI.Serivces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -16,13 +15,6 @@ namespace AirportAPI.Controllers
             _airportServices = airportServices;
         }
 
-        //[HttpPost]
-        //public ActionResult<Airport> Create(Airport airport)
-        //{
-        //    _airportServices.Create(airport);
-        //    return Ok();
-        //}
-        
         [HttpGet]
         public ActionResult<List<Airport>> Get() => _airportServices.Get();
 
@@ -36,6 +28,7 @@ namespace AirportAPI.Controllers
 
             return airport;
         }
+
         [HttpGet("/ByCountry/{country_id}", Name = "GetAirportCountry")]
         public ActionResult<List<Airport>> GetByCountry(string country_id)
         {

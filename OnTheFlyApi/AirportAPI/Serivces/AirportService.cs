@@ -16,11 +16,6 @@ namespace AirportAPI.Serivces
             _airports = database.GetCollection<Airport>(settings.AirportCollectionName);
         }
 
-        //public Airport Create (Airport airport)
-        //{
-        //    _airports.InsertOne(airport);
-        //    return airport;
-        //}
         public List<Airport> Get() =>
             _airports.Find(airport => true).ToList();
 
