@@ -16,6 +16,7 @@ namespace SaleAPI.Controllers
         private readonly SaleService _saleService;
         public SaleController(SaleService saleService) => _saleService = saleService;
 
+        #region Get
         [HttpGet]
         public ActionResult<List<Sale>> Get() => _saleService.Get();
 
@@ -27,15 +28,17 @@ namespace SaleAPI.Controllers
             if (sale == null) return NotFound("Sale not found!!!");
             return Ok(sale);
         }
+        #endregion Get
 
-        [HttpPost("CreateSale")]
-        public async Task<ActionResult<AirCraft>> Create(SaleDTO saleDTO)
+        #region Post
+        [HttpPost("CreateSaleByIata")]
+        public async Task<ActionResult<AirCraft>> CreateSaleIata(SaleDTO saleDTO)
         {
             //busca o voo para cadastroartur
             var flight = await FlightAPIConsummer.GetFlight(saleDTO);
             if (flight == null) return NotFound("Flight not found!!!");
             //verifica se há passagem para todos os passageiros da solicitacao de compra
-            else if (flight.Sales > saleDTO.PassengersCPFs.Count) return BadRequest("\r\nThere are no tickets for all passengers");
+            else if (flight.Sales > saleDTO.PassengersCPFs.Count) return BadRequest("There are no tickets for all passengers");
             var lstPassengers = await PassengersAPIConsummer.GetSalePassengersList(saleDTO.PassengersCPFs, "44355");
             if (lstPassengers == null) return BadRequest("There is a problem with the passengers on the flight");
 
@@ -55,7 +58,34 @@ namespace SaleAPI.Controllers
         }
 
 
+        [HttpPost("CreateSaleByState")]
+        public async Task<ActionResult<AirCraft>> CreateSaleState(SaleDTO saleDTO)
+        {
+            //busca o voo para cadastroartur
+            var flight = await FlightAPIConsummer.GetFlight(saleDTO);
+            if (flight == null) return NotFound("Flight not found!!!");
+            //verifica se há passagem para todos os passageiros da solicitacao de compra
+            else if (flight.Sales > saleDTO.PassengersCPFs.Count) return BadRequest("There are no tickets for all passengers");
+            var lstPassengers = await PassengersAPIConsummer.GetSalePassengersList(saleDTO.PassengersCPFs, "44355");
+            if (lstPassengers == null) return BadRequest("There is a problem with the passengers on the flight");
 
+            Sale sale = new()
+            {
+                Flight = flight,
+                Passenger = lstPassengers,
+                Reserved = saleDTO.Reserved,
+                Sold = true
+            };
+
+            //insere no banco de dados
+            _saleService.Create(sale);
+            sale.Flight.Sales += sale.Passenger.Count;
+            if (await FlightAPIConsummer.UpdateFlightSales(sale.Flight)) return CreatedAtRoute("GetOneSale", sale, sale);
+            else return BadRequest("Unregistered sale");
+        }
+        #endregion Post
+
+        #region Put
         [HttpPut("PutStatusReserved/{date}/{status}/{aircraft}/{cpf}")]
         public ActionResult<Sale> Put(SaleDTO saleIn/* DateTime date, string aircraft, bool status, string cpf*/)
         {
@@ -69,7 +99,10 @@ namespace SaleAPI.Controllers
             _saleService.Put(sale);
             return NoContent();
         }
+        #endregion Put
+
     }
 }
+
 
 
