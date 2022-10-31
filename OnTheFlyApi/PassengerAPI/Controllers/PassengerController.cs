@@ -45,6 +45,8 @@ namespace PassengerAPI.Controllers
             Passenger passenger;
             List<Passenger> passengersList = new();
 
+            if (unformattedCpfList.Count == 0) return BadRequest();
+
             if (!unformattedCpfList.GroupBy(c => c).All(c => c.Count() == 1)) return BadRequest();
 
             foreach (string cpf in unformattedCpfList)
