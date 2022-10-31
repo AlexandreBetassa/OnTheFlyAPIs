@@ -58,9 +58,8 @@ namespace FlightsAPI.Controllers
             if (airCraft == null) return NotFound();
             if (airCraft.Company.Status == true) return BadRequest("Restricted Airline, flights can only be registered for unrestricted airlines.");
 
-            Airport airport = await AirportAPIConsummer.GetAirport(destiny);
+            Airport airport = await AirportAPIConsummer.GetAirport(destiny.ToUpper());
 
-            //Airport airport = new Airport { Country = "BR", IATA = destiny.ToUpper() }; /*Consumo api pestana*/
             if (airport == null) return NotFound();
 
             if (dateFlight < DateTime.Now) return BadRequest("Invalid Date, the date must be a future date the current date.");
@@ -98,6 +97,8 @@ namespace FlightsAPI.Controllers
         {
             var flightUpdate = _flightService.GetOne(fullDate, rabPlane.ToUpper(), destiny.ToUpper());
             if (flightUpdate == null) return NotFound();
+
+            if (flightUpdate.Status == false) return BadRequest("The flight was canceled, unable to change flight status.");
 
             flightUpdate.Status = newStatus;
 
