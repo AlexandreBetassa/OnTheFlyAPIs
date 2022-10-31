@@ -33,9 +33,12 @@ namespace AirCraftAPI.Controllers
         [HttpGet("GetByCnpj/{companyCnpj}")]
         public ActionResult<List<AirCraft>> GetAllByCnpj(string companyCnpj)
         {
-            companyCnpj = Utils.FormatCNPJ(companyCnpj);
+            var cnpj = companyCnpj.Replace(".", "").Replace("/", "").Replace("-", "");
+            if (cnpj.Length != 14) return BadRequest("CNPJ is not valid. CNPJ needs to be 14 characters long, without formatation.");
+            if (!long.TryParse(cnpj, out _)) return BadRequest("CNPJ is not valid. Use Only Numbers.");
+            cnpj = Utils.FormatCNPJ(companyCnpj);
 
-            var aircraftList = _airCraftService.GetAllByCnpj(companyCnpj);
+            var aircraftList = _airCraftService.GetAllByCnpj(cnpj);
             return aircraftList;
         }
         //-----------------------------------------------------------------------------------------------------------------
