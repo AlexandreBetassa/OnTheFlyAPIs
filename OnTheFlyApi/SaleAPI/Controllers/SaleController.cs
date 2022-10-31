@@ -39,21 +39,21 @@ namespace SaleAPI.Controllers
             var lstPassengers = await PassengersAPIConsummer.GetSalePassengersList(saleDTO.PassengersCPFs,"44355");
             if (lstPassengers == null) return BadRequest("There is a problem with the passengers on the flight");
 
-        //    Sale sale = new()
-        //    {
-        //        Flight = flight,
-        //        Passenger = lstPassengers,
-        //        Reserved = saleDTO.Reserved,
-        //        Sold = true
-        //    };
+            Sale sale = new()
+            {
+                Flight = flight,
+                Passenger = lstPassengers,
+                Reserved = saleDTO.Reserved,
+                Sold = true
+            };
 
-        //    //insere no banco de dados
-        //    _saleService.Create(sale);
-        //    sale.Flight.Sales += sale.Passenger.Count;
-        //    if (await FlightAPIConsummer.UpdateFlightSales(sale.Flight)) return CreatedAtRoute("GetOneSale", sale, sale);
-        //    else return BadRequest();
+            //insere no banco de dados
+            _saleService.Create(sale);
+            sale.Flight.Sales += sale.Passenger.Count;
+            if (await FlightAPIConsummer.UpdateFlightSales(sale.Flight)) return CreatedAtRoute("GetOneSale", sale, sale);
+            else return BadRequest();
 
-        //}
+        }
         //***************************************
 
         [HttpPut("PutStatusReserved/{date}/{status}/{aircraft}/{cpf}")]

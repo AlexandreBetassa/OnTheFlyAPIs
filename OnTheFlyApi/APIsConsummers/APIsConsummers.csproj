@@ -227,6 +227,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AirCraftAPIConsummer.cs" />
+    <Compile Include="AirportAPIConsummer.cs" />
     <Compile Include="FlightAPIConsummer.cs" />
     <Compile Include="CompanyAPIConsummer.cs" />
     <Compile Include="PassengersAPIConsummer.cs" />
