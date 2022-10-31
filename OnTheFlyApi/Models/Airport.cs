@@ -15,13 +15,11 @@ namespace Models
         [JsonPropertyName("iata")]
         public string IATA { get; set; }
 
-        //[Required]
-        [StringLength(2, ErrorMessage = "Tamanho limite do campo State é de 2 caracteres")]
+        [Required]
         [JsonPropertyName("time_zone_id")]
         public string TimeZoneId { get; set; }
 
         [Required]
-        [StringLength(2, ErrorMessage = "Tamanho limite do campo Country é de 2 caracteres")]
         [JsonPropertyName("country_id")]
         public string Country { get; set; }
 

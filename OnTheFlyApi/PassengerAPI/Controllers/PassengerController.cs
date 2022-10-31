@@ -53,7 +53,7 @@ namespace PassengerAPI.Controllers
             {
                 passenger = _passengerService.Get(Models.Utils.FormatCPF(cpf));
                 if (passenger == null) return NotFound();
-                if (passenger.Status == true) return BadRequest();
+                if (passenger.Status == true) return BadRequest("Unauthorized passenger on the list");
                 passengersList.Add(passenger);
             }
 

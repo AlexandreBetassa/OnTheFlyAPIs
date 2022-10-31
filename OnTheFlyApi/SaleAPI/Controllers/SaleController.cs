@@ -34,7 +34,7 @@ namespace SaleAPI.Controllers
         [HttpPost("CreateSaleByIata")]
         public async Task<ActionResult<AirCraft>> CreateSaleIata(SaleDTO saleDTO)
         {
-            //busca o voo para cadastroartur
+            //busca o voo para cadastro
             var flight = await FlightAPIConsummer.GetFlight(saleDTO);
             if (flight == null) return NotFound("Flight not found!!!");
             //verifica se há passagem para todos os passageiros da solicitacao de compra
@@ -51,38 +51,15 @@ namespace SaleAPI.Controllers
             };
 
             //insere no banco de dados
-            _saleService.Create(sale);
             sale.Flight.Sales += sale.Passenger.Count;
-            if (await FlightAPIConsummer.UpdateFlightSales(sale.Flight)) return CreatedAtRoute("GetOneSale", sale, sale);
-            else return BadRequest("Unregistered sale");
-        }
-
-
-        [HttpPost("CreateSaleByIcao")]
-        public async Task<ActionResult<AirCraft>> CreateSaleIcao(SaleDTO saleDTO)
-        {
-            //busca o voo para cadastroartur
-            var flight = await FlightAPIConsummer.GetFlight(saleDTO);
-            if (flight == null) return NotFound("Flight not found!!!");
-            //verifica se há passagem para todos os passageiros da solicitacao de compra
-            else if (flight.Sales > saleDTO.PassengersCPFs.Count) return BadRequest("There are no tickets for all passengers");
-            var lstPassengers = await PassengersAPIConsummer.GetSalePassengersList(saleDTO.PassengersCPFs, "44355");
-            if (lstPassengers == null) return BadRequest("There is a problem with the passengers on the flight");
-
-            Sale sale = new()
+            if (await FlightAPIConsummer.UpdateFlightSales(sale.Flight))
             {
-                Flight = flight,
-                Passenger = lstPassengers,
-                Reserved = saleDTO.Reserved,
-                Sold = true
-            };
-
-            //insere no banco de dados
-            _saleService.Create(sale);
-            sale.Flight.Sales += sale.Passenger.Count;
-            if (await FlightAPIConsummer.UpdateFlightSales(sale.Flight)) return CreatedAtRoute("GetOneSale", sale, sale);
+                _saleService.Create(sale);
+                return CreatedAtRoute("GetOneSale", sale, sale);
+            }
             else return BadRequest("Unregistered sale");
         }
+
         #endregion Post
 
         #region Put
