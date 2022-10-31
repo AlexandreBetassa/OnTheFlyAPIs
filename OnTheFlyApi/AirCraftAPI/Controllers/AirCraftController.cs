@@ -32,6 +32,7 @@ namespace AirCraftAPI.Controllers
         [HttpGet("GetByCnpj/{companyCnpj}")]
         public ActionResult<List<AirCraft>> GetAllByCnpj(string companyCnpj)
         {
+            companyCnpj.Replace(".", "").Replace("/", "").Replace("-", "");
             companyCnpj = Utils.FormatCNPJ(companyCnpj);
 
             var aircraftList = _airCraftService.GetAllByCnpj(companyCnpj);
@@ -57,31 +58,23 @@ namespace AirCraftAPI.Controllers
         [HttpPost]
         public ActionResult<AirCraft> CreateAirCraft([FromBody] AirCraft airCraftInsert)
         {
-            //passar todos os dados inseridos para UpperCase:
             airCraftInsert.RAB = airCraftInsert.RAB.ToUpper();
             //-----------------------------------------------
-
+            
             string rabValidation = Utils.ValidateRab(airCraftInsert.RAB); 
             if (rabValidation != "OK") return BadRequest(rabValidation);
 
             var airCraft = _airCraftService.GetOneByRAB(airCraftInsert.RAB);
             if (airCraft != null)
                 return StatusCode((int)HttpStatusCode.Conflict, "Could not proceed with this request. There is already an aircraft registered with this RAB code!");
-             
-            //precisa tirar a formatação do CNPJ antes de mandar a requisição GET pela api do Luciano
-            //airCraft.Company.CNPJ = Utils.
+
+            airCraftInsert.Company.CNPJ.Replace(".", "").Replace("/", "").Replace("-", "");
+
             var company = CompanyAPIConsummer.GetOneCNPJ(airCraftInsert.Company.CNPJ).Result;
             if (company == null) return BadRequest("Invalid CNPJ. Could not found an company with informed CNPJ.");
 
             airCraftInsert.Company = company;
-            //AirCraft aircraft = new AirCraft
-            //{
-            //    Capacity = airCraftInsert.Capacity,
-            //    Company = company,
-            //    DtLastFlight = DateTime.Now,
-            //    DtRegistry = DateTime.Now,
-            //    RAB = airCraftInsert.RAB
-            //};
+
 
             _airCraftService.Create(airCraftInsert);
 
@@ -107,7 +100,7 @@ namespace AirCraftAPI.Controllers
         }
 
 
-        [HttpPut("ModifyAirCraftDtLastFlight/")]   //update usando o objeto completo ja atualizado
+        [HttpPut("ModifyAirCraftDtLastFlight/")]
         public ActionResult<AirCraft> UpdateLastFlight(AirCraft aircraftUpdate)
         {
             aircraftUpdate.RAB = aircraftUpdate.RAB.ToUpper();
@@ -115,21 +108,6 @@ namespace AirCraftAPI.Controllers
 
             return NoContent();
         }
-
-        //[HttpPut("ModifyAirCraftDtLastFlight/{rab}/{updateLastFlight}")]
-        //public ActionResult<AirCraft> UpdateLastFlight(string rab, DateTime updateLastFlight)
-        //{
-        //    rab = rab.ToUpper();
-        //    var aircraftUpdate = _airCraftService.GetOneByRAB(rab);
-        //    if (aircraftUpdate == null)
-        //        return NotFound();
-
-        //    aircraftUpdate.DtLastFlight = updateLastFlight;
-
-        //    _airCraftService.Update(aircraftUpdate, rab);
-
-        //    return NoContent();
-        //}
         //-----------------------------------------------------------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------------------
 
@@ -147,8 +125,6 @@ namespace AirCraftAPI.Controllers
 
             return NoContent();
         }
-
-
 
     }
 }
