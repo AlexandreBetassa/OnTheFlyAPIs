@@ -57,8 +57,8 @@ namespace SaleAPI.Controllers
         [HttpGet("TesteByDanielDev")]
         public async Task<ActionResult<List<Passenger>>> Test()
         {
-            return Ok(await PassengersAPIConsummer.GetSalePassengersList(
-                new() { new PassengerOnlyCPFDTO { UnformattedCPF = "57613539032" }, new PassengerOnlyCPFDTO { UnformattedCPF = "39066324821" } }, localPort: "5001"));
+            return await PassengersAPIConsummer.GetSalePassengersList(
+                new() { "39066324821", "57613539032", "57613539032" }, localPort: "5001");
         }
         //***************************************
 

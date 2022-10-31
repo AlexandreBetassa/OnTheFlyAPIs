@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using System.Text.Json;
 using Newtonsoft.Json;
 
 namespace APIsConsummers
@@ -11,7 +10,7 @@ namespace APIsConsummers
     public class PassengersAPIConsummer
     {
         //Get passengers for a sale
-        public static async Task<List<Passenger>> GetSalePassengersList(List<PassengerOnlyCPFDTO> unformattedCpfList, string localPort)
+        public static async Task<List<Passenger>> GetSalePassengersList(List<string> unformattedCpfList, string localPort)
         {
             using (HttpClient _passengerClient = new HttpClient())
             {
