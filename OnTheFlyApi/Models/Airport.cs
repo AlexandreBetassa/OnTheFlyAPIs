@@ -1,11 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace Models
 {
@@ -14,35 +9,37 @@ namespace Models
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
         public string Id { get; set; }
-
         [Required]
         [StringLength(3, ErrorMessage = "Tamanho limite do campo IATA é de 3 caracteres")]
-        [JsonProperty("iata")]
+        [JsonPropertyName("iata")]
         public string IATA { get; set; }
 
-        [Required]
+        //[Required]
         [StringLength(2, ErrorMessage = "Tamanho limite do campo State é de 2 caracteres")]
-        [JsonProperty("time_zone_id")]
+        [JsonPropertyName("time_zone_id")]
         public string TimeZoneId { get; set; }
 
         [Required]
         [StringLength(2, ErrorMessage = "Tamanho limite do campo Country é de 2 caracteres")]
-        [JsonProperty("country_id")]
+        [JsonPropertyName("country_id")]
         public string Country { get; set; }
 
-        [JsonProperty("name")]
+        [JsonPropertyName("name")]
         public string NameAirport { get; set; }
 
-        [JsonProperty("city_code")]
+        [JsonPropertyName("city_code")]
         public string CityCode { get; set; }
 
-        [JsonProperty("location")]
+        [JsonPropertyName("location")]
         public string Location { get; set; }
 
-        [JsonProperty("elevation")]
+        [JsonPropertyName("elevation")]
         public string Elevation { get; set; }
 
-        [JsonProperty("icao")]
+        [JsonPropertyName("icao")]
         public string Icao { get; set; }
+
+        [JsonPropertyName("state")]
+        public string State { get; set; }
     }
 }

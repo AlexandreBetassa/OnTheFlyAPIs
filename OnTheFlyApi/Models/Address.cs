@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -7,23 +8,33 @@ namespace Models
 {
     public class Address
     {
+        [BsonId]
+        [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
+        [JsonPropertyName("_id")]
+        public string Id { get; set; }
         [Required]
         [MaxLength(9)]
+        [JsonPropertyName("ZipCode")]
         public string ZipCode { get; set; }
 
         [MaxLength(100)]
+        [JsonPropertyName("Street")]
         public string Street { get; set; }
 
         [Required]
+        [JsonPropertyName("Number")]
         public int Number { get; set; }
 
         [MaxLength(10)]
+        [JsonPropertyName("Complement")]
         public string Complement { get; set; }
 
         [MaxLength(30)]
+        [JsonPropertyName("City")]
         public string City { get; set; }
 
         [MaxLength(2)]
+        [JsonPropertyName("State")]
         public string State { get; set; }
     }
 
@@ -42,7 +53,6 @@ namespace Models
         public int Number { get; set; }
 
         [MaxLength(10)]
-        [JsonPropertyName("complemento")]
         public string Complement { get; set; }
 
         [MaxLength(30)]
@@ -58,7 +68,6 @@ namespace Models
     {
         [Required]
         [MaxLength(9)]
-        [JsonProperty("cep")]
         public string ZipCode { get; set; }
 
         [Required]
