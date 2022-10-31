@@ -59,6 +59,10 @@ namespace CompanyAPI.Controllers
 
             if (_restrictedCompanyService.GetOneCNPJ(companyDTO.CNPJ) != null) company.Status = true;
 
+            if (company.NameOp == "STRING") company.NameOp = company.Name;
+           
+            //Street
+
             _companyService.Create(company);
 
             //var UnFormatedCNPJ = company.CNPJ.Replace(".", "").Replace("/", "").Replace("-", "");
