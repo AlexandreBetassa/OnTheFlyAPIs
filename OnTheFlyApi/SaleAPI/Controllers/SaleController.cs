@@ -34,10 +34,13 @@ namespace SaleAPI.Controllers
         [HttpPost("CreateSaleByIata")]
         public async Task<ActionResult<AirCraft>> CreateSaleIata(SaleDTO saleDTO)
         {
-            //busca o voo para cadastro
+            saleDTO.RAB = saleDTO.RAB.ToUpper();
+            saleDTO.Destiny = saleDTO.Destiny.ToUpper();
+
+            //search for the flight for registration
             var flight = await FlightAPIConsummer.GetFlight(saleDTO);
             if (flight == null) return NotFound("Flight not found!!!");
-            //verifica se há passagem para todos os passageiros da solicitacao de compra
+            //checks if there is a ticket for all passengers in the purchase request
             else if (flight.Sales > saleDTO.PassengersCPFs.Count) return BadRequest("There are no tickets for all passengers");
             var lstPassengers = await PassengersAPIConsummer.GetSalePassengersList(saleDTO.PassengersCPFs, "44355");
             if (lstPassengers == null) return BadRequest("There is a problem with the passengers on the flight");
@@ -63,15 +66,13 @@ namespace SaleAPI.Controllers
         #endregion Post
 
         #region Put
-        [HttpPut("PutStatusReserved/{date}/{status}/{aircraft}/{cpf}")]
-        public ActionResult<Sale> Put(SaleDTO saleIn/* DateTime date, string aircraft, bool status, string cpf*/)
+        [HttpPut("PutStatusReserved/{status}")]
+        public ActionResult<Sale> Put(SaleDTO saleIn)
         {
-            //var sale = _saleService.Get().Where(saleIn => saleIn.Flight.Departure == date
-            //&& saleIn.Flight.Plane.RAB == aircraft && saleIn.Passenger[0].CPF == cpf).FirstOrDefault();
             var sale = _saleService.Get().Where(s => s.Flight.Departure == saleIn.DtFlight && s.Flight.Plane.RAB == saleIn.RAB && s.Flight.Destiny.IATA
             == saleIn.Destiny && s.Passenger[0].CPF == Models.Utils.FormatCPF(saleIn.PassengersCPFs[0])).FirstOrDefault();
-            if (sale == null) return BadRequest("\r\nUnable to change. Sale not found");
-
+            if (sale == null) return BadRequest("Unable to change. Sale not found");
+            if (!sale.Reserved) return BadRequest("Ticket already canceled");
             sale.Reserved = saleIn.Reserved;
             _saleService.Put(sale);
             return NoContent();
