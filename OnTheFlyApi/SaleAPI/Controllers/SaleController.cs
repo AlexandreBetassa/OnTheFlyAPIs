@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using SaleAPI.Services;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 
 namespace SaleAPI.Controllers
 {
@@ -16,6 +16,7 @@ namespace SaleAPI.Controllers
         private readonly SaleService _saleService;
         public SaleController(SaleService saleService) => _saleService = saleService;
 
+        #region Get
         [HttpGet]
         public ActionResult<List<Sale>> Get() => _saleService.Get();
 
@@ -27,15 +28,17 @@ namespace SaleAPI.Controllers
             if (sale == null) return NotFound("Sale not found!!!");
             return Ok(sale);
         }
+        #endregion Get
 
-        [HttpPost("CreateSale")]
-        public async Task<ActionResult<AirCraft>> Create(SaleDTO saleDTO)
+        #region Post
+        [HttpPost("CreateSaleByIata")]
+        public async Task<ActionResult<AirCraft>> CreateSaleIata(SaleDTO saleDTO)
         {
             //busca o voo para cadastroartur
             var flight = await FlightAPIConsummer.GetFlight(saleDTO);
             if (flight == null) return NotFound("Flight not found!!!");
             //verifica se há passagem para todos os passageiros da solicitacao de compra
-            else if (flight.Sales > saleDTO.PassengersCPFs.Count) return BadRequest("\r\nThere are no tickets for all passengers");
+            else if (flight.Sales > saleDTO.PassengersCPFs.Count) return BadRequest("There are no tickets for all passengers");
             var lstPassengers = await PassengersAPIConsummer.GetSalePassengersList(saleDTO.PassengersCPFs, "44355");
             if (lstPassengers == null) return BadRequest("There is a problem with the passengers on the flight");
 
@@ -51,23 +54,55 @@ namespace SaleAPI.Controllers
             _saleService.Create(sale);
             sale.Flight.Sales += sale.Passenger.Count;
             if (await FlightAPIConsummer.UpdateFlightSales(sale.Flight)) return CreatedAtRoute("GetOneSale", sale, sale);
-            else return BadRequest();
+            else return BadRequest("Unregistered sale");
         }
 
 
-
-        [HttpPut("PutStatusReserved/{date}/{status}/{aircraft}/{cpf}")]
-        public ActionResult<Sale> Put(DateTime date, string aircraft, bool status, string cpf)
+        [HttpPost("CreateSaleByIcao")]
+        public async Task<ActionResult<AirCraft>> CreateSaleIcao(SaleDTO saleDTO)
         {
-            var sale = _saleService.Get().Where(saleIn => saleIn.Flight.Departure == date
-            && saleIn.Flight.Plane.RAB == aircraft && saleIn.Passenger[0].CPF == cpf).FirstOrDefault();
-            if (sale == null) return BadRequest("Impossível alterar. Venda não localizada");
+            //busca o voo para cadastroartur
+            var flight = await FlightAPIConsummer.GetFlight(saleDTO);
+            if (flight == null) return NotFound("Flight not found!!!");
+            //verifica se há passagem para todos os passageiros da solicitacao de compra
+            else if (flight.Sales > saleDTO.PassengersCPFs.Count) return BadRequest("There are no tickets for all passengers");
+            var lstPassengers = await PassengersAPIConsummer.GetSalePassengersList(saleDTO.PassengersCPFs, "44355");
+            if (lstPassengers == null) return BadRequest("There is a problem with the passengers on the flight");
 
-            sale.Reserved = status;
+            Sale sale = new()
+            {
+                Flight = flight,
+                Passenger = lstPassengers,
+                Reserved = saleDTO.Reserved,
+                Sold = true
+            };
+
+            //insere no banco de dados
+            _saleService.Create(sale);
+            sale.Flight.Sales += sale.Passenger.Count;
+            if (await FlightAPIConsummer.UpdateFlightSales(sale.Flight)) return CreatedAtRoute("GetOneSale", sale, sale);
+            else return BadRequest("Unregistered sale");
+        }
+        #endregion Post
+
+        #region Put
+        [HttpPut("PutStatusReserved/{date}/{status}/{aircraft}/{cpf}")]
+        public ActionResult<Sale> Put(SaleDTO saleIn/* DateTime date, string aircraft, bool status, string cpf*/)
+        {
+            //var sale = _saleService.Get().Where(saleIn => saleIn.Flight.Departure == date
+            //&& saleIn.Flight.Plane.RAB == aircraft && saleIn.Passenger[0].CPF == cpf).FirstOrDefault();
+            var sale = _saleService.Get().Where(s => s.Flight.Departure == saleIn.DtFlight && s.Flight.Plane.RAB == saleIn.RAB && s.Flight.Destiny.IATA
+            == saleIn.Destiny && s.Passenger[0].CPF == Models.Utils.FormatCPF(saleIn.PassengersCPFs[0])).FirstOrDefault();
+            if (sale == null) return BadRequest("\r\nUnable to change. Sale not found");
+
+            sale.Reserved = saleIn.Reserved;
             _saleService.Put(sale);
             return NoContent();
         }
+        #endregion Put
+
     }
 }
+
 
 

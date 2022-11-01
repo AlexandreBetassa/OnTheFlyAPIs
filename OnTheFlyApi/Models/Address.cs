@@ -1,7 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 using System.Text.Json.Serialization;
 
 namespace Models
@@ -10,7 +9,7 @@ namespace Models
     {
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
-        [JsonPropertyName("_id")]
+        [JsonPropertyName("Id")]
         public string Id { get; set; }
         [Required]
         [MaxLength(9)]

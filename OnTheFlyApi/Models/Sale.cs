@@ -11,7 +11,7 @@ namespace Models
         [Required(ErrorMessage = "There are no flights linked to this sale")]
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
-        [JsonPropertyName("_id")]
+        [JsonPropertyName("Id")]
         public string Id { get; set; }
         public Flight Flight { get; set; }
         [Required(ErrorMessage = "No to passengers linked to this sale")]
