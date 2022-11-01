@@ -40,11 +40,11 @@ namespace PassengerAPI.Controllers
         [HttpPost("Create")]
         public ActionResult<RestrictedPassenger> Post(RestrictedPassengerDTO r)
         {
-            if (!Models.Utils.CPFIsValid(r.UnformattedCPF)) return BadRequest();
+            if (!Models.Utils.CPFIsValid(r.UnformattedCPF)) return BadRequest("Invalid CPF.");
 
             string formattedCpf = Models.Utils.FormatCPF(r.UnformattedCPF);
 
-            if (_restrictedPassengerService.Get(formattedCpf) != null) return Unauthorized();
+            if (_restrictedPassengerService.Get(formattedCpf) != null) return Unauthorized("Passenger already exists.");
 
             var passenger = _passengerService.Get(formattedCpf);
             if (passenger != null)

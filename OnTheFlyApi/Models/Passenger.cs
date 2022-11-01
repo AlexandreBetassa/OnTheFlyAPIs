@@ -42,8 +42,8 @@ namespace Models
         [Required]
         [StringLength(maximumLength: 1, MinimumLength = 1)]
         public string Gender { get; set; }
-        [StringLength(maximumLength: 15, MinimumLength = 10)]
-        public string PhoneOpt { get; set; }
+        [StringLength(maximumLength: 11, MinimumLength = 11)]
+        public string UnformattedPhoneOpt { get; set; }
         [Required]
         public DateTime DtBirth { get; set; }
         [Required]
@@ -62,8 +62,8 @@ namespace Models
         [Required]
         [StringLength(maximumLength: 1, MinimumLength = 1)]
         public string NewGender { get; set; }
-        [StringLength(maximumLength: 15, MinimumLength = 10)]
-        public string NewPhoneOpt { get; set; }
+        [StringLength(maximumLength: 11, MinimumLength = 11)]
+        public string NewUnformattedPhoneOpt { get; set; }
         [Required]
         public AddressDTO NewAddress { get; set; }
 

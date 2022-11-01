@@ -102,11 +102,16 @@ namespace Models
            $"{unformatedCNPJ.Substring(8, 4)}-" +
            $"{unformatedCNPJ.Substring(12, 2)}";
 
-        public static string FormatCPF(string unformatedCpf)
-            => $"{unformatedCpf.Substring(0, 3)}." +
-            $"{unformatedCpf.Substring(3, 3)}." +
-            $"{unformatedCpf.Substring(6, 3)}-" +
-            $"{unformatedCpf.Substring(9, 2)}";
+        public static string FormatCPF(string unformattedCpf)
+            => $"{unformattedCpf.Substring(0, 3)}." +
+            $"{unformattedCpf.Substring(3, 3)}." +
+            $"{unformattedCpf.Substring(6, 3)}-" +
+            $"{unformattedCpf.Substring(9, 2)}";
+
+        public static string FormatPhone(string unformattedPhone)
+            => $"({unformattedPhone.Substring(0, 2)})" +
+            $"{unformattedPhone.Substring(2, 5)}-" +
+            $"{unformattedPhone.Substring(7, 4)}";
 
         public static bool ValidateCompanyTime(Company company)
         {

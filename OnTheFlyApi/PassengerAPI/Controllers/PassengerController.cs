@@ -67,21 +67,21 @@ namespace PassengerAPI.Controllers
         [HttpPost("Create")]
         public ActionResult<Passenger> Post(PassengerDTO p)
         {
-            if (!Models.Utils.CPFIsValid(p.UnformattedCPF)) return BadRequest();
+            if (!Models.Utils.CPFIsValid(p.UnformattedCPF)) return BadRequest("Invalid CPF.");
 
             string formattedCpf = Models.Utils.FormatCPF(p.UnformattedCPF);
 
-            if (_passengerService.Get(formattedCpf) != null) return Unauthorized();
+            if (_passengerService.Get(formattedCpf) != null) return Unauthorized("Passenger already exists.");
 
             var address = ViaCepAPIConsummer.GetAdress(p.Address.ZipCode).Result;
-            if (address == null) return NotFound();
+            if (address.ZipCode == null) return NotFound();
 
             Passenger passenger = new()
             {
                 CPF = formattedCpf,
                 Name = p.Name.ToUpper(),
                 Gender = p.Gender.ToUpper(),
-                Phone = p.PhoneOpt,
+                Phone = Models.Utils.FormatPhone(p.UnformattedPhoneOpt),
                 DtBirth = p.DtBirth,
                 DtRegister = DateTime.Now,
                 Status = false,
@@ -105,19 +105,19 @@ namespace PassengerAPI.Controllers
         [HttpPut("Update")]
         public ActionResult<Passenger> Put(PassengerUpdateDTO p)
         {
-            if (!Models.Utils.CPFIsValid(p.UnformattedCPF)) return BadRequest();
+            if (!Models.Utils.CPFIsValid(p.UnformattedCPF)) return BadRequest("Invalid CPF.");
 
             string formattedCpf = Models.Utils.FormatCPF(p.UnformattedCPF);
 
             var passenger = _passengerService.Get(formattedCpf);
-            if (passenger == null) return BadRequest();
+            if (passenger == null) return BadRequest("Passenger doesn't exists.");
 
             var address = ViaCepAPIConsummer.GetAdress(p.NewAddress.ZipCode).Result;
-            if (address == null) return NotFound();
+            if (address.ZipCode == null) return NotFound();
 
             passenger.Name = p.NewName.ToUpper();
             passenger.Gender = p.NewGender.ToUpper();
-            passenger.Phone = p.NewPhoneOpt;
+            passenger.Phone = p.NewUnformattedPhoneOpt;
             passenger.Address = new Address
             {
                 ZipCode = address.ZipCode,
