@@ -43,7 +43,7 @@ namespace FlightsAPI.Controllers
             return Ok(flight);
         }
 
-        [HttpPost("GetOne/", Name = "GetOne")]
+        [HttpPost("GetOne", Name = "GetOne")]
         public ActionResult<Flight> Get([FromBody] SaleDTO sale)
         {
             var flight = _flightService.GetOne(sale.DtFlight, sale.RAB.ToUpper(), sale.Destiny.ToUpper());
