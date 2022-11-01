@@ -28,7 +28,7 @@ namespace CompanyAPI.Controllers
         public async Task<ActionResult<Company>> Create(CompanyDTO companyDTO, string rab, int capacity)
         {
           
-            if (!Utils.ValidateCnpj(companyDTO.CNPJ)) return BadRequest("Invalid CNPJ");
+            if (!Utils.ValidateCnpj(companyDTO.CNPJ)) return BadRequest("This CNPJ is invalid, check if it contains only numbers");
                        
             var unformattedCNPJ = companyDTO.CNPJ;
             companyDTO.CNPJ = Utils.FormatCNPJ(unformattedCNPJ);
@@ -48,7 +48,7 @@ namespace CompanyAPI.Controllers
                 Address = new Address
                 {
                     ZipCode = address.ZipCode,
-                    Street = address.Street,
+                    Street = address.Street.ToUpper(),
                     Number = companyDTO.Address.Number,
                     Complement = companyDTO.Address.Complement.ToUpper(),
                     City = address.City.ToUpper(),
@@ -93,10 +93,10 @@ namespace CompanyAPI.Controllers
         public ActionResult<List<Company>> GetAll() => _companyService.GetAll();
 
 
-        [HttpGet("GetCNPJ/{cnpj:length(14)}")]
+        [HttpGet("GetCNPJ/{cnpj}")]
         public ActionResult<Company> GetOneCNPJ(string cnpj)
         {
-            if (!Utils.ValidateCnpj(cnpj)) return BadRequest("Invalid CNPJ");
+            if (!Utils.ValidateCnpj(cnpj)) return BadRequest("This CNPJ is invalid, check if it contains only numbers");
 
             var unformattedCNPJ = cnpj;
             cnpj = Utils.FormatCNPJ(unformattedCNPJ);
@@ -114,18 +114,20 @@ namespace CompanyAPI.Controllers
         [HttpPut("PutNameOP/")]
         public ActionResult<Company> PutNameOp(string cnpj, string newNameOp)
         {
-            if (!Utils.ValidateCnpj(cnpj)) return BadRequest("Invalid CNPJ");
+            if (!Utils.ValidateCnpj(cnpj)) return BadRequest("This CNPJ is invalid, check if it contains only numbers");
 
             var unformattedCNPJ = cnpj;
             cnpj = Utils.FormatCNPJ(unformattedCNPJ);
 
             var company = _companyService.GetOneCNPJ(cnpj);
             if (company == null) return NotFound();
-            company.NameOp = newNameOp.ToUpper();
 
-            if (newNameOp == null) newNameOp = company.Name;
-                            
-            _companyService.Update(cnpj, company);
+
+            if (newNameOp == null) company.NameOp = company.Name;
+            else
+                company.NameOp = newNameOp;            
+            
+                _companyService.Update(cnpj, company);
 
             return Ok(company);
         }
@@ -135,7 +137,9 @@ namespace CompanyAPI.Controllers
         [HttpPut("PutCEP/{newCEP}")]
         public ActionResult<Company> PutCep(string cnpj, string newCEP)
         {
-            if (!long.TryParse(cnpj, out long aux)) return BadRequest("");
+            if (!Utils.ValidateCnpj(cnpj)) return BadRequest("This CNPJ is invalid, check if it contains only numbers");
+
+            if (!long.TryParse(newCEP, out long aux)) return BadRequest("This zip code is invalid, check that it contains only numbers");
 
             var unformattedCNPJ = cnpj;
             cnpj = Utils.FormatCNPJ(unformattedCNPJ);
@@ -158,7 +162,7 @@ namespace CompanyAPI.Controllers
         [HttpPut("PutStreet/{newStreet}")]
         public ActionResult<Company> PutStreet(string cnpj, string newStreet)
         {
-            if (!Utils.ValidateCnpj(cnpj)) return BadRequest("Invalid CNPJ");
+            if (!Utils.ValidateCnpj(cnpj)) return BadRequest("This CNPJ is invalid, check if it contains only numbers");
 
             var unformattedCNPJ = cnpj;
             cnpj = Utils.FormatCNPJ(unformattedCNPJ);
@@ -176,7 +180,7 @@ namespace CompanyAPI.Controllers
         [HttpPut("PutNumber/{newNumber}")]
         public ActionResult<Company> PutNumber(string cnpj, int newNumber)
         {
-            if (!Utils.ValidateCnpj(cnpj)) return BadRequest("Invalid CNPJ");
+            if (!Utils.ValidateCnpj(cnpj)) return BadRequest("This CNPJ is invalid, check if it contains only numbers");
 
             var unformattedCNPJ = cnpj;
             cnpj = Utils.FormatCNPJ(unformattedCNPJ);
@@ -194,7 +198,7 @@ namespace CompanyAPI.Controllers
         [HttpPut("PutComplement/{newComplement}")]
         public ActionResult<Company> PutComplement(string cnpj, string newComplement)
         {
-            if (!Utils.ValidateCnpj(cnpj)) return BadRequest("Invalid CNPJ");
+            if (!Utils.ValidateCnpj(cnpj)) return BadRequest("This CNPJ is invalid, check if it contains only numbers");
 
             var unformattedCNPJ = cnpj;
             cnpj = Utils.FormatCNPJ(unformattedCNPJ);
@@ -212,10 +216,10 @@ namespace CompanyAPI.Controllers
 
 
 
-        [HttpDelete("{cnpj:length(14)}")]
+        [HttpDelete("{cnpj}")]
         public ActionResult<Company> Delete(string cnpj)
         {
-            if (!Utils.ValidateCnpj(cnpj)) return BadRequest("Invalid CNPJ");
+            if (!Utils.ValidateCnpj(cnpj)) return BadRequest("This CNPJ is invalid, check if it contains only numbers");
 
             var unformattedCNPJ = cnpj;
             cnpj = Utils.FormatCNPJ(unformattedCNPJ);
