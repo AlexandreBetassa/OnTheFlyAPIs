@@ -31,5 +31,9 @@ namespace Models
         [Required(ErrorMessage = "Inform the aircraft")]
         [MaxLength(6, ErrorMessage = "Invalid format registration")]
         public string RAB { get; set; }
+
+        [Required(ErrorMessage = "Destination not informed.")]
+        [StringLength(3, ErrorMessage = "Iata has 3 characters.")]
+        public string Destiny { get; set; }
     }
 }
