@@ -93,7 +93,7 @@ namespace CompanyAPI.Controllers
         public ActionResult<List<Company>> GetAll() => _companyService.GetAll();
 
 
-        [HttpGet("GetCNPJ/{cnpj:length(14)}")]
+        [HttpGet("GetCNPJ/{cnpj}")]
         public ActionResult<Company> GetOneCNPJ(string cnpj)
         {
             if (!Utils.ValidateCnpj(cnpj)) return BadRequest("Invalid CNPJ");
@@ -135,7 +135,9 @@ namespace CompanyAPI.Controllers
         [HttpPut("PutCEP/{newCEP}")]
         public ActionResult<Company> PutCep(string cnpj, string newCEP)
         {
-            if (!long.TryParse(cnpj, out long aux)) return BadRequest("");
+            if (!Utils.ValidateCnpj(cnpj)) return BadRequest("Invalid CNPJ");
+
+            if (!long.TryParse(newCEP, out long aux)) return BadRequest("Invalid zip code");
 
             var unformattedCNPJ = cnpj;
             cnpj = Utils.FormatCNPJ(unformattedCNPJ);
@@ -212,7 +214,7 @@ namespace CompanyAPI.Controllers
 
 
 
-        [HttpDelete("{cnpj:length(14)}")]
+        [HttpDelete("{cnpj}")]
         public ActionResult<Company> Delete(string cnpj)
         {
             if (!Utils.ValidateCnpj(cnpj)) return BadRequest("Invalid CNPJ");
