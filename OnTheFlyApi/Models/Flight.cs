@@ -30,6 +30,6 @@ namespace Models
 
         [Required]
         [JsonPropertyName("Status")]
-        public bool Status { get; set; }
+        public bool Status { get; set; } = true;
     }
 }
