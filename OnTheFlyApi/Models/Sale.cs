@@ -24,7 +24,10 @@ namespace Models
     {
         [Required(ErrorMessage = "Date in invalid format")]
         public string DtFlight { get; set; }
+
+        [Required(ErrorMessage = "No to passengers linked to this sale")]
         public List<string> PassengersCPFs { get; set; }
+
         [Required(ErrorMessage = "Inform the aircraft")]
         [MaxLength(6, ErrorMessage = "Invalid format registration")]
         public string RAB { get; set; }
