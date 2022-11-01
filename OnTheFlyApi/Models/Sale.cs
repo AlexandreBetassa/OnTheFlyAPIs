@@ -28,7 +28,5 @@ namespace Models
         [Required(ErrorMessage = "Inform the aircraft")]
         [MaxLength(6, ErrorMessage = "Invalid format registration")]
         public string RAB { get; set; }
-        public string Destiny { get; set; }
-        public bool Reserved { get; set; }
     }
 }
