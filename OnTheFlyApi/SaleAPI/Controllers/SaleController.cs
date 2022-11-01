@@ -20,7 +20,7 @@ namespace SaleAPI.Controllers
         [HttpGet]
         public ActionResult<List<Sale>> Get() => _saleService.Get();
 
-        [HttpGet(Name = "GetOneSale")]
+        [HttpGet(Name = "One")]
         public ActionResult<Sale> Get(Sale saleIn)
         {
             var sale = _saleService.Get().Where(c => c.Flight.Departure == saleIn.Flight.Departure
@@ -31,7 +31,7 @@ namespace SaleAPI.Controllers
         #endregion Get
 
         #region Post
-        [HttpPost("ReservedByIata")]
+        [HttpPost("Reserved")]
         public async Task<ActionResult<AirCraft>> ReservedSaleIata(SaleDTO saleDTO)
         {
             saleDTO.RAB = saleDTO.RAB.ToUpper();
@@ -53,14 +53,8 @@ namespace SaleAPI.Controllers
                 Sold = false
             };
 
-            //insere no banco de dados
-            sale.Flight.Sales += sale.Passenger.Count;
-            if (await FlightAPIConsummer.UpdateFlightSales(sale.Flight))
-            {
-                _saleService.Create(sale);
-                return CreatedAtRoute("GetOneSale", sale, sale);
-            }
-            else return BadRequest("Unregistered sale");
+            _saleService.Create(sale);
+            return CreatedAtRoute("One", sale, sale);
         }
 
         [HttpPost("ByIata")]
@@ -90,7 +84,7 @@ namespace SaleAPI.Controllers
             if (await FlightAPIConsummer.UpdateFlightSales(sale.Flight))
             {
                 _saleService.Create(sale);
-                return CreatedAtRoute("GetOneSale", sale, sale);
+                return CreatedAtRoute("One", sale, sale);
             }
             else return BadRequest("Unregistered sale");
         }
@@ -98,8 +92,8 @@ namespace SaleAPI.Controllers
         #endregion Post
 
         #region Put
-        [HttpPut("Reserved/{status}")]
-        public ActionResult<Sale> Put(SaleDTO saleIn)
+        [HttpPut]
+        public async Task<ActionResult<Sale>> Put(SaleDTO saleIn)
         {
             var sale = _saleService.Get().Where(s => s.Flight.Departure.ToString() == saleIn.DtFlight && s.Flight.Plane.RAB == saleIn.RAB && s.Flight.Destiny.IATA
             == saleIn.Destiny && s.Passenger[0].CPF == Models.Utils.FormatCPF(saleIn.PassengersCPFs[0])).FirstOrDefault();
@@ -107,7 +101,12 @@ namespace SaleAPI.Controllers
             if (!sale.Reserved) return BadRequest("Ticket already canceled");
             sale.Reserved = true;
             sale.Sold = true;
-            _saleService.Put(sale);
+            sale.Flight.Sales += sale.Passenger.Count;
+            if (await FlightAPIConsummer.UpdateFlightSales(sale.Flight))
+            {
+                _saleService.Put(sale);
+                CreatedAtRoute("One", sale, sale);
+            }
             return NoContent();
         }
         #endregion Put
