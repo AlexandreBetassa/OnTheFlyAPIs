@@ -1,0 +1,344 @@
+iata,time_zone_id,name,city_code,country_id,location,elevation,icao,city,state
+JTN,America/Sao_Paulo,Antônio Ribeiro Nogueira Jr. State Airport,JTN,BR,POINT (-46.785556 -24.164722),10,SDIM,Itanhaém,
+JTA,America/Fortaleza,Pedro Teixeira Castelo Airport,JTA,BR,POINT (-40.29597814583012 -5.93260025),1457,SDZG,Tauá,
+GDR,America/Sao_Paulo,Angra dos Reis Airport,GDR,BR,POINT (-44.307222 -22.975278),22,SDAG,Angra dos Reis,
+MXQ,America/Sao_Paulo,Lorenzo Airport,MXQ,BR,POINT (-38.91 -13.389444),22,SNCL,Cairu,
+JHF,America/Sao_Paulo,São Paulo Catarina Executive Airport,JHF,BR,POINT (-47.165658 -23.426886),2562,SBJH,São Roque,Sao Paulo
+JSB,America/Fortaleza,Walfrido Salmito de Almeida Airport,JSB,BR,POINT (-40.883333 -4.05),2874,SWBE,São Benedito,Ceará
+VCC,America/Sao_Paulo,New Vacaria Airport,VCC,BR,POINT (-51.022778 -28.431944),2975,SNEE,Vacaria,
+JCS,America/Fortaleza,Aeroporto De Crateus Airport,JCS,BR,POINT (-40.7045819389 -5.21230869969),1026,SNWS,Crateus,
+JPO,America/Recife,Brigadeiro Firmino Ayres Airport,NVM,BR,POINT (-37.25184761766 -7.037496939556),850,SNTS,Patos,
+JPE,America/Sao_Paulo,Nagib Demachki Airport,JPE,BR,POINT (-47.316389 -3.019722),443,SNEB,Paragominas,
+JPY,America/Sao_Paulo,Paraty Airport,JPY,BR,POINT (-44.720278 -23.224444),10,SDTK,Paraty,
+MEA,America/Sao_Paulo,Macae,MEA,BR,POINT (-41.76577364545359 -22.343171050000002),19,SBME,Macae,Rio de Janeiro
+IUP,America/Manaus,Lorenzo Airport,IUP,BR,POINT (-59.8393706089647 -7.1726927603202),616,,Apui,
+MEU,America/Santarem,Monte Dourado,MEU,BR,POINT (-52.60197779839184 -0.8896558000000001),649,SBMD,Almeirim,Para
+EEA,America/Sao_Paulo,Aeroporto Regional do Planalto Serrano,EEA,BR,POINT (-50.34963377743513 -27.63194875),2880,SNCP,Correia Pinto,
+ITP,America/Sao_Paulo,Itaperuna,ITP,BR,POINT (-41.87582988333334 -21.219961),331,SDUN,Itaperuna,Rio de Janeiro
+LVB,America/Sao_Paulo,Dos Galpoes,LVB,BR,POINT (-55.61667 -30.833332),997,,Rivera,Rivera
+CSW,America/Porto_Velho,Colorado do Oeste,CSW,BR,POINT (-61.168056 -13.019444),711,,,
+BAU,America/Sao_Paulo,Bauru Airport,BRI,BR,POINT (-49.05328145802982 -22.3450535),2047,,Bauru,Sao Paulo
+AQM,America/Porto_Velho,Ariquemes,AQM,BR,POINT (-63.066666 -9.933333),334,SJOG,Ariquemes,Rondonia
+AUB,America/Cuiaba,Itauba Airport,AUB,BR,POINT (-55.581735 -11.878603),1223,,Itauba,Mato Grosso
+SLZ,America/Fortaleza,Marechal Cunha Machado International Airport,SLZ,BR,POINT (-44.23940764493366 -2.58899115),111,SBSL,Sao Luis,Maranhao
+BAT,America/Sao_Paulo,Airport Chafei Amsei,BAT,BR,POINT (-48.55 -20.55),1732,SNBA,Barretos,Sao Paulo
+AAG,America/Sao_Paulo,Arapoti,AAG,BR,POINT (-49.78949435424242 -24.1037812),2608,SSYA,Jaguariaiva,Parana
+BGV,America/Sao_Paulo,Bento Goncalves,BGV,BR,POINT (-51.516666 -29.166668),2050,SSBG,Bento Goncalves,Rio Grande do Sul
+ALT,America/Santarem,Alenquer,ALT,BR,POINT (-54.766666 -1.933333),3,SDWQ,Alenquer,Para
+BQQ,America/Bahia,Barra,BQQ,BR,POINT (-43.13333 -11.083333),1309,SNBX,Barra,Bahia
+BVB,America/Boa_Vista,Boa Vista Airport,BVB,BR,POINT (-60.666668 2.833333),242,SBBV,Boa Vista,Roraima
+CAC,America/Sao_Paulo,Cascavel Airport,CAC,BR,POINT (-53.466667 -24.95),2417,SBCA,Cascavel,Parana
+CAF,America/Manaus,Carauari,CAF,BR,POINT (-66.89752105783637 -4.87146245),265,SWCA,Carauari,Amazonas
+CAU,America/Recife,Caruaru,CAU,BR,POINT (-35.916668 -8.25),1932,SNRU,Caruaru,Pernambuco
+CAW,America/Sao_Paulo,Bartolomeu Lisandro Airport,CAW,BR,POINT (-41.3 -21.75),32,SBCP,Campos,Rio de Janeiro
+CCI,America/Sao_Paulo,Concordia,CCI,BR,POINT (-52.050556 -27.181389),2398,SSCK,Concordia,Santa Catarina
+CCM,America/Sao_Paulo,Criciuma,CCM,BR,POINT (-49.36667 -28.7),203,SBCM,Criciuma,Santa Catarina
+CCQ,America/Bahia,Cachoeira,CCQ,BR,POINT (-38.966667 -12.6),127,,Cachoeira,Bahia
+BPS,America/Bahia,Porto Seguro Airport,BPS,BR,POINT (-39.08336724314525 -16.4389835),134,SBPS,Porto Seguro,Bahia
+MCZ,America/Maceio,Maceio-Zumbi dos Palmares International Airport,MCZ,BR,POINT (-35.800446 -9.512521),321,SBMO,Satuba,Alagoas
+BRA,America/Bahia,Barreiras Airport,BRA,BR,POINT (-45.009705353357425 -12.0794806),2440,SNBR,Barreiras,Bahia
+BRB,America/Fortaleza,Barreirinhas,BRB,BR,POINT (-42.80350775032719 -2.7574806),55,SSRS,Barreirinha,Amazonas
+BSB,America/Sao_Paulo,Brasilia International Airport,BSB,BR,POINT (-47.91172169662855 -15.87174755),3471,SBBR,Brasilia,Federal District
+PLL,America/Manaus,Ponta Pelada,PLL,BR,POINT (-59.98561283693144 -3.1450556),246,SBMN,Manaus,Amazonas
+POA,America/Sao_Paulo,Salgado Filho International Airport,POA,BR,POINT (-51.16747969953305 -29.995268449999998),22,SBPA,Porto Alegre,Rio Grande do Sul
+PPY,America/Sao_Paulo,Pouso Alegre,PPY,BR,POINT (-45.919592421375825 -22.2890865),2900,SNZA,Pouso Alegre,Minas Gerais
+PVH,America/Porto_Velho,Porto Velho International Airport,PVH,BR,POINT (-63.900493918125576 -8.70990265),328,SBPV,Porto Velho,Rondonia
+MNX,America/Manaus,Manicore,MNX,BR,POINT (-61.27874196726444 -5.81173955),98,SBMY,Manicore,Amazonas
+AAI,America/Araguaina,Arraias,AAI,BR,POINT (-46.933334 -12.916667),2490,SWRA,Campos Belos,Goias
+AAX,America/Sao_Paulo,Araxa Airport,AAX,BR,POINT (-46.96040575380038 -19.563132000000003),3267,SBAX,Araxa,Minas Gerais
+CGB,America/Cuiaba,Marechal Rondon International Airport,CGB,BR,POINT (-56.120266 -15.651725),629,SBCY,Varzea Grande,Mato Grosso
+MOC,America/Sao_Paulo,Montes Claros Airport,MOC,BR,POINT (-43.82008294490494 -16.70518095),2139,SBMK,Montes Claros,Minas Gerais
+CGH,America/Sao_Paulo,Sao Paulo/Congonhas Airport,SAO,BR,POINT (-46.659557 -23.626902),2627,SBSP,Diadema,Sao Paulo
+CGR,America/Campo_Grande,Campo Grande International Airport,CGR,BR,POINT (-54.68224625125994 -20.471576849999998),1788,SBCG,Campo Grande,Mato Grosso do Sul
+CBW,America/Sao_Paulo,Campo Mourao,CBW,BR,POINT (-52.35696610253834 -24.009449),1784,SSKM,Campo Mourao,Parana
+AIF,America/Sao_Paulo,Assis,AIF,BR,POINT (-50.416668 -22.666668),1804,SNAX,Assis,Sao Paulo
+ALQ,America/Sao_Paulo,Federal,ALQ,BR,POINT (-55.763332 -29.799723),334,SSLT,Alegrete,Rio Grande do Sul
+AMJ,America/Sao_Paulo,Almenara,AMJ,BR,POINT (-40.683334 -16.183332),593,SNAR,Almenara,Minas Gerais
+CIZ,America/Manaus,Coari,CIZ,BR,POINT (-63.13333 -4.083333),95,SWKO,Coari,Amazonas
+MTE,America/Santarem,Monte Alegre,MTE,BR,POINT (-54.066666 -1.983333),183,SNMA,Monte Alegre,Para
+MTG,America/Cuiaba,Mato Grosso,MTG,BR,POINT (-55 -14),1423,SWVB,Diamantino,Mato Grosso
+APQ,America/Maceio,Arapiraca,APQ,BR,POINT (-36.62984998547607 -9.7765662),839,SNAL,Arapiraca,Alagoas
+APS,America/Sao_Paulo,Anapolis,APS,BR,POINT (-48.966667 -16.333332),3280,SWNS,Anapolis,Goias
+APX,America/Sao_Paulo,Arapongas,APX,BR,POINT (-51.466667 -23.483334),2309,SSOG,Apucarana,Parana
+APY,America/Fortaleza,Alto Parnaiba,APY,BR,POINT (-45.933334 -9.133333),941,SNAI,Morros,Maranhao
+AQA,America/Sao_Paulo,Araraquara,AQA,BR,POINT (-48.13333 -21.816668),2322,SBAQ,Araraquara,Sao Paulo
+CKO,America/Sao_Paulo,Cornelio Procopio,CKO,BR,POINT (-50.666668 -23.116667),1653,SSCP,Bandeirantes,Parana
+CLN,America/Fortaleza,Carolina,CLN,BR,POINT (-47.45 -7.333333),587,SBCI,Carolina,Maranhao
+CLV,America/Sao_Paulo,Caldas Novas,CLV,BR,POINT (-48.6081742294032 -17.7247899),2276,SBCN,Caldas Novas,Goias
+CMC,America/Fortaleza,Camocim,CMC,BR,POINT (-40.85836649182566 -2.89492665),13,SNWC,Camocim,Ceara
+ATM,America/Santarem,Altamira Airport,ATM,BR,POINT (-52.216667 -3.2),321,SBHT,Altamira,Para
+CPV,America/Fortaleza,Joao Suassuna Airport,CPV,BR,POINT (-35.89609699581786 -7.27016065),1561,SBKG,Campina Grande,Paraiba
+MVF,America/Fortaleza,Dixsept Rosado,MVF,BR,POINT (-37.25 -5.166667),78,SBMS,Mossoro,Rio Grande do Norte
+CTP,America/Fortaleza,Carutapera,CTP,BR,POINT (-46.0172234 -1.250278),95,SNCP,Carutapera,Maranhao
+AUX,America/Araguaina,Araguaina Airport,AUX,BR,POINT (-48.2 -7.2),810,SWGN,Araguaina,Tocantins
+CMP,America/Belem,Campo Alegre,CMP,BR,POINT (-36.35 -9.8),587,SNKE,Campo Alegre,Alagoas
+CMT,America/Belem,Cameta,CMT,BR,POINT (-49.5 -2.2),32,,Cameta,Para
+CNV,America/Bahia,Canavieiras,CNV,BR,POINT (-38.9558886 -15.6649926),32,SNED,Canavieiras,Bahia
+BAZ,America/Manaus,Barbelos,BAZ,BR,POINT (-62.933613 -0.966944),137,SWBC,Barcelos,Amazonas
+CPQ,America/Sao_Paulo,International,CPQ,BR,POINT (-47.111595 -22.856462),1919,,Campinas,Sao Paulo
+BCR,America/Manaus,Boca Do Acre,BCR,BR,POINT (-67.38333 -8.75),377,SWNK,Boca do Acre,Amazonas
+BDC,America/Fortaleza,Barra Do Corda,BDC,BR,POINT (-45.266666 -5.466667),551,SNBC,Barra do Corda,Maranhao
+CPU,America/Fortaleza,Cururupu,CPU,BR,POINT (-44.866944 -1.821111),78,SNCU,Cururupu,Maranhao
+CRQ,America/Bahia,Caravelas,CRQ,BR,POINT (-39.25 -17.75),0,SSCV,Nova Vicosa,Bahia
+TGQ,America/Cuiaba,Tangara da Serra,TGQ,BR,POINT (-57.44358442390656 -14.66279795),1460,SWTS,Nova Olimpia,Mato Grosso
+THE,America/Fortaleza,Teresina Airport,THE,BR,POINT (-42.823510202633514 -5.0598744),219,SBTE,Teresina,Piaui
+MCP,America/Belem,Macapa International Airport,MCP,BR,POINT (-51.07059996039651 0.0505785),42,SBMQ,Macapa,Amapa
+CSS,America/Campo_Grande,Cassilandia,CSS,BR,POINT (-51.983334 -18.983334),1669,SSCL,Cassilandia,Mato Grosso do Sul
+AJU,America/Maceio,Aracaju Airport,AJU,BR,POINT (-37.07602527743482 -10.98281225),42,SBAR,Aracaju,Sergipe
+CTQ,America/Sao_Paulo,Do Palmar,CTQ,BR,POINT (-50.1 -18.85),1476,SSVP,Santa Vitoria,Minas Gerais
+BJP,America/Sao_Paulo,Braganca Paulista,BJP,BR,POINT (-46.53679706594859 -22.979598199999998),2933,SBBP,Braganca Paulista,Sao Paulo
+NAT,America/Fortaleza,Sao Goncalo do Amarante-Governador Aluizio Alves Intl Airport,NAT,BR,POINT (-35.250244 -5.916787),190,SBSG,Parnamirim,Rio Grande do Norte
+NBV,America/Sao_Paulo,Cana Brava,NBV,BR,POINT (-45.86667 -17.383333),1722,,Joao Pinheiro,Minas Gerais
+BMS,America/Bahia,Brumado,BMS,BR,POINT (-41.63333 -14.233333),1361,SSXH,Brumado,Bahia
+BNU,America/Sao_Paulo,Blumenau,BNU,BR,POINT (-49 -27),1289,SSBL,Gaspar,Santa Catarina
+REZ,America/Sao_Paulo,Resende,REZ,BR,POINT (-44.47716871796958 -22.47720015),1315,SDRS,Resende,Rio de Janeiro
+ARS,America/Sao_Paulo,Aragarcas,ARS,BR,POINT (-52.2411003 -15.8993998),1033,SJVO,Aragarcas,Goias
+ARU,America/Sao_Paulo,Aracatuba Airport,ARU,BR,POINT (-50.425139094792286 -21.140815),1341,SBAU,Aracatuba,Sao Paulo
+SJP,America/Sao_Paulo,Sao Jose do Rio Preto Airport,SJP,BR,POINT (-49.408467700474546 -20.81731545),1755,SBSR,Sao Jose do Rio Preto,Sao Paulo
+AXE,America/Sao_Paulo,Xanxere,AXE,BR,POINT (-52.37339732495896 -26.8749455),2929,SSXX,Xanxere,Santa Catarina
+BSS,America/Fortaleza,Balsas,BSS,BR,POINT (-46.05 -7.516667),885,SNBS,Balsas,Maranhao
+NVM,America/Cuiaba,Brigadeiro Eduardo Gomes Airport,NVM,BR,POINT (-56.0349239329 -13.81380253609),1404,,Nova Mutum,Mato Grosso
+NTM,America/Araguaina,Miracema Do Norte,NTM,BR,POINT (-48.5 -9.183333),849,,,
+BEL,America/Belem,Val De Cans International Airport,BEL,BR,POINT (-48.47964610194296 -1.3798578),19,SBBE,Belem,Para
+BFH,America/Sao_Paulo,Bacacheri,BFH,BR,POINT (-49.231650952179585 -25.4048327),2998,SBBI,Curitiba,Parana
+BVM,America/Bahia,Belmonte,BVM,BR,POINT (-38.916668 -15.833333),45,SNBL,Belmonte,Bahia
+BVS,America/Belem,Breves,BVS,BR,POINT (-50.44221729198899 -1.6351127),68,SNVS,Breves,Para
+BGX,America/Sao_Paulo,Airport Cmdt. Gustavo Kraemer,BGX,BR,POINT (-54.112838163262815 -31.390997249999998),580,SBBG,Bage,Rio Grande do Sul
+BYO,America/Campo_Grande,Bonito Airport,BYO,BR,POINT (-56.45190863172819 -21.24942965),1122,SBDB,Bonito,Mato Grosso do Sul
+OUS,America/Sao_Paulo,Ourinhos,OUS,BR,POINT (-49.91315384754624 -22.966458),1528,SDOU,Ourinhos,Sao Paulo
+BPG,America/Cuiaba,Barra Do Garcas,BPG,BR,POINT (-52.39006674230171 -15.8606725),1141,SBBW,Barra do Garcas,Mato Grosso
+NNU,America/Sao_Paulo,Nanuque,NNU,BR,POINT (-40.3296120536359 -17.8234475),633,SNNU,Nanuque,Minas Gerais
+NOK,America/Cuiaba,Nova Xavantina,NOK,BR,POINT (-52.348088000279134 -14.698767),997,SWXV,Araguaiana,Mato Grosso
+NVP,America/Manaus,Novo Aripuana,NVP,BR,POINT (-60.36429342007336 -5.117820549999999),121,SWNA,Novo Aripuana,Amazonas
+NVT,America/Sao_Paulo,Navegantes Airport,NVT,BR,POINT (-48.649354164934465 -26.87842885),19,SBNF,Navegantes,Santa Catarina
+BZC,America/Sao_Paulo,Buzios,BZC,BR,POINT (-41.9628374856585 -22.77063),19,SSBZ,Armacao de Buzios,Rio de Janeiro
+OLC,America/Manaus,Sen. Eunice Micheles,OLC,BR,POINT (-68.95853 -3.470869),255,SDCG,Sao Paulo de Olivenca,Amazonas
+CDI,America/Sao_Paulo,Cachoeiro Itapemirim,CDI,BR,POINT (-41.185587839495895 -20.834752),219,SNKI,Cachoeiro de Itapemirim,Espirito Santo
+CFB,America/Sao_Paulo,Cabo Frio International Airport,CFB,BR,POINT (-42.076586063102596 -22.923360950000003),26,SBCB,Cabo Frio,Rio de Janeiro
+CFC,America/Sao_Paulo,Cacador,CFC,BR,POINT (-50.940058269051605 -26.788347950000002),3339,SBCD,Cacador,Santa Catarina
+OTT,America/Cuiaba,Andre Maggi,OTT,BR,POINT (-58.581287 -9.902215),921,,Aripuana,Mato Grosso
+PAV,America/Bahia,Paulo Afonso Airport,PAV,BR,POINT (-38.25002608988869 -9.4005831),856,SBUF,Paulo Afonso,Bahia
+PCS,America/Fortaleza,Picos,PCS,BR,POINT (-41.466667 -7.083333),656,SNPC,Picos,Piaui
+PET,America/Sao_Paulo,Federal Airport,PET,BR,POINT (-52.324444 -31.718056),49,SBPK,Pelotas,Rio Grande do Sul
+PDR,America/Fortaleza,Presidente Dutra,PDR,BR,POINT (-44.4858434 -5.3075836),318,,Presidente Dutra,Maranhao
+PGZ,America/Sao_Paulo,Comte Antonio Amilton Beraldo Airport,PGZ,BR,POINT (-50.15 -25.083332),2969,SBPG,Ponta Grossa,Parana
+PHB,America/Fortaleza,Santos Dumont,PHB,BR,POINT (-41.738335 -2.891667),19,SBPB,Parnaiba,Piaui
+PHI,America/Fortaleza,Pinheiro,PHI,BR,POINT (-45.083332 -2.516667),22,SNYE,Pinheiro,Maranhao
+PFB,America/Sao_Paulo,Passo Fundo Airport,PFB,BR,POINT (-52.32669864043906 -28.2435244),2362,SBPF,Passo Fundo,Rio Grande do Sul
+CNF,America/Sao_Paulo,Tancredo Neves International Airport,BHZ,BR,POINT (-43.96836942393943 -19.63339785),2713,SBCF,Lagoa Santa,Minas Gerais
+PIN,America/Manaus,Parintins,PIN,BR,POINT (-56.77727067382461 -2.6731800000000003),36,SWPI,Parintins,Amazonas
+PLU,America/Sao_Paulo,Belo Horizonte Airport,BHZ,BR,POINT (-43.75 -19.75),2545,SBBH,Santa Luzia,Minas Gerais
+PMG,America/Campo_Grande,International,PMG,BR,POINT (-55.7 -22.55),2119,SBPP,Ponta Pora,Mato Grosso do Sul
+PNG,America/Sao_Paulo,Paranagua,PNG,BR,POINT (-48.53062440956646 -25.53969285),32,SSPG,Paranagua,Parana
+PNZ,America/Recife,Petrolina International Airport,PNZ,BR,POINT (-40.490555 -9.393333),1223,SBPL,Petrolina,Pernambuco
+CSU,America/Sao_Paulo,Santa Cruz Do Sul,CSU,BR,POINT (-52.41103406734325 -29.68380235),626,SSSC,Santa Cruz do Sul,Rio Grande do Sul
+POJ,America/Sao_Paulo,Patos De Minas,QPT,BR,POINT (-46.4919252194623 -18.67291465),2746,SNPD,Patos de Minas,Minas Gerais
+POO,America/Sao_Paulo,Pocos De Caldas,POO,BR,POINT (-46.566647194940074 -21.842504849999997),4110,SBPC,Pocos de Caldas,Minas Gerais
+CXJ,America/Sao_Paulo,Hugo Cantergiani Regional Airport,CXJ,BR,POINT (-51.1861647969846 -29.19705975),2424,SBCX,Caxias do Sul,Rio Grande do Sul
+CWB,America/Sao_Paulo,Afonso Pena International Airport,CWB,BR,POINT (-49.176544 -25.5322),2956,SBCT,Sao Jose dos Pinhais,Parana
+QDV,America/Sao_Paulo,Comte. Rolim Adolfo Amaro State Airport,JDE,BR,POINT (-46.943611 -23.181667),2444,SBJD,Jundiaí,
+CZB,America/Sao_Paulo,Carlos Ruhl,CZB,BR,POINT (-53.558334 -28.641666),1312,SSAK,Cruz Alta,Rio Grande do Sul
+CZS,America/Rio_Branco,Campo Internacional Airport,CZS,BR,POINT (-72.78333 -7.583333),646,SBCZ,Cruzeiro do Sul,Acre
+DIQ,America/Sao_Paulo,Divinopolis,DIQ,BR,POINT (-44.870044517354316 -20.18147045),2562,SNDV,Divinopolis,Minas Gerais
+SDU,America/Sao_Paulo,Santos Dumont Airport,RIO,BR,POINT (-43.16418613781168 -22.91044395),49,SBRJ,Rio de Janeiro,Rio de Janeiro
+PTQ,America/Belem,Porto de Moz,PTQ,BR,POINT (-52.237087731100814 -1.74273455),26,SNMZ,Porto de Moz,Para
+DNO,America/Araguaina,Dianopolis,DNO,BR,POINT (-46.8466988 -11.5953999),2365,SWDN,Taguatinga,Tocantins
+DOU,America/Campo_Grande,Dourados Airport,DOU,BR,POINT (-54.92640220192091 -22.20140635),1423,SBDO,Dourados,Mato Grosso do Sul
+DTI,America/Sao_Paulo,Diamantina,DTI,BR,POINT (-43.65036719883837 -18.23369525),4527,SNDT,Diamantina,Minas Gerais
+REC,America/Recife,Guararapes-Gilberto Freyre International Airport,REC,BR,POINT (-34.92271835508188 -8.1256775),62,SBRF,Recife,Pernambuco
+RIA,America/Sao_Paulo,Santa Maria Airport,RIA,BR,POINT (-53.6875 -29.710556),285,SBSM,Santa Maria,Rio Grande do Sul
+RRN,America/Belem,Serra Norte,RRN,BR,POINT (-59 -11),1092,,Vilhena,Rondonia
+RSG,America/Belem,Serra Pelada,RSG,BR,POINT (-49.65 -5.95),944,,Maraba,Para
+RRJ,America/Sao_Paulo,Jacarepaguá Airport,RRJ,BR,POINT (-43.371449464398225 -22.98641695),45,SBJR,Rio de Janeiro,
+RVD,America/Sao_Paulo,Rio Verde Airport,RVD,BR,POINT (-50.933334 -17.716667),2627,SWLC,Santa Helena de Goias,Goias
+SEI,America/Bahia,Senhor Do Bonfim,SEI,BR,POINT (-40.183334 -10.45),1883,,Senhor do Bonfim,Bahia
+ERM,America/Sao_Paulo,Comandante Kraemer,ERM,BR,POINT (-52.275555 -27.641666),2486,SSER,Erechim,Rio Grande do Sul
+ERN,America/Eirunepe,Eirunepe,ERN,BR,POINT (-69.88333 -6.583333),416,SWEI,Eirunepe,Amazonas
+ESI,America/Sao_Paulo,Espinosa,ESI,BR,POINT (-44 -15),1453,SBEP,Itacarambi,Minas Gerais
+FRC,America/Sao_Paulo,Franca,FRC,BR,POINT (-47.4375 -20.551945),3303,SIMK,Franca,Sao Paulo
+SNZ,America/Fortaleza,Santa Cruz,SNZ,BR,POINT (-36.016666 -6.216667),813,SBSC,Santa Cruz,Rio Grande do Norte
+SOD,America/Sao_Paulo,Sorocaba,SOD,BR,POINT (-47.49014641930361 -23.4777055),2070,SDCO,Sorocaba,Sao Paulo
+FBE,America/Sao_Paulo,Francisco Beltrao,FBE,BR,POINT (-53.062941314576875 -26.05892195),2106,SSFB,Francisco Beltrao,Parana
+FEC,America/Bahia,Feira De Santana,FEC,BR,POINT (-38.90841809405157 -12.2001342),761,SDIY,Feira de Santana,Bahia
+SQM,America/Sao_Paulo,São Miguel de Aragao,SQM,BR,POINT (-50.216667 -13.316667),1171,SWUA,Sao Miguel do Araguaia,Goias
+FEJ,America/Rio_Branco,Feijo,FEJ,BR,POINT (-70.3402582680074 -8.1398638),498,SNOU,Feijo,Acre
+FEN,America/Noronha,Fernando De Noronha Airport,FEN,BR,POINT (-32.4227495764598 -3.8546858),150,SBFN,Fernando de Noronha (Distrito Estadual),Pernambuco
+SSO,America/Sao_Paulo,Sao Lourenco,SSO,BR,POINT (-45.05 -22.116667),2903,SNLO,Sao Lourenco,Minas Gerais
+SQY,America/Sao_Paulo,Sao Lourenco Do Sul,SQY,BR,POINT (-52.0334202565532 -31.38606845),121,SSRU,Sao Lourenco do Sul,Rio Grande do Sul
+SSA,America/Bahia,Deputado Luis Eduardo Magalhaes International Airport,SSA,BR,POINT (-38.33497451468749 -12.91102045),19,SBSV,Lauro de Freitas,Bahia
+STM,America/Santarem,Santarem-Maestro Wilson Fonseca Airport,STM,BR,POINT (-54.80445559036728 -2.42713895),206,SBSN,Santarem,Para
+FLB,America/Fortaleza,Cangapara,FLB,BR,POINT (-43.033333 -6.8),442,SNQG,Floriano,Piaui
+FLN,America/Sao_Paulo,Hercilio Luz International Airport,FLN,BR,POINT (-48.54468648648172 -27.670113450000002),19,SBFL,Carianos,Santa Catarina
+SXO,America/Cuiaba,Sao Felix Do Araguaia,SXO,BR,POINT (-50.65 -11.6),639,SWFX,Gurupi,Tocantins
+SXX,America/Belem,Sao Felix Do Xingu,SXX,BR,POINT (-51.952638481072114 -6.64104735),652,SNFX,Sao Felix do Xingu,Para
+FOR,America/Fortaleza,Pinto Martins Airport,FOR,BR,POINT (-38.540836 -3.779073),141,SBFZ,Fortaleza,Ceara
+VCP,America/Sao_Paulo,Viracopos Airport,SAO,BR,POINT (-47.1418432690333 -23.00605625),2096,SBKP,Indaiatuba,Sao Paulo
+GCV,America/Sao_Paulo,Gravatai,GCV,BR,POINT (-50.994167 -29.941668),127,,Gravatai,Rio Grande do Sul
+GDP,America/Fortaleza,Guadalupe,GDP,BR,POINT (-43.58167 -6.781944),570,SNGD,Sao Joao dos Patos,Maranhao
+GEL,America/Sao_Paulo,Sepe Tiaraju,GEL,BR,POINT (-54.165611958794074 -28.28341965),1013,SBNM,Santo Angelo,Rio Grande do Sul
+VDC,America/Bahia,Vitoria Da Conquista Airport,VDC,BR,POINT (-40.862788613186495 -14.86450825),2916,SBVC,Vitoria da Conquista,Bahia
+VIA,America/Sao_Paulo,Vienna,VIA,BR,POINT (-51.136112 -27.008333),2588,SSVI,Videira,Santa Catarina
+VOT,America/Sao_Paulo,Votuporanga,VOT,BR,POINT (-49.88333 -20.433332),1692,SDVG,Votuporanga,Sao Paulo
+VLP,America/Cuiaba,Vila Rica,VLP,BR,POINT (-51.14049738118665 -9.981114550000001),813,SWVC,Conceicao do Araguaia,Para
+GIG,America/Sao_Paulo,Galeao Antonio Carlos Jobim International Airport,RIO,BR,POINT (-43.258620204081936 -22.81122025),32,SBGL,Duque de Caxias,Rio de Janeiro
+GJM,America/Porto_Velho,Guajara-Mirim,GJM,BR,POINT (-65.36667 -10.783333),387,SBGM,Guajara Mirim,Rondonia
+GUJ,America/Sao_Paulo,Guaratingueta,GUJ,BR,POINT (-45.20482610775648 -22.791205050000002),1748,SBGW,Guaratingueta,Sao Paulo
+GMS,America/Fortaleza,Guimaraes,GMS,BR,POINT (-44.7 -2.15),177,SNYW,Bequimao,Maranhao
+GNM,America/Bahia,Guanambi,GNM,BR,POINT (-42.783333 -14.3),1729,SNGI,Guanambi,Bahia
+GPB,America/Sao_Paulo,Tancredo Thomaz Faria,GPB,BR,POINT (-51.5 -25.333332),3395,SSGG,Guarapuava,Parana
+GRU,America/Sao_Paulo,Sao Paulo-Guarulhos International Airport,SAO,BR,POINT (-46.481320528800595 -23.43779495),2460,SBGR,Guarulhos,Sao Paulo
+GUZ,America/Sao_Paulo,Guarapari,QDL,BR,POINT (-40.49178638456354 -20.6469745),39,SNGA,Guarapari,Espirito Santo
+GVR,America/Sao_Paulo,Governador Valadares Airport,GVR,BR,POINT (-41.933334 -18.850279),492,SBGV,Governador Valadares,Minas Gerais
+GYN,America/Sao_Paulo,Santa Genoveva Airport,GYN,BR,POINT (-49.226624 -16.632631),2440,SBGO,Goiania,Goias
+GGB,America/Cuiaba,Água Boa,GGB,BR,POINT (-52.15026599220484 -14.01962765),1479,,Mozarlandia,Goias
+GGF,America/Santarem,Almeirim,GGF,BR,POINT (-52.57808006493803 -1.47928445),597,,,
+GGH,America/Sao_Paulo,Gastão Mesquita Airport,GGH,BR,POINT (-52.642222 -23.691667),1692,,Cianorte,Parana
+GGJ,America/Sao_Paulo,Guaíra Airport,GGJ,BR,POINT (-54.19114629441818 -24.080879449999998),862,SSGY,Salto del Guaira,Canindeyu
+HRZ,America/Sao_Paulo,Horizontina,HRZ,BR,POINT (-54.34020485995269 -27.637036000000002),990,SSHZ,Horizontina,Rio Grande do Sul
+TEC,America/Sao_Paulo,Telemaco Borba,TEC,BR,POINT (-50.65176291354726 -24.31767995),2610,SSVL,Telemaco Borba,Parana
+ITQ,America/Sao_Paulo,Itaqui,ITQ,BR,POINT (-56.540659559488645 -29.17210465),213,SSIQ,Itaqui,Rio Grande do Sul
+JOI,America/Sao_Paulo,Joinville-Lauro Carneiro de Loyola Airport,JOI,BR,POINT (-48.79862231685878 -26.2249688),15,SBJV,Joinville,Santa Catarina
+JPR,America/Porto_Velho,Ji-Parana Airport,JPR,BR,POINT (-61.84667 -10.870556),598,SBJI,Ji Parana,Rondonia
+JRT,America/Manaus,Juruti Airport,JRT,BR,POINT (-56.0902786255 -2.1866669655),0,,Juruti,Para
+JPA,America/Fortaleza,Presidente Castro Pinto International Airport,JPA,BR,POINT (-34.95030583440195 -7.148930699999999),217,SBJP,Bayeux,Paraiba
+IGU,America/Sao_Paulo,Cataratas International Airport,IGU,BR,POINT (-54.49060873125 -25.5930616),757,SBFI,Puerto Iguazu,Misiones
+JTI,America/Sao_Paulo,Jatai,JTI,BR,POINT (-51.774723 -17.829445),2529,SWJW,Jatai,Goias
+IJU,America/Sao_Paulo,J. Batista Bos Filho Airport,IJU,BR,POINT (-53.916668 -28.416668),1227,SSIJ,Ijui,Rio Grande do Sul
+JTC,America/Sao_Paulo,Bauru-Arealva Airport,JTC,BR,POINT (-49.07515943787047 -22.15705835),1962,SBAE,Bauru,Sao Paulo
+ILB,America/Campo_Grande,Ilha Solteira,ILB,BR,POINT (-51.333332 -20.333332),1056,,Ilha Solteira,Sao Paulo
+IMP,America/Fortaleza,Imperatriz Airport,IMP,BR,POINT (-47.45800807097166 -5.5301267),390,SBIZ,Imperatriz,Maranhao
+IOS,America/Bahia,Ilheus/Bahia-Jorge Amado Airport,IOS,BR,POINT (-39.03 -14.813889),13,SBIL,Ilheus,Bahia
+IPG,America/Manaus,Ipiranga,IPG,BR,POINT (-65.95 -3.216667),265,SWII,Fonte Boa,Amazonas
+IPN,America/Sao_Paulo,Usiminas Airport,IPN,BR,POINT (-42.533333 -19.5),725,SBIP,Ipatinga,Minas Gerais
+IPU,America/Bahia,Ipiau,IPU,BR,POINT (-39.733334 -14.133333),410,SNIU,Ipiau,Bahia
+IRE,America/Bahia,Irece,IRE,BR,POINT (-41.86667 -11.3),2316,SNIC,Irece,Bahia
+IRZ,America/Manaus,Tapuruquara,IRZ,BR,POINT (-64.99261880076497 -0.37810525),137,SWTP,Santa Isabel do Rio Negro,Amazonas
+ITA,America/Manaus,Itacoatiara,ITA,BR,POINT (-58.416668 -3.133333),62,SBIC,Itacoatiara,Amazonas
+ITB,America/Santarem,Itaituba,ITB,BR,POINT (-55.983334 -4.283333),22,SBIH,Itaituba,Para
+ITE,America/Bahia,Itubera,ITE,BR,POINT (-39.2 -13.7),554,SNZW,Itubera,Bahia
+ITN,America/Bahia,Itabuna,ITN,BR,POINT (-39.3 -14.8),505,SWTX,Itabuna,Bahia
+ITR,America/Sao_Paulo,Hidroeletrica,ITR,BR,POINT (-49.21306537143137 -18.44603765),1538,SBIT,Itumbiara,Goias
+IZA,America/Sao_Paulo,Zona da Mata Regional Airport,JDF,BR,POINT (-43.173058 -21.513056),1318,SBZM,Rio Novo,Minas Gerais
+JCB,America/Sao_Paulo,Joacaba,JCB,BR,POINT (-51.55345654971351 -27.17148265),2516,SSJA,Joacaba,Santa Catarina
+JCM,America/Bahia,Jacobina,JCM,BR,POINT (-40.55150285692899 -11.1640584),1548,SNJB,Jacobina,Bahia
+JDF,America/Sao_Paulo,Francisco De Assis,JDF,BR,POINT (-43.333332 -21.75),2562,SBJF,Juiz de Fora,Minas Gerais
+JDO,America/Fortaleza,Orlando Bezerra de Menezes Airport,JDO,BR,POINT (-39.316666 -7.2),1243,SBJU,Juazeiro do Norte,Ceara
+JDR,America/Sao_Paulo,Sao Joao Del Rei,JDR,BR,POINT (-44.224610172835526 -21.0852396),3057,SNJR,Tiradentes,Minas Gerais
+JEQ,America/Bahia,Jequie,JEQ,BR,POINT (-40.071268208841715 -13.8775218),610,SNJK,Jequie,Bahia
+LAJ,America/Sao_Paulo,Correia Pinto Airport,LAJ,BR,POINT (-50.316666 -27.8),3065,SBLJ,Lages,Santa Catarina
+LBR,America/Manaus,Labrea,LBR,BR,POINT (-64.85 -7.25),190,SWLB,Canutama,Amazonas
+LAZ,America/Bahia,Bom Jesus Da Lapa,LAZ,BR,POINT (-43.409181138408584 -13.26170655),1454,SBLP,Bom Jesus da Lapa,Bahia
+JJD,Brazil/East,Jericoacoara,JJD,BR,POINT (-40.357153993491025 -2.9061462999999996),29,SBJE,Cruz,Ceara
+JJG,America/Sao_Paulo,Jaguaruna Regional Airport,JJG,BR,POINT (-49.05437795338313 -28.66726125),82,SBJA,Jaguaruna,Santa Catarina
+LDB,America/Sao_Paulo,Londrina Airport,LDB,BR,POINT (-51.137714 -23.328457),1867,SBLO,Londrina,Parana
+JLS,America/Sao_Paulo,Jales,JLS,BR,POINT (-50.55 -20.166668),1532,SDJL,Jales,Sao Paulo
+LEC,America/Bahia,Coronel Horacio de Mattos Airport,LEC,BR,POINT (-41.281113 -12.48),1676,SBLE,Vera Cruz,Bahia
+LEP,America/Sao_Paulo,Leopoldina,LEP,BR,POINT (-42.666668 -21.466667),919,,Leopoldina,Minas Gerais
+JNA,America/Sao_Paulo,Januaria,JNA,BR,POINT (-44.38438081278936 -15.473317399999999),1571,SNJN,Januaria,Minas Gerais
+LIP,America/Sao_Paulo,Lins,LIP,BR,POINT (-49.73213046125255 -21.66259085),1559,SWXQ,Lins,Sao Paulo
+LOI,America/Sao_Paulo,Helmuth Baungartem,LOI,BR,POINT (-49.542778 -27.159721),1062,SSLN,Ibirama,Santa Catarina
+MBZ,America/Manaus,Maues,MBZ,BR,POINT (-57.724955102848156 -3.3699246499999997),59,SWMW,Maues,Amazonas
+MBK,America/Cuiaba,Matupa,MBK,BR,POINT (-54.932777 -10.0575),994,SWXM,Alta Floresta,Mato Grosso
+AFL,America/Cuiaba,Alta Floresta Airport,AFL,BR,POINT (-56.10603812089458 -9.866163),790,SBAT,,
+CDJ,America/Belem,Conceicao Do Araguaia,CDJ,BR,POINT (-49.283333 -8.233333),518,SBAA,,
+CKS,America/Belem,Carajas Airport,CKS,BR,POINT (-49.99774268663904 -6.11655575),2063,SBCJ,,
+MAO,America/Manaus,Eduardo Gomes International Airport,MAO,BR,POINT (-60.04575303314657 -3.03553825),259,SBEG,,
+CMG,America/Campo_Grande,Corumba Internacional Airport,CMG,BR,POINT (-57.66975905679873 -19.0125785),485,SBCR,,
+JCR,America/Santarem,Jacareacanga,JCR,BR,POINT (-57.533333 -5.983333),557,SBEK,,
+MAB,America/Belem,Maraba Airport,MAB,BR,POINT (-49.166668 -5.366667),334,SBMA,,
+OYK,America/Belem,Oiapoque,OYK,BR,POINT (-51.795727219974765 3.8562182),36,SBOI,,
+PMW,America/Araguaina,Palmas Airport,PMW,BR,POINT (-48.35278 -10.241667),757,SBPJ,,
+BVH,America/Porto_Velho,Vilhena Airport,BVH,BR,POINT (-60.09875397255124 -12.6940825),1922,SBVH,,
+OIA,America/Belem,Ourilandia,OIA,BR,POINT (-51.047096751155294 -6.76392515),856,SDOW,,
+LVR,America/Cuiaba,Mun. Do Bom Futuro,LVR,BR,POINT (-55.95025 -13.037861),1312,SILC,,
+CFO,America/Cuiaba,Confreza,CFO,BR,POINT (-51.566666 -10.633333),751,SJHG,,
+NPR,America/Santarem,Novo Progresso Municipal,NPR,BR,POINT (-55.400833 -7.125833),751,SJNP,,
+JUA,America/Cuiaba,Juara,JUA,BR,POINT (-57.466667 -11.333333),870,SIZX,,
+RDC,America/Belem,Redencao,RDC,BR,POINT (-49.97954959577524 -8.03127325),603,SNDC,,
+ITI,America/Sao_Paulo,Itambacuri,ITI,BR,POINT (-41.5 -18),1394,SNYH,,
+OBI,America/Santarem,Obidos,OBI,BR,POINT (-55.516666 -1.916667),95,SNTI,,
+APU,America/Sao_Paulo,Apucarana,APU,BR,POINT (-51.483334 -23.55),2408,SSAP,,
+PBV,America/Cuiaba,Porto Dos Gauchos,PBV,BR,POINT (-57.3333333 -11.5166667),807,SWPG,,
+PBX,America/Cuiaba,Porto Alegre Do Norte,PBX,BR,POINT (-51.6844371 -10.8612428),629,SWPQ,,
+JRN,America/Cuiaba,Juruena,JRN,BR,POINT (-58.49488557867951 -10.314160600000001),525,SWJU,,
+OPS,America/Cuiaba,Sinop Airport,OPS,BR,POINT (-55.585581084918076 -11.88507355),1240,SBSI,,
+AIR,America/Cuiaba,Aripuana,AIR,BR,POINT (-59.38333 -10.25),1095,SSOU,,
+CCX,America/Cuiaba,Caceres,CCX,BR,POINT (-57.7 -16.066668),374,SWKC,,
+CQA,America/Cuiaba,Canarana Airport,CQA,BR,POINT (-52.26867717855606 -13.57509615),1325,SWEK,,
+LCB,America/Cuiaba,Pontes e Lacerda,LCB,BR,POINT (-59.99861 -13.013333),870,SWBG,,
+CQS,America/Porto_Velho,Costa Marques,CQS,BR,POINT (-64.25192287574623 -12.4249231),456,SWCQ,,
+DMT,America/Cuiaba,Diamantino,DMT,BR,POINT (-56.5 -14.5),744,SWDM,,
+FBA,America/Manaus,Fonte Boa,FBA,BR,POINT (-66.08396647634501 -2.5323850500000002),150,SWOB,,
+GRP,America/Araguaina,Gurupi,GRP,BR,POINT (-49.216667 -11.666667),898,SWGI,,
+HUW,America/Manaus,Humaita,HUW,BR,POINT (-0.348669 53.583447),59,SWHT,,
+IDO,America/Araguaina,Rio,IDO,BR,POINT (-50.666668 -11.566667),649,SWIY,,
+JIA,America/Cuiaba,Juina,JIA,BR,POINT (-58.88333 -11.5),1069,SWJN,,
+STZ,America/Cuiaba,Confresa,STZ,BR,POINT (-50.45 -10.300278),583,SWST,,
+AZL,America/Cuiaba,Fazenda Tucunare Airport,AZL,BR,POINT (-58.866935 -13.465528),2020,SWTU,,
+MGF,America/Sao_Paulo,Regional De Maringa,MGF,BR,POINT (-51.933334 -23.383612),1594,SBMG,Maringa,Parana
+MII,America/Sao_Paulo,Dr Gastao Vidigal Airport,MII,BR,POINT (-49.933334 -22.2),2014,SBML,Marilia,Sao Paulo
+MQH,America/Sao_Paulo,Municipal,MQH,BR,POINT (-48.233334 -13.533333),1312,SWIQ,Cavalcante,Goias
+MVS,America/Bahia,Aeroporto Max Feffer,MVS,BR,POINT (-39.566666 -18.083332),32,SNMU,Mucuri,Bahia
+NQL,America/Sao_Paulo,Niquelandia,NQL,BR,POINT (-48.983334 -14),1758,SWNQ,Uruacu,Goias
+OAL,America/Porto_Velho,Cacoal Airport,OAL,BR,POINT (-61.4825 -11.433889),597,SSKW,Cacoal,Rondonia
+ORX,America/Santarem,Oriximina,ORX,BR,POINT (-55.86667 -1.75),141,SNOX,Oriximina,Para
+PBB,America/Campo_Grande,Paranaiba,PBB,BR,POINT (-51.183334 -19.666668),1348,SSPN,Paranaiba,Mato Grosso do Sul
+PBQ,America/Porto_Velho,Pimenta Bueno,PBQ,BR,POINT (-61.2 -11.7),626,SWPM,Pimenta Bueno,Rondonia
+PDF,America/Bahia,Prado,PDF,BR,POINT (-39.216667 -17.35),32,SNRD,Prado,Bahia
+PGG,America/Santarem,Progresso,PGG,BR,POINT (-55.46111 -6.954167),688,,Jacareacanga,Para
+PIG,America/Boa_Vista,Pitinga,PIG,BR,POINT (-51.716667 -24.75),2808,,Pitanga,Parana
+PIV,America/Sao_Paulo,Pirapora,PIV,BR,POINT (-44.93222 -17.338612),1653,SNPX,Pirapora,Minas Gerais
+PNB,America/Araguaina,Porto Nacional,PNB,BR,POINT (-48.39911065205263 -10.71799955),810,SDPE,Palmas,Tocantins
+PPB,America/Sao_Paulo,A. De Barros Airport,PPB,BR,POINT (-51.45 -22.1),1332,SBDN,Alvares Machado,Sao Paulo
+PSW,America/Sao_Paulo,Passos,PSW,BR,POINT (-46.61667 -20.716667),2427,SNOS,Passos,Minas Gerais
+PTO,America/Sao_Paulo,Pato Branco,PTO,BR,POINT (-52.694225841764215 -26.2169937),2687,SBPO,Pato Branco,Parana
+PVI,America/Sao_Paulo,Edu Chaves,PVI,BR,POINT (-52.466667 -23.066668),1358,SSPI,Paranavai,Parana
+QSC,America/Sao_Paulo,Sao Carlos,QSC,BR,POINT (-47.90275820931602 -21.8730674),2637,SDSC,Ibate,Sao Paulo
+RBB,America/Manaus,Borba,RBB,BR,POINT (-59.60435028003239 -4.40582015),88,SWBR,Borba,Amazonas
+RAO,America/Sao_Paulo,Dr. Leite Lopes State Airport,RAO,BR,POINT (-47.773335 -21.135834),1791,SBRP,Ribeirao Preto,Sao Paulo
+RBR,America/Rio_Branco,Pres. Medici Airport,RBR,BR,POINT (-67.8 -9.966667),462,SBRB,Rio Branco,Acre
+RIG,America/Sao_Paulo,Rio Grande,RIG,BR,POINT (-52.16620090786992 -32.0824308),49,SJRG,Rio Grande,Rio Grande do Sul
+ROO,America/Cuiaba,Rondonopolis Airport,ROO,BR,POINT (-54.716667 -16.433332),1085,SBRD,Rondonopolis,Mato Grosso
+RWS,America/Sao_Paulo,Sumare,RWS,BR,POINT (-47.192223 -22.800556),1961,,Paulinia,Sao Paulo
+SBJ,America/Sao_Paulo,Sao Mateus,SBJ,BR,POINT (-39.733334 -18.583332),19,SNMX,Conceicao da Barra,Espirito Santo
+SFK,America/Belem,Soure,SFK,BR,POINT (-48.522920096540616 -0.69864855),39,SNSW,Soure,Para
+SFV,America/Sao_Paulo,Santa Fe Do Sul,SFV,BR,POINT (-50.166668 -19.833332),1443,,Iturama,Minas Gerais
+SJK,America/Sao_Paulo,Sao Jose Dos Campos,SJK,BR,POINT (-46.11667 -23.183332),2303,SBSJ,Santa Isabel,Sao Paulo
+SJL,America/Manaus,Da Cachoeira,SJL,BR,POINT (-66.98557275279653 -0.1483109),239,SBUA,Sao Gabriel da Cachoeira,Amazonas
+SQX,America/Sao_Paulo,Sao Miguel do Oeste,SQX,BR,POINT (-53.502777 -26.780556),2112,SSOE,Bernardo de Irigoyen,Misiones
+SRA,America/Sao_Paulo,Santa Rosa,SRA,BR,POINT (-54.483334 -27.866667),862,SSZR,Santa Rosa,Rio Grande do Sul
+SSZ,America/Sao_Paulo,Santos,SSZ,BR,POINT (-46.36667 -23.933332),29,SBST,Sao Vicente,Sao Paulo
+SWM,America/Cuiaba,Suia-Missu,SWM,BR,POINT (-53.25 -11.216667),895,,Sinop,Mato Grosso
+TBT,America/Manaus,Tabatinga International Airport,TBT,BR,POINT (-69.933334 -4.233333),279,SBTT,Tabatinga,Amazonas
+TFL,America/Sao_Paulo,Teofilo Otoni,TFL,BR,POINT (-41.5 -17.85),1572,SNTO,Teofilo Otoni,Minas Gerais
+TFF,America/Manaus,Tefe Airport,TFF,BR,POINT (-64.72460759140549 -3.3824045),188,SBTF,Tefe,Amazonas
+TJL,America/Campo_Grande,Três Lagoas Airport,TJL,BR,POINT (-51.683889 -20.754444),1050,SBTG,Tres Lagoas,Mato Grosso do Sul
+TLZ,America/Sao_Paulo,Catalao,TLZ,BR,POINT (-47.95 -18.166668),2612,SWKT,Catalao,Goias
+TMT,America/Santarem,Trombetas,TMT,BR,POINT (-55.583332 -1.916667),287,SBTB,Abidos,Para
+TOW,America/Sao_Paulo,Toledo,TOW,BR,POINT (-53.69611 -24.69861),1843,SBTD,Toledo,Parana
+TRQ,America/Rio_Branco,Tarauaca,TRQ,BR,POINT (-70.75 -8.1),646,SBTK,Tarauaca,Acre
+TSQ,America/Sao_Paulo,Torres,TSQ,BR,POINT (-49.746113 -29.3325),26,SBTR,Torres,Rio Grande do Sul
+TUR,America/Belem,Tucurui,TUR,BR,POINT (-49.733334 -3.7),830,SBTU,Tucurui,Para
+TUZ,America/Belem,Tucuma,TUZ,BR,POINT (-50.5 -21.883333),1060,,Tupa,Sao Paulo
+TXF,America/Bahia,Teixeira de Freitas Airport,TXF,BR,POINT (-37.183334 -7.133333),344,SNTF,Teixeira,Paraiba
+UBA,America/Sao_Paulo,Uberaba Airport,UBA,BR,POINT (-47.958332 -19.776388),2655,SBUR,Uberaba,Minas Gerais
+UBT,America/Sao_Paulo,Ubatuba,UBT,BR,POINT (-45.07459704874877 -23.441335600000002),13,SDUB,Ubatuba,Sao Paulo
+UDI,America/Sao_Paulo,Uberlandia-Ten. Cel. Av. Cesar Bombonato Airport,UDI,BR,POINT (-48.233334 -18.9),3094,SBUL,Uberlandia,Minas Gerais
+UMU,America/Sao_Paulo,Ernesto Geisel,UMU,BR,POINT (-53.31333 -23.798332),1558,SSUM,Umuarama,Parana
+UNA,America/Bahia,Una,UNA,BR,POINT (-38.997223 -15.353333),20,SBTC,Una,Bahia
+URB,America/Sao_Paulo,Ernesto Pochler,URB,BR,POINT (-51.566666 -20.783333),1169,,Castilho,Sao Paulo
+URG,America/Sao_Paulo,Ruben Berta Airport,URG,BR,POINT (-57.038334 -29.781668),256,SBUG,Uruguaiana,Rio Grande do Sul
+UVI,America/Sao_Paulo,União da Vitória Airport,UVI,BR,POINT (-51.068889 -26.231667),2437,,Porto Uniao,Santa Catarina
+VAG,America/Sao_Paulo,Major-Brigadeiro Trompowsky Airport,VAG,BR,POINT (-45.433334 -21.55),2870,SBVG,Varginha,Minas Gerais
+VAL,America/Bahia,Valenca,VAL,BR,POINT (-39.083332 -13.333333),249,SNVB,Valenca,Bahia
+VIX,America/Sao_Paulo,Eurico de Aguiar Salles Airport,VIX,BR,POINT (-40.28135718192593 -20.256092950000003),49,SBVT,Vila Velha,Espirito Santo
+XAP,America/Sao_Paulo,Chapeco Airport,XAP,BR,POINT (-52.629723 -27.088612),2146,SBCH,Chapeco,Santa Catarina
+XIG,America/Belem,Xinguara,XIG,BR,POINT (-48.8 -6.966667),810,SWSX,Sao Geraldo do Araguaia,Para
+ZFU,America/Sao_Paulo,Aruja,ZFU,BR,POINT (-46.3214444 -23.3964516),0,,Aruja,Sao Paulo
+ZMD,America/Rio_Branco,Sena Madureira,ZMD,BR,POINT (-68.75 -9.083333),540,,Sena Madureira,Acre
+NSR,America/Fortaleza,São Raimundo Nonato Airport,NSR,BR,POINT (-42.644444 -9.082778),1362,SWKY,São Raimundo Nonato,
+OPP,America/Belem,Salinópolis Airport,OPP,BR,POINT (-47.337778 -0.696944),89,SNSM,Salinópolis,
+JAW,America/Recife,Aeroporto de Araripina,JAW,BR,POINT (-40.535556 -7.586389),2195,SNAB,,
+QGP,America/Recife,Garanhuns Airport,QGP,BR,POINT (-36.471389 -8.834444),2533,SNGN,Garanhuns,
+VRZ,America/Sao_Paulo,Lavras Airport,VRZ,BR,POINT (-44.9639 -21.2406),3156,SSOL,Lavras,
+QIG,America/Fortaleza,Dr. Francisco Tomé da Frota Airport,QIG,BR,POINT (-39.298611 -6.347778),692,SNIG,Iguatu,
