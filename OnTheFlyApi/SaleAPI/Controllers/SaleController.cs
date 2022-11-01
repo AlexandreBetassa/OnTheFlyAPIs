@@ -69,7 +69,7 @@ namespace SaleAPI.Controllers
         [HttpPut("PutStatusReserved/{status}")]
         public ActionResult<Sale> Put(SaleDTO saleIn)
         {
-            var sale = _saleService.Get().Where(s => s.Flight.Departure == saleIn.DtFlight && s.Flight.Plane.RAB == saleIn.RAB && s.Flight.Destiny.IATA
+            var sale = _saleService.Get().Where(s => s.Flight.Departure.ToString() == saleIn.DtFlight && s.Flight.Plane.RAB == saleIn.RAB && s.Flight.Destiny.IATA
             == saleIn.Destiny && s.Passenger[0].CPF == Models.Utils.FormatCPF(saleIn.PassengersCPFs[0])).FirstOrDefault();
             if (sale == null) return BadRequest("Unable to change. Sale not found");
             if (!sale.Reserved) return BadRequest("Ticket already canceled");

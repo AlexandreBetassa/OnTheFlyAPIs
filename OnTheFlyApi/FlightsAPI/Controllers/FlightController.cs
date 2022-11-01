@@ -33,20 +33,10 @@ namespace FlightsAPI.Controllers
             return Ok(flight);
         }
 
-        [HttpGet("GetOneFlight/{fullDate}/{rabPlane}/{destiny}", Name = "GetOneFlight")]
-        public ActionResult<Flight> GetOneFlight(DateTime fullDate, string rabPlane, string destiny)
+        [HttpGet("{fullDate}/{rabPlane}/{destiny}", Name = "GetOneFlight")]
+        public ActionResult<Flight> GetOneFlight(string fullDate, string rabPlane, string destiny)
         {
-            var flight = _flightService.GetOne(fullDate, rabPlane.ToUpper(), destiny.ToUpper());
-
-            if (flight == null) return NotFound();
-
-            return Ok(flight);
-        }
-
-        [HttpPost("GetOne", Name = "GetOne")]
-        public ActionResult<Flight> Get([FromBody] SaleDTO sale)
-        {
-            var flight = _flightService.GetOne(sale.DtFlight, sale.RAB.ToUpper(), sale.Destiny.ToUpper());
+            var flight = _flightService.GetOne(DateTime.Parse(fullDate), rabPlane.ToUpper(), destiny.ToUpper());
 
             if (flight == null) return NotFound();
 

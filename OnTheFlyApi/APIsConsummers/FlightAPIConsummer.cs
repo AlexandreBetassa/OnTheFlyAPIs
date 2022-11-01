@@ -12,9 +12,7 @@ namespace APIsConsummers
         {
             using (HttpClient flightClient = new HttpClient())
             {
-                string saleJson = JsonSerializer.Serialize(sale);
-                HttpContent content = new StringContent(saleJson, Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await flightClient.PostAsync($"https://localhost:44348/api/Flight/GetOne/", content);
+                HttpResponseMessage response = await flightClient.GetAsync($"https://localhost:44348/api/Flight/{sale.DtFlight}/{sale.RAB}/{sale.Destiny}");
                 string flightJson = await response.Content.ReadAsStringAsync();
                 if (response.IsSuccessStatusCode)
                 {

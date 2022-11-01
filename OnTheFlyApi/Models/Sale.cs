@@ -23,7 +23,7 @@ namespace Models
     public class SaleDTO
     {
         [Required(ErrorMessage = "Date in invalid format")]
-        public DateTime DtFlight { get; set; }
+        public string DtFlight { get; set; }
         public List<string> PassengersCPFs { get; set; }
         [Required(ErrorMessage = "Inform the aircraft")]
         [MaxLength(6, ErrorMessage = "Invalid format registration")]
