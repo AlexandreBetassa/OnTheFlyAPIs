@@ -39,32 +39,27 @@ namespace PassengerAPI.Controllers
             return Ok(passenger);
         }
 
-        [HttpPost("GetSalePassengersList")]
-        public ActionResult<List<Passenger>> GetSalePassengersList(List<string> unformattedCpfList)
-        {
-            Passenger passenger;
-            List<Passenger> passengersList = new();
+        //[HttpPost("GetSalePassengersList")]
+        //public ActionResult<Passenger> GetSalePassengersList(string unformattedCpf)
+        //{
+        //    Passenger passenger;
+        //    //if (!unformattedCpfList.GroupBy(c => c).All(c => c.Count() == 1)) return BadRequest();
 
-            if (unformattedCpfList.Count == 0) return BadRequest();
+        //        passenger = _passengerService.Get(Models.Utils.FormatCPF(unformattedCpf));
+        //        if (passenger == null) return NotFound();
+        //        if (passenger.Status == true) return BadRequest("Unauthorized passenger on the list");
+        //        passengersList.Add(passenger);
+        //    }
 
-            if (!unformattedCpfList.GroupBy(c => c).All(c => c.Count() == 1)) return BadRequest();
+        //    if ((DateTime.Today - passengersList[0].DtBirth.AddYears(18)).Days < 0)
+        //        return BadRequest();
 
-            foreach (string cpf in unformattedCpfList)
-            {
-                passenger = _passengerService.Get(Models.Utils.FormatCPF(cpf));
-                if (passenger == null) return NotFound();
-                if (passenger.Status == true) return BadRequest("Unauthorized passenger on the list");
-                passengersList.Add(passenger);
-            }
-
-            if ((DateTime.Today - passengersList[0].DtBirth.AddYears(18)).Days < 0)
-                return BadRequest();
-
-            return passengersList;
-        }
+        //    return passengersList;
+        //}
 
         // POST api/<PassengerController>
-        [HttpPost("Create")]
+
+        [HttpPost]
         public ActionResult<Passenger> Post(PassengerDTO p)
         {
             if (!Models.Utils.CPFIsValid(p.UnformattedCPF)) return BadRequest("Invalid CPF.");

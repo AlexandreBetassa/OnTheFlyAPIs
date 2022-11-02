@@ -23,12 +23,17 @@ namespace Models
     public class SaleDTO
     {
         [Required(ErrorMessage = "Date in invalid format")]
-        public DateTime DtFlight { get; set; }
+        public string DtFlight { get; set; }
+
+        [Required(ErrorMessage = "No to passengers linked to this sale")]
         public List<string> PassengersCPFs { get; set; }
+
         [Required(ErrorMessage = "Inform the aircraft")]
         [MaxLength(6, ErrorMessage = "Invalid format registration")]
         public string RAB { get; set; }
+
+        [Required(ErrorMessage = "Destination not informed.")]
+        [StringLength(3, ErrorMessage = "Iata has 3 characters.")]
         public string Destiny { get; set; }
-        public bool Reserved { get; set; }
     }
 }

@@ -70,14 +70,14 @@ namespace AirCraftAPI.Controllers
             if (cnpj.Length != 14) return BadRequest("CNPJ is not valid. CNPJ needs to be 14 characters long, without formatation.");
             if (!long.TryParse(cnpj, out _)) return BadRequest("CNPJ is not valid. Use Only Numbers.");
 
-            string rabValidation = Utils.ValidateRab(airCraftInsert.RAB); 
+            string rabValidation = Utils.ValidateRab(airCraftInsert.RAB);
             if (rabValidation != "OK") return BadRequest(rabValidation);
 
             var airCraft = _airCraftService.GetOneByRAB(airCraftInsert.RAB);
             if (airCraft != null)
                 return StatusCode((int)HttpStatusCode.Conflict, "Could not proceed with this request. There is already an aircraft registered with this RAB code!");
 
-            
+
 
             var company = await CompanyAPIConsummer.GetOneCNPJ(cnpj);
             if (company == null) return BadRequest("Invalid CNPJ. Could not found an company with informed CNPJ.");
