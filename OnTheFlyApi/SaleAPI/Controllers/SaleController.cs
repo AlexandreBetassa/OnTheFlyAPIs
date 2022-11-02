@@ -32,7 +32,7 @@ namespace SaleAPI.Controllers
         #endregion Get
 
         #region Post
-        [HttpPost]
+        [HttpPost("reserved", Name ="reserved")]
         public async Task<ActionResult<Sale>> Reserved(SaleDTO saleDTO)
         {
             saleDTO.RAB = saleDTO.RAB.ToUpper();
