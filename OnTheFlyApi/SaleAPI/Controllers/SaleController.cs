@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using SaleAPI.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,7 +21,7 @@ namespace SaleAPI.Controllers
         [HttpGet]
         public ActionResult<List<Sale>> Get() => _saleService.Get();
 
-        [HttpGet(Name = "One")]
+        [HttpGet("sale", Name = "One")]
         public ActionResult<Sale> Get(Sale saleIn)
         {
             var sale = _saleService.Get().Where(c => c.Flight.Departure == saleIn.Flight.Departure
@@ -31,8 +32,8 @@ namespace SaleAPI.Controllers
         #endregion Get
 
         #region Post
-        [HttpPost("Reserved")]
-        public async Task<ActionResult<AirCraft>> ReservedSaleIata(SaleDTO saleDTO)
+        [HttpPost]
+        public async Task<ActionResult<Sale>> Reserved(SaleDTO saleDTO)
         {
             saleDTO.RAB = saleDTO.RAB.ToUpper();
             saleDTO.Destiny = saleDTO.Destiny.ToUpper();
@@ -42,13 +43,22 @@ namespace SaleAPI.Controllers
             if (flight == null) return NotFound("Flight not found!!!");
             //checks if there is a ticket for all passengers in the purchase request
             else if (flight.Sales > saleDTO.PassengersCPFs.Count) return BadRequest("There are no tickets for all passengers");
-            var lstPassengers = await PassengersAPIConsummer.GetSalePassengersList(saleDTO.PassengersCPFs, "44355");
-            if (lstPassengers == null) return BadRequest("There is a problem with the passengers on the flight");
+
+            List<Passenger> listPassengers = new();
+            foreach (string cpf in saleDTO.PassengersCPFs)
+            {
+                var passenger = await PassengersAPIConsummer.GetSalePassengersList(cpf.Replace("-", "").Replace(".", ""));
+                if (passenger == null) return BadRequest($"CPF not found, {cpf}");
+                else if (passenger.Status) return BadRequest($"CPF number {cpf} is on the restricted list.");
+                else listPassengers.Add(passenger);
+            }
+
+            if ((DateTime.Today - listPassengers[0].DtBirth.AddYears(18)).Days < 0) return BadRequest("Only people over the age of 18 can make sales.");
 
             Sale sale = new()
             {
                 Flight = flight,
-                Passenger = lstPassengers,
+                Passenger = listPassengers,
                 Reserved = true,
                 Sold = false
             };
@@ -57,8 +67,8 @@ namespace SaleAPI.Controllers
             return CreatedAtRoute("One", sale, sale);
         }
 
-        [HttpPost("ByIata")]
-        public async Task<ActionResult<AirCraft>> SaleIata(SaleDTO saleDTO)
+        [HttpPost]
+        public async Task<ActionResult<AirCraft>> Sale(SaleDTO saleDTO)
         {
             saleDTO.RAB = saleDTO.RAB.ToUpper();
             saleDTO.Destiny = saleDTO.Destiny.ToUpper();
@@ -68,46 +78,47 @@ namespace SaleAPI.Controllers
             if (flight == null) return NotFound("Flight not found!!!");
             //checks if there is a ticket for all passengers in the purchase request
             else if (flight.Sales > saleDTO.PassengersCPFs.Count) return BadRequest("There are no tickets for all passengers");
-            var lstPassengers = await PassengersAPIConsummer.GetSalePassengersList(saleDTO.PassengersCPFs, "44355");
-            if (lstPassengers == null) return BadRequest("There is a problem with the passengers on the flight");
+
+            List<Passenger> listPassengers = new();
+            foreach (string cpf in saleDTO.PassengersCPFs)
+            {
+                var passenger = await PassengersAPIConsummer.GetSalePassengersList(cpf.Replace("-", "").Replace(".", ""));
+                if (passenger == null) return BadRequest($"CPF not found, {cpf}");
+                else if (passenger.Status) return BadRequest($"CPF number {cpf} is on the restricted list.");
+                else listPassengers.Add(passenger);
+            }
+
+            if ((DateTime.Today - listPassengers[0].DtBirth.AddYears(18)).Days < 0) return BadRequest("Only people over the age of 18 can make sales.");
 
             Sale sale = new()
             {
                 Flight = flight,
-                Passenger = lstPassengers,
+                Passenger = listPassengers,
                 Reserved = true,
                 Sold = true
             };
-
-            //insere no banco de dados
-            sale.Flight.Sales += sale.Passenger.Count;
-            if (await FlightAPIConsummer.UpdateFlightSales(sale.Flight))
-            {
-                _saleService.Create(sale);
-                return CreatedAtRoute("One", sale, sale);
-            }
-            else return BadRequest("Unregistered sale");
+            _saleService.Create(sale);
+            return CreatedAtRoute("One", sale, sale);
         }
 
         #endregion Post
 
         #region Put
         [HttpPut]
-        public async Task<ActionResult<Sale>> Put(SaleDTO saleIn)
+        public async Task<ActionResult<Sale>> Put(SaleDTO saleIn) //Confirm reservation
         {
             var sale = _saleService.Get().Where(s => s.Flight.Departure.ToString() == saleIn.DtFlight && s.Flight.Plane.RAB == saleIn.RAB && s.Flight.Destiny.IATA
             == saleIn.Destiny && s.Passenger[0].CPF == Models.Utils.FormatCPF(saleIn.PassengersCPFs[0])).FirstOrDefault();
             if (sale == null) return BadRequest("Unable to change. Sale not found");
             if (!sale.Reserved) return BadRequest("Ticket already canceled");
-            sale.Reserved = true;
             sale.Sold = true;
             sale.Flight.Sales += sale.Passenger.Count;
             if (await FlightAPIConsummer.UpdateFlightSales(sale.Flight))
             {
                 _saleService.Put(sale);
-                CreatedAtRoute("One", sale, sale);
+                return CreatedAtRoute("One", sale, sale);
             }
-            return NoContent();
+            return BadRequest("Reservation not confirmed");
         }
         #endregion Put
 

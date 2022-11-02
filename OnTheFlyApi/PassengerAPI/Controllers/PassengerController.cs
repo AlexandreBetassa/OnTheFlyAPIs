@@ -58,7 +58,8 @@ namespace PassengerAPI.Controllers
         //}
 
         // POST api/<PassengerController>
-        [HttpPost("Create")]
+
+        [HttpPost]
         public ActionResult<Passenger> Post(PassengerDTO p)
         {
             if (!Models.Utils.CPFIsValid(p.UnformattedCPF)) return BadRequest("Invalid CPF.");
