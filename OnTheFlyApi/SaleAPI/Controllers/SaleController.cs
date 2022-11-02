@@ -27,7 +27,7 @@ namespace SaleAPI.Controllers
             var sale = _saleService.Get()
                 .Where(c => c.Flight.Departure == DateTime.Parse(date)
                  && c.Flight.Plane.RAB == rab
-                 && c.Passenger[0].CPF == cpf
+                 && c.Passenger[0].CPF == cpf.Replace(".", "").Replace("-", "")
                  && c.Flight.Destiny.IATA == destination)
                 .FirstOrDefault();
             if (sale == null) return NotFound("Sale not found!!!");
