@@ -50,7 +50,9 @@ namespace FlightsAPI.Controllers
 
             if (airCraft == null) return NotFound();
 
-            if (airCraft.Company.Status == true) return BadRequest("Restricted Airline, flights can only be registered for unrestricted airlines.");
+            var company = await CompanyAPIConsummer.GetOneRestrictedCNPJ(airCraft.Company.CNPJ.Replace(".","").Replace("/","").Replace("-",""));
+
+            if (company != null) return BadRequest("Restricted Airline, flights can only be registered for unrestricted airlines.");
 
             Airport airport = await AirportAPIConsummer.GetAirport(destiny.ToUpper());
 

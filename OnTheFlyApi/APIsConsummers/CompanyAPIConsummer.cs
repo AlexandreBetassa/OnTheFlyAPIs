@@ -26,7 +26,7 @@ namespace APIsConsummers
         {
             using (HttpClient _restritedCompanyClient = new HttpClient())
             {
-                HttpResponseMessage response = await _restritedCompanyClient.GetAsync($"https://localhost:44306/api/RestritedComapany/GetCNPJ/{cnpj}/");
+                HttpResponseMessage response = await _restritedCompanyClient.GetAsync($"https://localhost:44306/api/RestrictedCompany/GetCNPJ/{cnpj}");
                 var companyJson = await response.Content.ReadAsStringAsync();
                 if (response.IsSuccessStatusCode) return JsonSerializer.Deserialize<RestrictedCompany>(companyJson);
                 else return null;

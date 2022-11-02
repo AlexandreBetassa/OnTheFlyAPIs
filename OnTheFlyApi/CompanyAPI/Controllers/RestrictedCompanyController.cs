@@ -31,20 +31,20 @@ namespace CompanyAPI.Controllers
             restrictedCompany.CNPJ = Utils.FormatCNPJ(unformattedCNPJ);
 
             var restritedCnpj = _restritedCompany.GetOneCNPJ(restrictedCompany.CNPJ);
-            if (restritedCnpj != null) return BadRequest("This CNPJ is already restricted") ;
+            if (restritedCnpj != null) return BadRequest("This CNPJ is already restricted");
 
-          var company = _companyService.GetOneCNPJ(restrictedCompany.CNPJ);
+            var company = _companyService.GetOneCNPJ(restrictedCompany.CNPJ);
             if (company != null)
             {
                 company.Status = true;
                 _companyService.Update(company.CNPJ, company);
             }
-        
+
             return Ok(_restritedCompany.Create(restrictedCompany));
         }
 
         [HttpGet]
-        public ActionResult<List<RestrictedCompany>> GetAll()=> _restritedCompany.GetAll();
+        public ActionResult<List<RestrictedCompany>> GetAll() => _restritedCompany.GetAll();
 
         [HttpGet("GetCNPJ/{cnpj}")]
         public ActionResult<RestrictedCompany> GetOneCNPJ(string cnpj)
@@ -69,7 +69,7 @@ namespace CompanyAPI.Controllers
             cnpj = Utils.FormatCNPJ(unformattedCNPJ);
 
             var restritedCompany = _restritedCompany.GetOneCNPJ(cnpj);
-            if(restritedCompany == null) return NotFound();
+            if (restritedCompany == null) return NotFound();
 
             var company = _companyService.GetOneCNPJ(cnpj);
             if (company != null)
