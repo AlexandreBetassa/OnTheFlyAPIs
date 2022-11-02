@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SaleAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/sales")]
     [ApiController]
     public class SaleController : ControllerBase
     {
@@ -21,7 +21,7 @@ namespace SaleAPI.Controllers
         [HttpGet]
         public ActionResult<List<Sale>> Get() => _saleService.Get();
 
-        [HttpGet("sale", Name = "One")]
+        [HttpGet("sale", Name = "one")]
         public ActionResult<Sale> Get(Sale saleIn)
         {
             var sale = _saleService.Get().Where(c => c.Flight.Departure == saleIn.Flight.Departure
@@ -32,7 +32,7 @@ namespace SaleAPI.Controllers
         #endregion Get
 
         #region Post
-        [HttpPost("reserved", Name ="reserved")]
+        [HttpPost("reserved", Name = "reserved")]
         public async Task<ActionResult<Sale>> Reserved(SaleDTO saleDTO)
         {
             saleDTO.RAB = saleDTO.RAB.ToUpper();
@@ -64,7 +64,7 @@ namespace SaleAPI.Controllers
             };
 
             _saleService.Create(sale);
-            return CreatedAtRoute("One", sale, sale);
+            return CreatedAtRoute("one", sale, sale);
         }
 
         [HttpPost]
@@ -98,7 +98,7 @@ namespace SaleAPI.Controllers
                 Sold = true
             };
             _saleService.Create(sale);
-            return CreatedAtRoute("One", sale, sale);
+            return CreatedAtRoute("one", sale, sale);
         }
 
         #endregion Post
@@ -116,7 +116,7 @@ namespace SaleAPI.Controllers
             if (await FlightAPIConsummer.UpdateFlightSales(sale.Flight))
             {
                 _saleService.Put(sale);
-                return CreatedAtRoute("One", sale, sale);
+                return CreatedAtRoute("one", sale, sale);
             }
             return BadRequest("Reservation not confirmed");
         }
