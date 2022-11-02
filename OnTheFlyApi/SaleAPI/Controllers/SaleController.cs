@@ -22,10 +22,14 @@ namespace SaleAPI.Controllers
         public ActionResult<List<Sale>> Get() => _saleService.Get();
 
         [HttpGet("sale", Name = "one")]
-        public ActionResult<Sale> Get(Sale saleIn)
+        public ActionResult<Sale> Get(string date, string rab, string cpf, string destination)
         {
-            var sale = _saleService.Get().Where(c => c.Flight.Departure == saleIn.Flight.Departure
-            && c.Flight.Plane.RAB == saleIn.Flight.Plane.RAB).FirstOrDefault();
+            var sale = _saleService.Get()
+                .Where(c => c.Flight.Departure == DateTime.Parse(date)
+                 && c.Flight.Plane.RAB == rab
+                 && c.Passenger[0].CPF == cpf
+                 && c.Flight.Destiny.IATA == destination)
+                .FirstOrDefault();
             if (sale == null) return NotFound("Sale not found!!!");
             return Ok(sale);
         }
@@ -64,7 +68,13 @@ namespace SaleAPI.Controllers
             };
 
             _saleService.Create(sale);
-            return CreatedAtRoute("one", sale, sale);
+            return CreatedAtRoute("one", new
+            {
+                date = sale.Flight.Departure,
+                cpf = sale.Passenger[0].CPF,
+                rab = sale.Flight.Plane.RAB,
+                destination = sale.Flight.Destiny.IATA
+            }, sale);
         }
 
         [HttpPost]
@@ -98,7 +108,7 @@ namespace SaleAPI.Controllers
                 Sold = true
             };
             _saleService.Create(sale);
-            return CreatedAtRoute("one", sale, sale);
+            return CreatedAtRoute("one", saleDTO, sale);
         }
 
         #endregion Post
